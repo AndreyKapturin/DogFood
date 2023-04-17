@@ -1,7 +1,8 @@
 import React from "react";
+import "./style.css"
 
 const Main = () => {
-    return <div>i am main</div>
+    return <main className="main">i am main</main>
 }
 
 export default Main;
