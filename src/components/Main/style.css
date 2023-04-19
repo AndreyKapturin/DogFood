@@ -1,4 +1,4 @@
 .main{
-    width: 100%;
-    height: min-content;
+    min-height: min-content;
+    padding: 40px 40px;
 }
