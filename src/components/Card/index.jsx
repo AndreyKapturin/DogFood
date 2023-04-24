@@ -4,7 +4,6 @@ import Like from "../images/Like";
 
 const Card = ({ product }) => {
     const { name, picture, price, wight, discount, isFavorite } = product;
-    console.log(product);
     return (
         <div className="test">
             {!!discount && <span className="card__discount">{discount} %</span>}
