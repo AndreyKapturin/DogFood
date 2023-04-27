@@ -1,17 +1,30 @@
+import React from 'react';
 import './App.css';
 import Footer from './components/Footer';
 import Header from './components/Header';
 import Main from './components/Main';
-import data from "./data/data.json"
-
 import { api } from './api/api';
+import { useEffect, useState } from 'react';
 
-console.log(api.getProducts());
 function App() {
+  const [products, setProducts] = useState([]);
+  const [search, setSearch] = useState(null)
+
+  useEffect(() => {
+    if (!search) {
+      api.getProducts().then(data => { setProducts(data.products) })
+    } else {
+      const timer = setTimeout(() => {
+        api.searchProducts(search).then(data => setProducts(data))
+      }, 500);
+      return () => clearTimeout(timer)
+    }
+  }, [search])
+
   return (
     <div className='app'>
-      <Header />
-      <Main cards={data} />
+      <Header setSearch={setSearch} />
+      <Main cards={products} />
       <Footer />
     </div>
   );

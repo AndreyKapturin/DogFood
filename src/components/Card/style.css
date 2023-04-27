@@ -1,17 +1,5 @@
 .card {
     height: min-content;
-    width: 300px;
-    padding: 10px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    border-radius: 10px;
-    box-shadow: 1px 5px 10px 0px #b0b0b0;
-    position: relative;
-}
-
-.test {
-    height: min-content;
     width: min-content;
     padding: 10px;
     display: grid;
