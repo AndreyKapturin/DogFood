@@ -1,17 +1,27 @@
 import React from "react";
 import "./style.css"
 import Like from "../images/Like";
+import BackBtn from "../BackBtn";
+import { Star, Truck, Award, StarFill } from "react-bootstrap-icons";
 
-const Product = ({ product }) => {
-    const { name, discount, price, description, pictures } = product;
+
+const Product = ({ product, getRate }) => {
+    const { name, discount, price, description, pictures, reviews } = product;
+    let rate = getRate(product);
+    const stars = []
+    for (let i = 0; i < 5; i++) {
+        i < rate ? stars.push(<StarFill key={`${StarFill}` + i} fill="#FFE44D" stroke="#1A1A1A" />) : stars.push(<Star key={`${Star}` + i} />)
+    }
+
     return (
         <div>
-            <span>Назад</span>
-            <h1>{name}</h1>
+            <BackBtn />
+            <h1 className="product__name">{name}</h1>
             <div className="rating-wrapper">
-                <span>articul</span>
-                <span>rating</span>
-                <span>review</span>
+                <span>Артикул: </span>
+                <span className="product___rating">{[...stars]}</span>
+                <span>{!!reviews ? `${reviews.length} отзыв` : "Ещё нет отзывов"}</span>
+                {/* Нужна функция для правильного окончания */}
             </div>
             <div className="info-wrapper">
                 <div className="pruduct-wrapper">
@@ -32,7 +42,7 @@ const Product = ({ product }) => {
                             <span>В избранное</span>
                         </div>
                         <div className="placeholrer-delivery">
-                            <span>icon</span>
+                            <Truck width="24" height="24" />
                             <div className="placeholrer-delivery__text">
                                 <h3>Доставка по всему Миру!</h3>
                                 <p>Доставка курьером — <b>от 399 ₽</b></p>
@@ -40,7 +50,7 @@ const Product = ({ product }) => {
                             </div>
                         </div>
                         <div className="placeholrer-guarantee">
-                            <span>icon</span>
+                            <Award width="24" height="24" />
                             <div className="placeholrer-guarantee__text">
                                 <h3>Гарантия качества</h3>
                                 <p>Если Вам не понравилось качество нашей продукции, мы вернем деньги, либо сделаем все возможное, чтобы удовлетворить ваши нужды.</p>
