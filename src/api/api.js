@@ -8,6 +8,11 @@ class Api {
             headers: this.headers,
         }).then(res => res.json());
     }
+    getProductsByID(id) {
+        return fetch(`${this.baseUrl}/${id}`, {
+            headers: this.headers,
+        }).then(res => res.json());
+    }
     searchProducts(search) {
         return fetch(`${this.baseUrl}/search?query=${search}`, {
             headers: this.headers,
