@@ -1,6 +1,6 @@
 import React from "react";
 import "./style.css"
-import CardList from "../CardList";
+import CardList from "../pages/CardList";
 import { Route, Routes } from "react-router-dom";
 import ProductPage from "../pages/ProductPage";
 

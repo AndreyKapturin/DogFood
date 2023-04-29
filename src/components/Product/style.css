@@ -3,8 +3,17 @@
     gap: 10px;
 }
 
+.product___rating {
+    font-size: 20px;
+    line-height: 15px;
+}
+
 .info-wrapper {
     display: grid;
+}
+
+.product__name{
+    margin: 0;
 }
 
 .pruduct-wrapper {
