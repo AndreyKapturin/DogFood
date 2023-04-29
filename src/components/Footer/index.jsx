@@ -14,16 +14,16 @@ const Footer = () => {
             <span>© «Интернет-магазин DogFood.ru»</span>
         </div>
         <div className="footer__nav-list">
-            <a href="#">Каталог</a>
-            <a href="#">Акции</a>
-            <a href="#">Новости</a>
-            <a href="#">Отзывы</a>
+            <a href="/">Каталог</a>
+            <a href="/">Акции</a>
+            <a href="/">Новости</a>
+            <a href="/">Отзывы</a>
         </div>
         <div className="footer__nav-list">
-            <a href="#">Оплата и доставка</a>
-            <a href="#">Часто спрашивают</a>
-            <a href="#">Обратная связь</a>
-            <a href="#">Контакты</a>
+            <a href="/">Оплата и доставка</a>
+            <a href="/">Часто спрашивают</a>
+            <a href="/">Обратная связь</a>
+            <a href="/">Контакты</a>
         </div>
         <div className="footer__contacts">
             <h3>Мы на связи</h3>
@@ -32,11 +32,11 @@ const Footer = () => {
                 <a href="mailto:dogfood.ru@gmail.com">dogfood.ru@gmail.com</a>
             </div>
             <div className="footer__contacts-social">
-                <a href="#"><LogoTG /></a>
-                <a href="#"><LogoWA /></a>
-                <a href="#"><LogoViber /></a>
-                <a href="#"><LogoInstagram /></a>
-                <a href="#"><LogoVK /></a>
+                <a href="/"><LogoTG /></a>
+                <a href="/"><LogoWA /></a>
+                <a href="/"><LogoViber /></a>
+                <a href="/"><LogoInstagram /></a>
+                <a href="/"><LogoVK /></a>
             </div>
         </div>
     </footer>
