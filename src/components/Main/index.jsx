@@ -11,7 +11,7 @@ const Main = ({ cards, search, setProducts, user, changeLike }) => {
         <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/catalog" element={<CardList cards={cards} search={search} setProducts={setProducts} user={user} changeLike={changeLike} />} />
-            <Route path="/product/:id" element={<ProductPage />} />
+            <Route path="/product/:id" element={<ProductPage setProducts={setProducts} user={user} products={cards} />} />
             <Route path="/*" element={<NotFoundPage />} />
         </Routes>
     </main>
