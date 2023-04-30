@@ -24,7 +24,7 @@ function App() {
   return (
     <div className='app'>
       <Header setSearch={setSearch} />
-      <Main cards={products} />
+      <Main cards={products} search={search} />
       <Footer />
     </div>
   );

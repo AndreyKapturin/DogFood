@@ -3,6 +3,7 @@ import "./style.css"
 import Like from "../images/Like";
 import BackBtn from "../BackBtn";
 import { Star, Truck, Award, StarFill } from "react-bootstrap-icons";
+import { getEnding } from "../../utilities/utilities";
 
 
 const Product = ({ product, getRate }) => {
@@ -20,8 +21,7 @@ const Product = ({ product, getRate }) => {
             <div className="rating-wrapper">
                 <span>Артикул: </span>
                 <span className="product___rating">{[...stars]}</span>
-                <span>{!!reviews ? `${reviews.length} отзыв` : "Ещё нет отзывов"}</span>
-                {/* Нужна функция для правильного окончания */}
+                <span>{!!reviews ? `${reviews.length} отзыв${getEnding(reviews.length)}` : "Ещё нет отзывов"}</span>
             </div>
             <div className="info-wrapper">
                 <div className="pruduct-wrapper">
