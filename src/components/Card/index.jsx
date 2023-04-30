@@ -3,13 +3,14 @@ import "./style.css"
 import Like from "../images/Like";
 import { Link } from "react-router-dom";
 
-const Card = ({ product }) => {
-    const { name, pictures, price, wight, discount, isFavorite } = product;
+const Card = ({ product, user, changeLike }) => {
+    const { name, pictures, price, wight, discount, likes, _id } = product;
+    const isLiked = likes.includes(user._id)
     return (
         <div className="card">
             {!!discount && <span className="card__discount">{discount} %</span>}
-            {!isFavorite && <Like className="card__like"/>}
-            <Link to={`/product/${product._id}`} className="card__link">
+            <span onClick={() => changeLike(_id, isLiked)}><Like className="card__like" fill={isLiked ? "red" : "none"} /></span>
+            <Link to={`/product/${_id}`} className="card__link">
                 <img className="card__img" src={pictures} alt={name}></img>
                 {!!discount ? <span className="card__old-price">{price} ₽</span> : <span className="card__old-price"></span>}
                 {!!discount ? <span className="card__price red">{price - (price * discount) / 100} ₽</span> : <span className="card__price black">{price - (price * discount) / 100} ₽</span>}

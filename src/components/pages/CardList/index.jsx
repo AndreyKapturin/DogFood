@@ -6,7 +6,7 @@ import SearchNotFound from "../../SearchNotFound";
 import Sorting from "../../Sorting";
 import { getRate } from "../../../utilities/utilities";
 
-const CardList = ({ cards, search, setProducts }) => {
+const CardList = ({ cards, search, setProducts, user, changeLike }) => {
     const sort = (cards, filter) => {
         if (filter === "popular") {
             const filtered = cards.sort((a, b) => (b.likes.length - a.likes.length))
@@ -44,7 +44,7 @@ const CardList = ({ cards, search, setProducts }) => {
             {cards.length === 0 && <SearchNotFound />}
             {cards.length > 0 && <Sorting cards={cards} setProducts={setProducts} sort={sort} />}
             <div className="main__card-list">
-                {cards.map((card, i) => <Card key={`${card._id}${i}`} product={{ ...card }} />)}
+                {cards.map((card, i) => <Card key={`${card._id}${i}`} product={{ ...card }} user={user} changeLike={changeLike} />)}
             </div>
         </>
     )

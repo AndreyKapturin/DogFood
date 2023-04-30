@@ -6,11 +6,11 @@ import ProductPage from "../pages/ProductPage";
 import NotFoundPage from "../pages/NotFoundPage";
 import HomePage from "../pages/HomePage";
 
-const Main = ({ cards, search, setProducts }) => {
+const Main = ({ cards, search, setProducts, user, changeLike }) => {
     return <main className="main">
         <Routes>
             <Route path="/" element={<HomePage />} />
-            <Route path="/catalog" element={<CardList cards={cards} search={search} setProducts={setProducts} />} />
+            <Route path="/catalog" element={<CardList cards={cards} search={search} setProducts={setProducts} user={user} changeLike={changeLike} />} />
             <Route path="/product/:id" element={<ProductPage />} />
             <Route path="/*" element={<NotFoundPage />} />
         </Routes>
