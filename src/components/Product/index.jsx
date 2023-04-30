@@ -6,14 +6,14 @@ import { Star, Truck, Award, StarFill } from "react-bootstrap-icons";
 import { getEnding, getRate } from "../../utilities/utilities";
 
 
-const Product = ({ product}) => {
-    const { name, discount, price, description, pictures, reviews } = product;
+const Product = ({ product, changeLikeOnProductPage, user }) => {
+    const { name, discount, price, description, pictures, reviews, likes, _id } = product;
     let rate = getRate(product);
     const stars = []
     for (let i = 0; i < 5; i++) {
         i < rate ? stars.push(<StarFill key={`${StarFill}` + i} fill="#FFE44D" stroke="#1A1A1A" />) : stars.push(<Star key={`${Star}` + i} />)
     }
-
+    let isLiked = likes ? likes.includes(user._id) : false
     return (
         <div>
             <BackBtn />
@@ -38,8 +38,7 @@ const Product = ({ product}) => {
                             <button className="product__card-btn">В корзину</button>
                         </div>
                         <div className="product-favorite">
-                            <Like />
-                            <span>В избранное</span>
+                            <span onClick={() => changeLikeOnProductPage(_id, isLiked)}><Like fill={isLiked ? "red" : "none"}/> В избранное</span>
                         </div>
                         <div className="placeholrer-delivery">
                             <Truck width="24" height="24" />

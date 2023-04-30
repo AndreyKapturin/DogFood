@@ -36,7 +36,7 @@ function App() {
   return (
     <div className='app'>
       <Header setSearch={setSearch} />
-      <Main cards={products} search={search} setProducts={setProducts} user={user} changeLike={changeLike} />
+      <Main cards={products} search={search} setProducts={setProducts} user={user} changeLike={changeLike}/>
       <Footer />
     </div>
   );
