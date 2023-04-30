@@ -9,6 +9,11 @@ import { useEffect, useState } from 'react';
 function App() {
   const [products, setProducts] = useState([]);
   const [search, setSearch] = useState(null)
+  const [user, setUser] = useState({})
+
+  useEffect(() => {
+    api.getUserInfo().then(data => setUser(data))
+  }, [])
 
   useEffect(() => {
     if (!search) {
@@ -21,10 +26,17 @@ function App() {
     }
   }, [search])
 
+  const changeLike = (productID, wasLiked) => {
+    api.swithLike(productID, wasLiked).then(res => {
+      const newProducts = products.map(product => product._id === productID ? res : product);
+      setProducts([...newProducts])
+    })
+  }
+
   return (
     <div className='app'>
       <Header setSearch={setSearch} />
-      <Main cards={products} search={search} setProducts={setProducts} />
+      <Main cards={products} search={search} setProducts={setProducts} user={user} changeLike={changeLike} />
       <Footer />
     </div>
   );
