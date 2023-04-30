@@ -25,3 +25,16 @@ export const getEnding = (num) => {
         }
     }
 }
+
+export const getRate = (product) => {
+    if (product.reviews) {
+        const rate = product.reviews.reduce((avg, review, i, arr) => {
+            if (i !== arr.length - 1) {
+                return avg += review.rating
+            } else {
+                return (avg += review.rating) / arr.length
+            }
+        }, 0)
+        return Math.floor(rate)
+    }
+}

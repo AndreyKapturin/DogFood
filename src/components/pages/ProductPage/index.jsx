@@ -13,21 +13,9 @@ const ProductPage = () => {
         })
     }, [id])
 
-    const getRate = (product) => {
-        if (product.reviews) {
-            const rate = product.reviews.reduce((avg, review, i, arr) => {
-                if (i !== arr.length - 1) {
-                    return avg += review.rating
-                } else {
-                    return (avg += review.rating) / arr.length
-                }
-            }, 0)
-            return Math.floor(rate)
-        }
-    }
     return (
         <div className="productPage">
-            <Product product={product} getRate={getRate} />
+            <Product product={product}  />
         </div>
     )
 }
