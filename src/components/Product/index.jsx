@@ -3,10 +3,10 @@ import "./style.css"
 import Like from "../images/Like";
 import BackBtn from "../BackBtn";
 import { Star, Truck, Award, StarFill } from "react-bootstrap-icons";
-import { getEnding } from "../../utilities/utilities";
+import { getEnding, getRate } from "../../utilities/utilities";
 
 
-const Product = ({ product, getRate }) => {
+const Product = ({ product}) => {
     const { name, discount, price, description, pictures, reviews } = product;
     let rate = getRate(product);
     const stars = []
