@@ -1,4 +1,7 @@
 .main{
     min-height: min-content;
-    padding: 40px 40px;
+    padding: 20px 60px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
