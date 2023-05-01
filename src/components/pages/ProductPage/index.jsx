@@ -8,17 +8,19 @@ const ProductPage = ({ setProducts, user, products }) => {
     const { id } = useParams();
     const [product, setProduct] = useState({});
     useEffect(() => {
-        api.getProductsByID(id).then(data => {
-            setProduct(data);
-        })
+        api.getProductsByID(id)
+            .then(data => setProduct(data))
+            .catch(error => console.error("Ошибка при запросе данных об одном продукте", error))
     }, [id])
 
     const changeLikeOnProductPage = (productID, wasLiked) => {
-        api.swithLike(productID, wasLiked).then(res => {
-            setProduct(res)
-            const newProducts = products.map(product => product._id === productID ? res : product);
-            setProducts([...newProducts])
-        })
+        api.swithLike(productID, wasLiked)
+            .then(res => {
+                setProduct(res)
+                const newProducts = products.map(product => product._id === productID ? res : product);
+                setProducts([...newProducts])
+            })
+            .catch(error => console.error("Ошибка при смене лайка в продукте", error))
     }
 
     return (
