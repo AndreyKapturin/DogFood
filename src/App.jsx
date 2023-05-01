@@ -5,12 +5,13 @@ import Header from './components/Header';
 import Main from './components/Main';
 import { api } from './api/api';
 import { useEffect, useState } from 'react';
+import { filterMyFavProduct } from './utilities/utilities';
 
 function App() {
-  const [products, setProducts] = useState([]);
-  const [search, setSearch] = useState(null)
   const [user, setUser] = useState({})
-
+  const [products, setProducts] = useState([]);
+  const [myFavProduct, setMyFavProduct] = useState([])
+  const [search, setSearch] = useState(null)
   useEffect(() => {
     api.getUserInfo()
       .then(data => setUser(data))
@@ -20,7 +21,10 @@ function App() {
   useEffect(() => {
     if (!search) {
       api.getProducts()
-        .then(data => setProducts(data.products))
+        .then(data => {
+          setProducts(data.products);
+          setMyFavProduct(filterMyFavProduct(data.products, user._id))
+        })
         .catch(error => console.error("Ошибка при запросе всех продуктов", error))
     } else {
       const timer = setTimeout(() => {
@@ -30,21 +34,22 @@ function App() {
       }, 500);
       return () => clearTimeout(timer)
     }
-  }, [search])
+  }, [search, user])
 
   const changeLike = (productID, wasLiked) => {
     api.swithLike(productID, wasLiked)
       .then(res => {
         const newProducts = products.map(product => product._id === productID ? res : product);
         setProducts([...newProducts])
+        setMyFavProduct(filterMyFavProduct(newProducts, user._id))
       })
       .catch(error => console.error("Ошибка при смене лайка в каталоге", error))
   }
 
   return (
     <div className='app'>
-      <Header setSearch={setSearch} />
-      <Main cards={products} search={search} setProducts={setProducts} user={user} changeLike={changeLike} />
+      <Header setSearch={setSearch} myFavProduct={myFavProduct} />
+      <Main cards={products} search={search} setProducts={setProducts} user={user} changeLike={changeLike} setMyFavProduct={setMyFavProduct} myFavProduct={myFavProduct} />
       <Footer />
     </div>
   );

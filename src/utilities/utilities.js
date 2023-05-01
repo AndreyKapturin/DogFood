@@ -38,3 +38,8 @@ export const getRate = (product) => {
         return Math.floor(rate)
     }
 }
+
+export const filterMyFavProduct = (products, userID) => {
+    const fav = products.filter(product => product.likes.includes(userID))
+    return fav
+}
