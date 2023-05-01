@@ -4,3 +4,9 @@
     gap: 30px;
     justify-content: flex-start;
 }
+
+.favoritePage {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
