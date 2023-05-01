@@ -5,15 +5,17 @@ import Input from "../Input";
 import Favorite from "../images/Favorite";
 import Cart from "../images/Cart";
 import Profile from "../images/Profile";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import Bubble from "../Bubble";
 
-const Header = ({ setSearch }) => {
+const Header = ({ setSearch, myFavProduct }) => {
+    const location = useLocation()
     return (
         <header className="header">
             <Link to="/"><Logo /></Link>
-            <Input setSearch={setSearch} />
+            {location.pathname === "/catalog" && <Input setSearch={setSearch} />}
             <div className="header__icons">
-                <a href="/"><Favorite /></a>
+                <Link className="header-icon-link" to="/favorite"><Bubble products={myFavProduct} /><Favorite /></Link>
                 <a href="/"><Cart /></a>
                 <a href="/"><Profile /></a>
             </div>

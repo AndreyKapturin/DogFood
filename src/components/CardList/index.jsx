@@ -2,10 +2,10 @@ import React from "react";
 import "./style.css"
 import Card from "../Card";
 
-const CardList = ({ cards, user, changeLike }) => {
+const CardList = ({ cards, user, changeLike, className }) => {
     return (
         <>
-            <div className="card-list">
+            <div className={className}>
                 {cards.map((card, i) => <Card key={`${card._id}${i}`} product={{ ...card }} user={user} changeLike={changeLike} />)}
             </div>
         </>

@@ -3,8 +3,9 @@ import "./style.css"
 import Product from "../../Product";
 import { useParams } from "react-router-dom";
 import { api } from "../../../api/api";
+import { filterMyFavProduct } from "../../../utilities/utilities";
 
-const ProductPage = ({ setProducts, user, products }) => {
+const ProductPage = ({ setProducts, user, products, setMyFavProduct }) => {
     const { id } = useParams();
     const [product, setProduct] = useState({});
     useEffect(() => {
@@ -19,6 +20,7 @@ const ProductPage = ({ setProducts, user, products }) => {
                 setProduct(res)
                 const newProducts = products.map(product => product._id === productID ? res : product);
                 setProducts([...newProducts])
+                setMyFavProduct(filterMyFavProduct(newProducts, user._id))
             })
             .catch(error => console.error("Ошибка при смене лайка в продукте", error))
     }

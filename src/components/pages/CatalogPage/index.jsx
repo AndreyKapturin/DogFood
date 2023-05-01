@@ -5,7 +5,6 @@ import SearchResult from "../../SearchResult";
 import SearchNotFound from "../../SearchNotFound";
 import Sorting from "../../Sorting";
 import { getRate } from "../../../utilities/utilities";
-
 const CatalogPage = ({ cards, search, setProducts, user, changeLike }) => {
     const sort = (cards, filter) => {
         if (filter === "popular") {
@@ -43,7 +42,7 @@ const CatalogPage = ({ cards, search, setProducts, user, changeLike }) => {
             {search && <SearchResult search={search} cards={cards} />}
             {cards.length === 0 && <SearchNotFound />}
             {cards.length > 0 && <Sorting cards={cards} setProducts={setProducts} sort={sort} />}
-            <CardList cards={cards} user={user} changeLike={changeLike} />
+            <CardList cards={cards} user={user} changeLike={changeLike} className={"catalogPageCardList"} />
         </>
     )
 }
