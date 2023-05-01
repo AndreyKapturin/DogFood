@@ -1,9 +1,9 @@
 import React from "react";
 import "./style.css"
 
-const Input = ({ setSearch }) => {
+const Input = ({ setSearch, location }) => {
     return (
-        <input className="header__input" type="text" placeholder={"Поиск"} onChange={e => setSearch(e.target.value)}></input>
+        <input className="header__input" type="text" placeholder={"Поиск"} disabled={location.pathname !== "/catalog"} onChange={e => setSearch(e.target.value)}></input>
     )
 }
 

@@ -3,7 +3,7 @@ import "./style.css"
 
 const Bubble = ({ products }) => {
     return (
-        products.length && <span className="header__bubble" >{products.length}</span>
+        <span className="header__bubble" >{products.length}</span>
     )
 }
 

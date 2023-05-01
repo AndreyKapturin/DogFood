@@ -13,9 +13,9 @@ const Header = ({ setSearch, myFavProduct }) => {
     return (
         <header className="header">
             <Link to="/"><Logo /></Link>
-            {location.pathname === "/catalog" && <Input setSearch={setSearch} />}
+            <Input setSearch={setSearch} location={location} />
             <div className="header__icons">
-                <Link className="header-icon-link" to="/favorite"><Bubble products={myFavProduct} /><Favorite /></Link>
+                <Link className="header-icon-link" to="/favorite">{!!myFavProduct.length && <Bubble products={myFavProduct} />}<Favorite /></Link>
                 <a href="/"><Cart /></a>
                 <a href="/"><Profile /></a>
             </div>
