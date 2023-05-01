@@ -1,12 +1,12 @@
 import React from "react";
 import "./style.css"
-import Card from "../../Card";
+import CardList from "../../CardList";
 import SearchResult from "../../SearchResult";
 import SearchNotFound from "../../SearchNotFound";
 import Sorting from "../../Sorting";
 import { getRate } from "../../../utilities/utilities";
 
-const CardList = ({ cards, search, setProducts, user, changeLike }) => {
+const CatalogPage = ({ cards, search, setProducts, user, changeLike }) => {
     const sort = (cards, filter) => {
         if (filter === "popular") {
             const filtered = cards.sort((a, b) => (b.likes.length - a.likes.length))
@@ -43,11 +43,9 @@ const CardList = ({ cards, search, setProducts, user, changeLike }) => {
             {search && <SearchResult search={search} cards={cards} />}
             {cards.length === 0 && <SearchNotFound />}
             {cards.length > 0 && <Sorting cards={cards} setProducts={setProducts} sort={sort} />}
-            <div className="main__card-list">
-                {cards.map((card, i) => <Card key={`${card._id}${i}`} product={{ ...card }} user={user} changeLike={changeLike} />)}
-            </div>
+            <CardList cards={cards} user={user} changeLike={changeLike} />
         </>
     )
 }
 
-export default CardList;
+export default CatalogPage;
