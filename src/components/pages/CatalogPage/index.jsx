@@ -1,11 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./style.css"
 import CardList from "../../CardList";
 import SearchResult from "../../SearchResult";
 import NotFound from "../../NotFound";
 import Sorting from "../../Sorting";
 import { getRate } from "../../../utilities/utilities";
-const CatalogPage = ({ cards, search, setProducts, user, changeLike }) => {
+import { AppContext } from "../../../context/AppContext";
+const CatalogPage = () => {
+    const { search, products, setProducts } = useContext(AppContext)
     const sort = (cards, filter) => {
         if (filter === "popular") {
             const filtered = cards.sort((a, b) => (b.likes.length - a.likes.length))
@@ -39,10 +41,10 @@ const CatalogPage = ({ cards, search, setProducts, user, changeLike }) => {
 
     return (
         <>
-            {search && <SearchResult search={search} cards={cards} />}
-            {cards.length === 0 && <NotFound text="Простите, по вашему запросу товаров не найдено" buttonText="На главную" buttonPath="/" />}
-            {cards.length > 0 && <Sorting cards={cards} setProducts={setProducts} sort={sort} />}
-            <CardList cards={cards} user={user} changeLike={changeLike} className={"catalogPageCardList"} />
+            {search && <SearchResult />}
+            {products.length === 0 && <NotFound text="Простите, по вашему запросу товаров не найдено" buttonText="На главную" buttonPath="/" />}
+            {products.length && <Sorting sort={sort} />}
+            <CardList cards={products} className={"catalogPageCardList"} />
         </>
     )
 }

@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./style.css"
 import Like from "../images/Like";
 import { Link } from "react-router-dom";
+import { AppContext } from "../../context/AppContext";
 
-const Card = ({ product, user, changeLike }) => {
+const Card = ({ product }) => {
+    const { user, changeLike } = useContext(AppContext)
     const { name, pictures, price, wight, discount, likes, _id } = product;
     const isLiked = likes.includes(user._id)
     return (

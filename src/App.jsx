@@ -1,17 +1,18 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './App.css';
 import Footer from './components/Footer';
 import Header from './components/Header';
 import Main from './components/Main';
 import { api } from './api/api';
-import { useEffect, useState } from 'react';
 import { filterMyFavProduct } from './utilities/utilities';
+import { AppContext } from './context/AppContext';
 
 function App() {
   const [user, setUser] = useState({})
   const [products, setProducts] = useState([]);
   const [myFavProduct, setMyFavProduct] = useState([])
   const [search, setSearch] = useState(null)
+
   useEffect(() => {
     api.getUserInfo()
       .then(data => setUser(data))
@@ -45,12 +46,24 @@ function App() {
       })
       .catch(error => console.error("Ошибка при смене лайка в каталоге", error))
   }
+  const Context = {
+    setSearch,
+    setProducts,
+    changeLike,
+    user,
+    myFavProduct,
+    setMyFavProduct,
+    products,
+    search
+  }
 
   return (
     <div className='app'>
-      <Header setSearch={setSearch} myFavProduct={myFavProduct} />
-      <Main cards={products} search={search} setProducts={setProducts} user={user} changeLike={changeLike} setMyFavProduct={setMyFavProduct} myFavProduct={myFavProduct} />
-      <Footer />
+      <AppContext.Provider value={Context}>
+        <Header />
+        <Main />
+        <Footer />
+      </AppContext.Provider >
     </div>
   );
 }
