@@ -1,4 +1,4 @@
-.main__card-list{
+.catalogPageCardList{
     display: flex;
     flex-wrap: wrap;
     gap: 30px;

@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./style.css"
 import { getEnding } from "../../utilities/utilities";
+import { AppContext } from "../../context/AppContext";
 
-const SearchResult = ({search, cards}) => {
+const SearchResult = () => {
+    const { products, search } = useContext(AppContext)
     return (
-        <h1 className="searchResult">По запросу <span className="red">{search}</span> найдено {cards.length} товар{getEnding(cards.length)}</h1>
+        <h1 className="searchResult">По запросу <span className="red">{search}</span> найдено {products.length} товар{getEnding(products.length)}</h1>
     )
 }
 
