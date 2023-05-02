@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./style.css"
 import Product from "../../Product";
 import { useParams } from "react-router-dom";
 import { api } from "../../../api/api";
 import { filterMyFavProduct } from "../../../utilities/utilities";
+import { AppContext } from "../../../context/AppContext";
 
-const ProductPage = ({ setProducts, user, products, setMyFavProduct }) => {
+const ProductPage = () => {
+    const { setProducts, user, products, setMyFavProduct } = useContext(AppContext);
     const { id } = useParams();
     const [product, setProduct] = useState({});
     useEffect(() => {
