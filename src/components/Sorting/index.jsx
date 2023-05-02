@@ -1,18 +1,22 @@
 import React, { useContext } from "react";
 import "./style.css"
 import { AppContext } from "../../context/AppContext";
+import { sort } from "../../utilities/utilities";
 
-const Sorting = ({ sort }) => {
-    const { products } = useContext(AppContext)
+const Sorting = () => {
+    const { products, setProducts } = useContext(AppContext)
+    const filters = [
+        {filter: "popular", title: "Популярные"},
+        {filter: "new", title: "Новинки"},
+        {filter: "cheap", title: "Сначала дешёвые"},
+        {filter: "costly", title: "Сначала дорогие"},
+        {filter: "topRate", title: "По рейтингу"},
+        {filter: "reviews", title: "По количеству отзывов"},
+        {filter: "sale", title: "По скидке"}
+     ]
     return (
         <div className="sorting">
-            <span className="sorting__point" onClick={() => sort(products, "popular")}>Популярные</span>
-            <span className="sorting__point" onClick={() => sort(products, "new")}>Новинки</span>
-            <span className="sorting__point" onClick={() => sort(products, "cheap")}>Сначала дешёвые</span>
-            <span className="sorting__point" onClick={() => sort(products, "costly")}>Сначала дорогие</span>
-            <span className="sorting__point" onClick={() => sort(products, "topRate")}>По рейтингу</span>
-            <span className="sorting__point" onClick={() => sort(products, "reviews")}>По количеству отзывов</span>
-            <span className="sorting__point" onClick={() => sort(products, "sale")}>По скидке</span>
+            {filters.map(filter => <span className="sorting__point" onClick={() => sort(products, filter.filter, setProducts)}>{filter.title}</span>)}
         </div>
     )
 }
