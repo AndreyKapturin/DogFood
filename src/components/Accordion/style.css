@@ -1,0 +1,28 @@
+.accordion {
+    height: auto;
+    padding: 5px;
+    border: 1px solid black;
+    border-radius: 10px;
+    transition: all 0.3s ease-in-out;
+}
+
+.accordion__title {
+    position: relative;
+}
+
+.accordion__arrow {
+    position: absolute;
+    right: 10px;
+    top: 5px;
+    transition: all 0.3s ease-in-out;
+}
+
+.accordion__text {
+    overflow: hidden;
+    transition: all 0.4s ease-in-out;
+    height: 0px;
+}
+
+.turn180 {
+    transform: rotate(180deg);
+}
