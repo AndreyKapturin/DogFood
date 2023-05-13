@@ -8,7 +8,7 @@
     text-align: center;
 }
 
-.searhNotFound__button{
+.searhNotFound__button {
     width: 140px;
     padding: 10px 18px;
     background-color: transparent;
@@ -16,5 +16,5 @@
     border: 1px solid gray;
     font-weight: 700;
     font-size: 16px;
-    color: #1A1A1A;
+    color: #1a1a1a;
 }

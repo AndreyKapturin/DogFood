@@ -1,0 +1,13 @@
+.faqPage {
+    display: grid;
+    gap: 20px;
+}
+
+.faq__title {
+    margin: 0;
+}
+
+.faq__list {
+    display: grid;
+    gap: 5px;
+}

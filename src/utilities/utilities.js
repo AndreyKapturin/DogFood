@@ -1,76 +1,82 @@
 export const getEnding = (num) => {
-    const str = String(num)
+    const str = String(num);
     if (str.length > 1) {
-        const lastSymbols = str[str.length - 2] + str[str.length - 1]
+        const lastSymbols = str[str.length - 2] + str[str.length - 1];
         if (![11, 12, 13, 14].includes(Number(lastSymbols))) {
-            const lastSymbol = str[str.length - 1]
+            const lastSymbol = str[str.length - 1];
             if (Number(lastSymbol) === 1) {
-                return ""
+                return '';
             } else if ([2, 3, 4].includes(Number(lastSymbol))) {
-                return "а"
+                return 'а';
             } else {
-                return "ов"
+                return 'ов';
             }
         } else {
-            return "ов"
+            return 'ов';
         }
     } else {
-        const lastSymbol = str[str.length - 1]
+        const lastSymbol = str[str.length - 1];
         if (Number(lastSymbol) === 1) {
-            return ""
+            return '';
         } else if ([2, 3, 4].includes(Number(lastSymbol))) {
-            return "а"
+            return 'а';
         } else {
-            return "ов"
+            return 'ов';
         }
     }
-}
+};
 
 export const getRate = (product) => {
     if (product.reviews) {
         const rate = product.reviews.reduce((avg, review, i, arr) => {
             if (i !== arr.length - 1) {
-                return avg += review.rating
+                return (avg += review.rating);
             } else {
-                return (avg += review.rating) / arr.length
+                return (avg += review.rating) / arr.length;
             }
-        }, 0)
-        return Math.floor(rate)
+        }, 0);
+        return Math.floor(rate);
     }
-}
+};
 
 export const filterMyFavProduct = (products, userID) => {
-    const fav = products.filter(product => product.likes.includes(userID))
-    return fav
-}
+    const fav = products.filter((product) => product.likes.includes(userID));
+    return fav;
+};
 
-export  const sort = (cards, filter, hookFunc) => {
-    if (filter === "popular") {
-        const filtered = cards.sort((a, b) => (b.likes.length - a.likes.length))
-        return hookFunc([...filtered])
+export const sort = (cards, filter, hookFunc) => {
+    if (filter === 'popular') {
+        const filtered = cards.sort((a, b) => b.likes.length - a.likes.length);
+        return hookFunc([...filtered]);
     }
-    if (filter === "new") {
-        const filtered = cards.sort((a, b) => (new Date(b.created_at) - new Date(a.created_at)))
-        return hookFunc([...filtered])
+    if (filter === 'new') {
+        const filtered = cards.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+        return hookFunc([...filtered]);
     }
-    if (filter === "cheap") {
-        const filtered = cards.sort((a, b) => (a.price - (a.price * a.discount / 100)) - (b.price - (b.price * b.discount / 100)))
-        return hookFunc([...filtered])
+    if (filter === 'cheap') {
+        const filtered = cards.sort(
+            (a, b) =>
+                a.price - (a.price * a.discount) / 100 - (b.price - (b.price * b.discount) / 100)
+        );
+        return hookFunc([...filtered]);
     }
-    if (filter === "costly") {
-        const filtered = cards.sort((a, b) => (b.price - (b.price * b.discount / 100)) - (a.price - (a.price * a.discount / 100)))
-        return hookFunc([...filtered])
+    if (filter === 'costly') {
+        const filtered = cards.sort(
+            (a, b) =>
+                b.price - (b.price * b.discount) / 100 - (a.price - (a.price * a.discount) / 100)
+        );
+        return hookFunc([...filtered]);
     }
-    if (filter === "topRate") {
-        const filtered = cards.sort((a, b) => (getRate(b) - getRate(a)))
-        return hookFunc([...filtered])
+    if (filter === 'topRate') {
+        const filtered = cards.sort((a, b) => getRate(b) - getRate(a));
+        return hookFunc([...filtered]);
     }
-    if (filter === "reviews") {
-        const filtered = cards.sort((a, b) => (b.reviews.length - a.reviews.length))
-        return hookFunc([...filtered])
+    if (filter === 'reviews') {
+        const filtered = cards.sort((a, b) => b.reviews.length - a.reviews.length);
+        return hookFunc([...filtered]);
     }
-    if (filter === "sale") {
-        const filtered = cards.sort((a, b) => (b.discount - a.discount))
-        return hookFunc([...filtered])
+    if (filter === 'sale') {
+        const filtered = cards.sort((a, b) => b.discount - a.discount);
+        return hookFunc([...filtered]);
     }
-}
+};

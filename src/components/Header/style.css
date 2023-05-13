@@ -1,12 +1,12 @@
-.header{
-    background-color: #FFE44D;
+.header {
+    background-color: #ffe44d;
     display: flex;
     justify-content: space-between;
     padding: 16px 60px;
     align-items: center;
 }
 
-.header__icons{
+.header__icons {
     display: flex;
     gap: 35px;
 }
