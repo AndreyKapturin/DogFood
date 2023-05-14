@@ -1,5 +1,5 @@
 import React from 'react';
-import './style.css';
+import './style.scss';
 import Logo from '../images/Logo';
 import LogoTG from '../images/LogoTG';
 import LogoWA from '../images/LogoWA';

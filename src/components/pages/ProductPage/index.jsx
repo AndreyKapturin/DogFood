@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import './style.css';
+import './style.scss';
 import Product from '../../Product';
 import { useParams } from 'react-router-dom';
 import { api } from '../../../api/api';

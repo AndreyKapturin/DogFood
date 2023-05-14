@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import './style.css';
+import './style.scss';
 import Logo from '../images/Logo';
 import Input from '../Input';
 import Favorite from '../images/Favorite';
@@ -19,7 +19,7 @@ const Header = () => {
             </Link>
             <Input location={location} />
             <div className='header__icons'>
-                <Link className='header-icon-link' to='/favorite'>
+                <Link className='header__icon-link' to='/favorite'>
                     {!!myFavProduct.length && <Bubble products={myFavProduct} />}
                     <Favorite />
                 </Link>

@@ -5,6 +5,7 @@
 - React:  18.2.0
 - react-bootstrap-icons: 1.10.3
 - react-router-dom: 6.11.0
+- SASS: 1.62.1
 
 ## Что реализовано?
 
