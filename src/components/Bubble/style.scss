@@ -1,12 +1,10 @@
-.header-icon-link {
-    position: relative;
-}
+@import './../../global-style.scss';
 
-.header__bubble {
+.bubble {
     position: absolute;
     top: -10px;
     right: -15px;
-    background-color: #01a54e;
+    background-color: $main-green-bg-color;
     font-weight: bold;
     font-size: 10px;
     line-height: 12px;

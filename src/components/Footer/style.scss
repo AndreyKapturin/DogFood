@@ -1,0 +1,39 @@
+@import './../../global-style.scss';
+.footer {
+    background-color: $main-yellow-color;
+    display: flex;
+    justify-content: space-between;
+    padding: 40px 60px;
+    &__logo {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+    &__nav-list {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 20px;
+    }
+    &__nav-list a {
+        text-decoration: none;
+        color: $main-black-color;
+    }
+    &__contacts {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+    &__contacts a {
+        text-decoration: none;
+        color: $main-black-color;
+    }
+    &__contacts h2,
+    h3 {
+        margin: 0;
+    }
+    &__contacts-social {
+        display: flex;
+        gap: 12px;
+    }
+}

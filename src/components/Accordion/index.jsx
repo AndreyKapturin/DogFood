@@ -1,5 +1,5 @@
 import React from 'react';
-import './style.css';
+import './style.scss';
 import { CaretDownFill } from 'react-bootstrap-icons';
 
 const Accordion = ({ data }) => {

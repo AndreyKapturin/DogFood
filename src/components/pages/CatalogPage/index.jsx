@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import './style.css';
+import './style.scss';
 import CardList from '../../CardList';
 import SearchResult from '../../SearchResult';
 import NotFound from '../../NotFound';

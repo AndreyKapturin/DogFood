@@ -1,4 +1,5 @@
-.header__input {
+@import './../../global-style.scss';
+.input {
     width: 100%;
     max-width: 500px;
     padding: 14px 20px;
@@ -7,6 +8,6 @@
     font-weight: 400;
     font-size: 16px;
     line-height: 20px;
-    color: #1a1a1a;
+    color: $main-black-color;
     outline: none;
 }

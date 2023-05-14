@@ -1,5 +1,5 @@
 import React from 'react';
-import './style.css';
+import './style.scss';
 import Like from '../images/Like';
 import BackBtn from '../BackBtn';
 import { Star, Truck, Award, StarFill } from 'react-bootstrap-icons';
@@ -29,9 +29,9 @@ const Product = ({ product, changeLikeOnProductPage, user }) => {
                 </span>
             </div>
             <div className='info-wrapper'>
-                <div className='pruduct-wrapper'>
+                <div className='product-wrapper'>
                     <img className='product__img' src={pictures} alt={name} />
-                    <div className='pruduct-action-wrapper'>
+                    <div className='product-action-wrapper'>
                         {!!discount ? (
                             <span className='product__old-price'>{price} ₽</span>
                         ) : (
@@ -46,7 +46,7 @@ const Product = ({ product, changeLikeOnProductPage, user }) => {
                                 {price - (price * discount) / 100} ₽
                             </span>
                         )}
-                        <div className='pruduct-action-buttons'>
+                        <div className='product-action-buttons'>
                             <div className='product__quantity-counter'>
                                 <button className='quantity-counter-btn'>-</button>
                                 <span>0</span>

@@ -1,0 +1,98 @@
+@import './../../global-style.scss';
+.product {
+    &___rating {
+        font-size: 20px;
+        line-height: 15px;
+    }
+    &__name {
+        margin: 0;
+    }
+    &-wrapper {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+    }
+    &-action-wrapper {
+        display: grid;
+        gap: 10px;
+    }
+    &-action-buttons {
+        display: flex;
+        gap: 16px;
+    }
+    &__quantity-counter {
+        display: flex;
+        width: 100px;
+        border-radius: 20px;
+        border: 1px solid gray;
+        align-items: center;
+        justify-content: space-evenly;
+    }
+    &__card-btn {
+        width: 120px;
+        height: 40px;
+        padding: 10px 18px;
+        background-color: #ffe44d;
+        border-radius: 20px;
+        border: none;
+        font-style: normal;
+        font-weight: 700;
+        font-size: 16px;
+        line-height: 20px;
+        color: #1a1a1a;
+    }
+    &-favorite {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+    }
+    &__img {
+        height: 500px;
+    }
+    &__old-price {
+        text-decoration-line: line-through;
+    }
+    &__price {
+        font-style: normal;
+        font-weight: 800;
+        font-size: 28px;
+        line-height: 32px;
+    }
+}
+
+.rating-wrapper {
+    display: flex;
+    gap: 10px;
+}
+
+.info-wrapper {
+    display: grid;
+}
+
+.quantity-counter-btn {
+    border: none;
+    background-color: transparent;
+    font-size: 25px;
+}
+
+.placeholrer-delivery {
+    display: flex;
+    padding: 16px;
+    background-color: #eceff180;
+    border: none;
+    border-radius: 12px;
+    gap: 20px;
+}
+
+.placeholrer-guarantee {
+    display: flex;
+    padding: 16px;
+    background-color: #eceff180;
+    border: none;
+    border-radius: 12px;
+    gap: 20px;
+}
+
+.placeholrer-guarantee__text {
+    max-width: 330px;
+}

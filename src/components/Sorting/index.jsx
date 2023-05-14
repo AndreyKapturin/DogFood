@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import './style.css';
+import './style.scss';
 import { AppContext } from '../../context/AppContext';
 import { sort } from '../../utilities/utilities';
 

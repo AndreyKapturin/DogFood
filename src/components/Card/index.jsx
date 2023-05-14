@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import './style.css';
+import './style.scss';
 import Like from '../images/Like';
 import { Link } from 'react-router-dom';
 import { AppContext } from '../../context/AppContext';

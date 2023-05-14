@@ -1,12 +1,12 @@
 import React, { useContext } from 'react';
-import './style.css';
+import './style.scss';
 import { AppContext } from '../../context/AppContext';
 
 const Input = ({ location }) => {
     const { setSearch } = useContext(AppContext);
     return (
         <input
-            className='header__input'
+            className='input'
             type='text'
             placeholder={'Поиск'}
             disabled={location.pathname !== '/catalog'}
