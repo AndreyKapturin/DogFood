@@ -14,21 +14,23 @@ const Header = () => {
     const location = useLocation();
     return (
         <header className='header'>
-            <Link to='/'>
-                <Logo />
-            </Link>
-            <Input location={location} />
-            <div className='header__icons'>
-                <Link className='header__icon-link' to='/favorite'>
-                    {!!myFavProduct.length && <Bubble products={myFavProduct} />}
-                    <Favorite />
+            <div className='header__container'>
+                <Link to='/'>
+                    <Logo />
                 </Link>
-                <a href='/'>
-                    <Cart />
-                </a>
-                <a href='/'>
-                    <Profile />
-                </a>
+                <Input location={location} />
+                <div className='header__icons'>
+                    <Link className='header__icon-link' to='/favorite'>
+                        {!!myFavProduct.length && <Bubble products={myFavProduct} />}
+                        <Favorite />
+                    </Link>
+                    <a href='/'>
+                        <Cart />
+                    </a>
+                    <a href='/'>
+                        <Profile />
+                    </a>
+                </div>
             </div>
         </header>
     );

@@ -17,7 +17,7 @@ const FavoritePage = () => {
                     buttonPath='/catalog'
                 />
             )}
-            <CardList cards={myFavProduct} className={'favoritePageCardList'} />
+            <CardList cards={myFavProduct} />
         </div>
     );
 };

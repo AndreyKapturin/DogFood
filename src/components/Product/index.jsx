@@ -30,7 +30,9 @@ const Product = ({ product, changeLikeOnProductPage, user }) => {
             </div>
             <div className='info-wrapper'>
                 <div className='product-wrapper'>
-                    <img className='product__img' src={pictures} alt={name} />
+                    <div className='product__img-wrapper'>
+                        <img className='product__img' src={pictures} alt={name} />
+                    </div>
                     <div className='product-action-wrapper'>
                         {!!discount ? (
                             <span className='product__old-price'>{price} ₽</span>

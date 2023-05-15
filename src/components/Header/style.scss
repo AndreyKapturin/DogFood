@@ -2,16 +2,31 @@
 .header {
     background-color: $main-yellow-color;
     display: flex;
-    justify-content: space-between;
-    padding: 16px 60px;
-    align-items: center;
-
+    justify-content: center;
+    width: 100%;
+    &__container {
+        display: flex;
+        justify-content: space-between;
+        padding: 16px 30px;
+        align-items: center;
+        max-width: $main-max-width;
+        width: 100%;
+        gap: 30px;
+    }
     &__icon-link {
         position: relative;
     }
-
     &__icons {
         display: flex;
         gap: 35px;
+    }
+}
+
+@media (max-width: 850px) {
+    .header {
+        &__container {
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
     }
 }
