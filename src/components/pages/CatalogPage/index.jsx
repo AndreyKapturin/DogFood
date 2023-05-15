@@ -18,7 +18,7 @@ const CatalogPage = () => {
                 />
             )}
             {products.length && <Sorting />}
-            <CardList cards={products} className={'catalogPageCardList'} />
+            <CardList cards={products} />
         </>
     );
 };

@@ -11,3 +11,9 @@
     color: $main-black-color;
     outline: none;
 }
+
+@media (max-width: 850px) {
+    .input {
+        order: 1;
+    }
+}
