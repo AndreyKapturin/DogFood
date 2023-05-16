@@ -2,18 +2,14 @@ import React from 'react';
 import './style.scss';
 import Like from '../images/Like';
 import BackBtn from '../BackBtn';
-import { Star, Truck, Award, StarFill } from 'react-bootstrap-icons';
+import { Truck, Award } from 'react-bootstrap-icons';
 import { getEnding, getRate } from '../../utilities/utilities';
+import Review from '../Review';
+import Rating from '../Rating';
 
-const Product = ({ product, changeLikeOnProductPage, user }) => {
-    const { name, discount, price, description, pictures, reviews, likes, _id } = product;
+const Product = ({ product, changeLikeOnProductPage, user, reviews }) => {
+    const { name, discount, price, description, pictures, likes, _id } = product;
     let rate = getRate(product);
-    const stars = [];
-    for (let i = 0; i < 5; i++) {
-        i < rate
-            ? stars.push(<StarFill key={`${StarFill}` + i} fill='#FFE44D' stroke='#1A1A1A' />)
-            : stars.push(<Star key={`${Star}` + i} />);
-    }
     let isLiked = likes ? likes.includes(user._id) : false;
     return (
         <div>
@@ -21,7 +17,7 @@ const Product = ({ product, changeLikeOnProductPage, user }) => {
             <h1 className='product__name'>{name}</h1>
             <div className='rating-wrapper'>
                 <span>Артикул: </span>
-                <span className='product___rating'>{[...stars]}</span>
+                <span className='product___rating'><Rating rate={rate} /></span>
                 <span>
                     {!!reviews
                         ? `${reviews.length} отзыв${getEnding(reviews.length)}`
@@ -90,9 +86,12 @@ const Product = ({ product, changeLikeOnProductPage, user }) => {
                     <h2>Описание</h2>
                     <p>{description}</p>
                 </div>
-                <div className='specifications-wrapper'>
-                    <h2>Характеристики</h2>
-                    <div>тут будут характеристики</div>
+                <div className='reviews-wrapper'>
+                    <h2>Отзывы</h2>
+                    <button>Написать отзыв</button>
+                    {reviews.map((review) => (
+                        <Review review={review} />
+                    ))}
                 </div>
             </div>
         </div>

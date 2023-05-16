@@ -1,0 +1,12 @@
+.review {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border-top: 1px solid gray;
+    &__header {
+        display: flex;
+        gap: 10px;
+        line-height: 26px;
+        align-items: baseline;
+    }
+}

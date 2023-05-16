@@ -10,10 +10,16 @@ const ProductPage = () => {
     const { setProducts, user, products, setMyFavProduct } = useContext(AppContext);
     const { id } = useParams();
     const [product, setProduct] = useState({});
+    const [reviews, setReviews] = useState([]);
     useEffect(() => {
-        api.getProductsByID(id)
-            .then((data) => setProduct(data))
-            .catch((error) => console.error('Ошибка при запросе данных об одном продукте', error));
+        Promise.all([api.getProductsByID(id), api.getReviewsByID(id)])
+            .then(([productData, reviewsData]) => {
+                setProduct(productData);
+                console.log(productData);
+                setReviews(reviewsData);
+                console.log(reviewsData);
+            })
+            .catch((error) => console.error('Ошибка при запросе данных о продукте и отзывах', error));
     }, [id]);
 
     const changeLikeOnProductPage = (productID, wasLiked) => {
@@ -35,6 +41,7 @@ const ProductPage = () => {
                 product={product}
                 changeLikeOnProductPage={changeLikeOnProductPage}
                 user={user}
+                reviews={reviews}
             />
         </div>
     );

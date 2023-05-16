@@ -74,6 +74,7 @@
 
 .info-wrapper {
     display: grid;
+    gap: 40px;
 }
 
 .quantity-counter-btn {
@@ -102,6 +103,12 @@
 
 .placeholrer-guarantee__text {
     max-width: 330px;
+}
+
+.reviews-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
 @media (max-width: 1100px) {

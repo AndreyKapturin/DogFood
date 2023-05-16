@@ -30,6 +30,11 @@ class Api {
             headers: this.headers,
         }).then((res) => res.json());
     }
+    getReviewsByID(id) {
+        return fetch(`${this.baseUrl}/review/${id}`, {
+            headers: this.headers,
+        }).then((res) => res.json());
+    }
 }
 
 const config = {
