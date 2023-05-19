@@ -1,23 +1,20 @@
 import React from 'react';
 import './style.scss';
 import Like from '../images/Like';
-import BackBtn from '../BackBtn';
 import { Truck, Award } from 'react-bootstrap-icons';
-import { getEnding, getRate } from '../../utilities/utilities';
-import Review from '../Review';
-import Rating from '../Rating';
+import { getEnding, getRating } from '../../utilities/utilities';
+import Reviews from '../Reviews';
 
-const Product = ({ product, changeLikeOnProductPage, user, reviews }) => {
+const Product = ({ product, changeLikeOnProductPage, user, reviews, sendReview, deleteReview }) => {
     const { name, discount, price, description, pictures, likes, _id } = product;
-    let rate = getRate(product);
+    let rate = getRating(reviews);
     let isLiked = likes ? likes.includes(user._id) : false;
     return (
         <div>
-            <BackBtn />
             <h1 className='product__name'>{name}</h1>
             <div className='rating-wrapper'>
                 <span>Артикул: </span>
-                <span className='product___rating'><Rating rate={rate} /></span>
+                <span className='product___rating'>{rate}</span>
                 <span>
                     {!!reviews
                         ? `${reviews.length} отзыв${getEnding(reviews.length)}`
@@ -54,7 +51,8 @@ const Product = ({ product, changeLikeOnProductPage, user, reviews }) => {
                         </div>
                         <div className='product-favorite'>
                             <span onClick={() => changeLikeOnProductPage(_id, isLiked)}>
-                                <Like fill={isLiked ? 'red' : 'none'} /> В избранное
+                                <Like fill={isLiked ? 'red' : 'none'} />{' '}
+                                {isLiked ? 'В избранном' : 'В избранное'}
                             </span>
                         </div>
                         <div className='placeholrer-delivery'>
@@ -86,13 +84,13 @@ const Product = ({ product, changeLikeOnProductPage, user, reviews }) => {
                     <h2>Описание</h2>
                     <p>{description}</p>
                 </div>
-                <div className='reviews-wrapper'>
-                    <h2>Отзывы</h2>
-                    <button>Написать отзыв</button>
-                    {reviews.map((review) => (
-                        <Review review={review} />
-                    ))}
-                </div>
+                <Reviews
+                    reviews={reviews}
+                    sendReview={sendReview}
+                    productID={_id}
+                    deleteReview={deleteReview}
+                    user={user}
+                />
             </div>
         </div>
     );

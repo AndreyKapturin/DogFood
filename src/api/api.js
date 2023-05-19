@@ -35,6 +35,19 @@ class Api {
             headers: this.headers,
         }).then((res) => res.json());
     }
+    addProductReviewByID(id, data) {
+        return fetch(`${this.baseUrl}/review/${id}`, {
+            method: 'POST',
+            headers: this.headers,
+            body: JSON.stringify(data)
+        }).then((res) => res.json());
+    }
+    deleteProductReviewByID(productId, reviewId) {
+        return fetch(`${this.baseUrl}/review/${productId}/${reviewId}`, {
+            method: 'DELETE',
+            headers: this.headers,
+        }).then((res) => res.json());
+    }
 }
 
 const config = {
