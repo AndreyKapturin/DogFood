@@ -3,18 +3,19 @@ import './style.scss';
 import Like from '../images/Like';
 import { Truck, Award } from 'react-bootstrap-icons';
 import { getEnding, getRating } from '../../utilities/utilities';
-import Reviews from '../Reviews';
+import Rating from '../Rating';
 
-const Product = ({ product, changeLikeOnProductPage, user, reviews, sendReview, deleteReview }) => {
+const Product = ({ product, changeLikeOnProductPage, user, reviews }) => {
     const { name, discount, price, description, pictures, likes, _id } = product;
-    let rate = getRating(reviews);
     let isLiked = likes ? likes.includes(user._id) : false;
     return (
         <div>
             <h1 className='product__name'>{name}</h1>
             <div className='rating-wrapper'>
                 <span>Артикул: </span>
-                <span className='product___rating'>{rate}</span>
+                <span className='product___rating'>
+                    <Rating filling={getRating(reviews)} isEditable={false} />
+                </span>
                 <span>
                     {!!reviews
                         ? `${reviews.length} отзыв${getEnding(reviews.length)}`
@@ -84,13 +85,6 @@ const Product = ({ product, changeLikeOnProductPage, user, reviews, sendReview, 
                     <h2>Описание</h2>
                     <p>{description}</p>
                 </div>
-                <Reviews
-                    reviews={reviews}
-                    sendReview={sendReview}
-                    productID={_id}
-                    deleteReview={deleteReview}
-                    user={user}
-                />
             </div>
         </div>
     );

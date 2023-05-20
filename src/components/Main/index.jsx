@@ -1,12 +1,12 @@
 import React from 'react';
 import './style.scss';
 import { Route, Routes } from 'react-router-dom';
-import ProductPage from '../pages/ProductPage';
-import NotFoundPage from '../pages/NotFoundPage';
-import HomePage from '../pages/HomePage';
-import CatalogPage from '../pages/CatalogPage';
-import FavoritePage from '../pages/FavoritePage';
-import Faq from '../pages/Faq';
+import ProductPage from './../../pages/ProductPage';
+import NotFoundPage from './../../pages/NotFoundPage';
+import HomePage from './../../pages/HomePage';
+import CatalogPage from './../../pages/CatalogPage';
+import FavoritePage from './../../pages/FavoritePage';
+import Faq from './../../pages/Faq';
 
 const Main = () => {
     return (

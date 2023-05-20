@@ -1,9 +1,9 @@
 import React, { useContext } from 'react';
 import './style.scss';
-import CardList from '../../CardList';
-import BackBtn from '../../BackBtn';
-import NotFound from '../../NotFound';
-import { AppContext } from '../../../context/AppContext';
+import CardList from '../../components/CardList';
+import BackBtn from '../../components/BackBtn';
+import NotFound from '../../components/NotFound';
+import { AppContext } from '../../context/AppContext';
 
 const FavoritePage = () => {
     const { myFavProduct } = useContext(AppContext);

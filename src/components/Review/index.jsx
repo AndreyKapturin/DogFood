@@ -1,8 +1,9 @@
 import React from 'react';
 import './style.scss';
 import { Trash3 } from 'react-bootstrap-icons';
+import Rating from '../Rating';
 const Review = ({ review, deleteReview, user }) => {
-    const { author, text, created_at, product, _id } = review;
+    const { author, rating, text, created_at, product, _id } = review;
     return (
         <div className='review'>
             <div>
@@ -16,10 +17,10 @@ const Review = ({ review, deleteReview, user }) => {
                         })}
                     </span>
                     {user._id === author._id && (
-                        <Trash3 onClick={() => deleteReview(product, _id)} />
+                        <Trash3 className='review__trash' onClick={() => deleteReview(product, _id)} />
                     )}
                 </div>
-                <span>{'rating'}</span>
+                <Rating filling={rating} isEditable={false} />
             </div>
             <p>{text}</p>
         </div>

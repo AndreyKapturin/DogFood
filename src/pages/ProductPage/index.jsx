@@ -1,11 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react';
 import './style.scss';
-import Product from '../../Product';
+import Product from '../../components/Product';
 import { useParams } from 'react-router-dom';
-import { api } from '../../../api/api';
-import { filterMyFavProduct } from '../../../utilities/utilities';
-import { AppContext } from '../../../context/AppContext';
-import BackBtn from '../../BackBtn';
+import { api } from '../../api/api';
+import { filterMyFavProduct } from '../../utilities/utilities';
+import { AppContext } from '../../context/AppContext';
+import BackBtn from '../../components/BackBtn';
+import Reviews from '../../components/Reviews';
 
 const ProductPage = () => {
     const { setProducts, user, products, setMyFavProduct } = useContext(AppContext);
@@ -59,6 +60,13 @@ const ProductPage = () => {
                 reviews={reviews}
                 sendReview={sendReview}
                 deleteReview={deleteReview}
+            />
+            <Reviews
+                reviews={reviews}
+                sendReview={sendReview}
+                productID={id}
+                deleteReview={deleteReview}
+                user={user}
             />
         </div>
     );
