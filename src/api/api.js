@@ -1,3 +1,14 @@
+const config = {
+    headers: {
+        'Content-Type': 'application/json',
+        authorization:
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDQwZTg1NTMyOTFkNzkwYjNmODI4ZGUiLCJncm91cCI6Imdyb3VwLTEyIiwiaWF0IjoxNjgxOTc1NjI2LCJleHAiOjE3MTM1MTE2MjZ9.n_CZCLGyh3e2vhIi6Mx2dZh7Z7dtgF_p0NrP-AXsnBM',
+    },
+    baseProductUrl: 'https://api.react-learning.ru/products',
+    baseUserUrl: 'https://api.react-learning.ru/users',
+    baseUrl: 'https://api.react-learning.ru',
+};
+
 class Api {
     constructor(config) {
         this.baseProductUrl = config.baseProductUrl;
@@ -55,7 +66,7 @@ class Api {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(data),
+            body: JSON.stringify({ ...data, group: 'group-12' }),
         }).then((res) => res.json());
     }
     signIn(data) {
@@ -67,17 +78,24 @@ class Api {
             body: JSON.stringify(data),
         }).then((res) => res.json());
     }
+    getTokenByEmail(data) {
+        return fetch(`${this.baseUrl}/forgot-password`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        }).then((res) => res.json());
+    }
+    setNewPassword(data) {
+        return fetch(`${this.baseUrl}/password-reset/${data.token}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({password: data.password}),
+        }).then((res) => res.json());
+    }
 }
-
-const config = {
-    headers: {
-        'Content-Type': 'application/json',
-        authorization:
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDQwZTg1NTMyOTFkNzkwYjNmODI4ZGUiLCJncm91cCI6Imdyb3VwLTEyIiwiaWF0IjoxNjgxOTc1NjI2LCJleHAiOjE3MTM1MTE2MjZ9.n_CZCLGyh3e2vhIi6Mx2dZh7Z7dtgF_p0NrP-AXsnBM',
-    },
-    baseProductUrl: 'https://api.react-learning.ru/products',
-    baseUserUrl: 'https://api.react-learning.ru/users',
-    baseUrl: 'https://api.react-learning.ru',
-};
 
 export const api = new Api(config);

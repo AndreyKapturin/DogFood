@@ -2,13 +2,13 @@ import React, { useContext } from 'react';
 import './../formStyle.scss';
 import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
-import { emailOptions, passwordOptions } from '../formOptions';
+import { tokenOptions, passwordOptions } from '../formOptions';
 import { api } from '../../../api/api';
 import { EyeFill, EyeSlashFill } from 'react-bootstrap-icons';
 import { AppContext } from '../../../context/AppContext';
 
-const AuthorizationForm = () => {
-    const {showPassword, setShowPassword} = useContext(AppContext);
+const ResetPasswordForm = () => {
+    const { showPassword, setShowPassword } = useContext(AppContext);
     const navigate = useNavigate();
     const {
         register,
@@ -17,8 +17,8 @@ const AuthorizationForm = () => {
         formState: { errors },
     } = useForm({ mode: 'onSubmit' });
 
-    const logIn = (data) => {
-        api.signIn(data).then((res) => {
+    const resetPassword = (data) => {
+        api.setNewPassword(data).then((res) => {
             if (!!res.err) {
                 alert(`${res.message}`);
             } else {
@@ -30,13 +30,13 @@ const AuthorizationForm = () => {
     };
     return (
         <div>
-            <h3>Авторизация</h3>
-            <form className='form' onSubmit={handleSubmit(logIn)}>
+            <h3>Восстановление пароля</h3>
+            <form className='form' onSubmit={handleSubmit(resetPassword)}>
                 <input
-                    className={errors.email ? 'input error' : 'input'}
+                    className={errors.token ? 'input error' : 'input'}
                     type='text'
-                    {...register('email', emailOptions)}
-                    placeholder='Email'
+                    {...register('token', tokenOptions)}
+                    placeholder='Токен из письма'
                 />
                 <div className='input__wrapper'>
                     <input
@@ -46,25 +46,20 @@ const AuthorizationForm = () => {
                         placeholder='Пароль'
                         autoComplete='true'
                     />
-                    <span className='input__eye' onClick={() => setShowPassword(s => !s)}>
-                    {showPassword ? <EyeFill /> : <EyeSlashFill />}
+                    <span className='input__eye' onClick={() => setShowPassword((s) => !s)}>
+                        {showPassword ? <EyeFill /> : <EyeSlashFill />}
                     </span>
                 </div>
-                <span className='form__forgote-password'>
-                    <Link className='form__text' to='/forgot-password'>
-                        Забыли пароль?
-                    </Link>
-                </span>
-                {errors.email && <span className='error__message'>{errors.email.message}</span>}
+                {errors.token && <span className='error__message'>{errors.token.message}</span>}
                 {errors.password && (
                     <span className='error__message'>{errors.password.message}</span>
                 )}
                 <button className='form__button' type='submit'>
-                    Войти
+                    Обновить пароль
                 </button>
-                <Link to='/registration'>
+                <Link to='/logIn'>
                     <button className='form__button-link' type='submit'>
-                        У меня ещё нет аккаунта
+                        Я вспомнил пароль
                     </button>
                 </Link>
             </form>
@@ -72,4 +67,4 @@ const AuthorizationForm = () => {
     );
 };
 
-export default AuthorizationForm;
+export default ResetPasswordForm;

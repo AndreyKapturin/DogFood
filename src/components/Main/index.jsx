@@ -11,6 +11,7 @@ import Modal from '../Modal';
 import AuthorizationForm from '../Forms/AuthorizationForm';
 import RegistrationForm from '../Forms/RegistrationForm';
 import ForgotPasswordForm from '../Forms/ForgotPasswordForm';
+import ResetPasswordForm from '../Forms/ResetPasswordForm';
 
 const Main = ({ showModal, setShowModal }) => {
     return (
@@ -25,7 +26,7 @@ const Main = ({ showModal, setShowModal }) => {
                 <Route
                     path='/login'
                     element={
-                        <Modal showModal={showModal} setShowModal={setShowModal}>
+                        <Modal>
                             <AuthorizationForm />
                         </Modal>
                     }
@@ -33,7 +34,7 @@ const Main = ({ showModal, setShowModal }) => {
                 <Route
                     path='/registration'
                     element={
-                        <Modal showModal={showModal} setShowModal={setShowModal}>
+                        <Modal>
                             <RegistrationForm />
                         </Modal>
                     }
@@ -41,8 +42,16 @@ const Main = ({ showModal, setShowModal }) => {
                 <Route
                     path='/forgot-password'
                     element={
-                        <Modal showModal={showModal} setShowModal={setShowModal}>
+                        <Modal>
                             <ForgotPasswordForm />
+                        </Modal>
+                    }
+                />
+                <Route
+                    path='/password-reset'
+                    element={
+                        <Modal>
+                            <ResetPasswordForm />
                         </Modal>
                     }
                 />
