@@ -13,6 +13,7 @@ function App() {
     const [myFavProduct, setMyFavProduct] = useState([]);
     const [search, setSearch] = useState(null);
     const [showModal, setShowModal] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
 
     useEffect(() => {
         api.getUserInfo()
@@ -62,13 +63,15 @@ function App() {
         search,
         showModal,
         setShowModal,
+        showPassword,
+        setShowPassword,
     };
 
     return (
         <div className='app'>
             <AppContext.Provider value={Context}>
                 <Header />
-                <Main showModal={showModal} setShowModal={setShowModal} />
+                <Main />
                 <Footer />
             </AppContext.Provider>
         </div>
