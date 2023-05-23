@@ -1,0 +1,32 @@
+@import './../../global-style.scss';
+.modal {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #d3d3d381;
+    z-index: 20;
+    &__content {
+        display: flex;
+        flex-direction: column;
+        border: none;
+        border-radius: 15px;
+        background-color: $main-white-color;
+        min-height: 50px;
+        min-width: 50px;
+        padding: 15px;
+        width: min-content;
+    }
+    &__closer {
+        align-self: flex-end;
+        cursor: pointer;
+    }
+}
+
+.active {
+    display: flex;
+}

@@ -16,8 +16,9 @@ const Sorting = () => {
     ];
     return (
         <div className='sorting'>
-            {filters.map((filter) => (
+            {filters.map((filter, i) => (
                 <span
+                    key={`sorting${i}`}
                     className='sorting__point'
                     onClick={() => sort(products, filter.filter, setProducts)}
                 >

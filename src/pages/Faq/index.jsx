@@ -1,8 +1,8 @@
 import React from 'react';
 import './style.scss';
-import BackBtn from '../../BackBtn';
-import { faqInfo } from '../../../Constants/constants';
-import Accordion from '../../Accordion';
+import BackBtn from '../../components/BackBtn';
+import { faqInfo } from '../../Constants/constants';
+import Accordion from '../../components/Accordion';
 
 const Faq = () => {
     return (

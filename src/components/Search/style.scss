@@ -1,5 +1,5 @@
 @import './../../global-style.scss';
-.input {
+.search {
     width: 100%;
     max-width: 500px;
     padding: 14px 20px;
@@ -13,7 +13,7 @@
 }
 
 @media (max-width: 850px) {
-    .input {
+    .snput {
         order: 1;
     }
 }

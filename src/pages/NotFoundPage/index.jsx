@@ -1,6 +1,6 @@
 import React from 'react';
 import './style.scss';
-import NotFound from '../../NotFound';
+import NotFound from '../../components/NotFound';
 
 const NotFoundPage = () => {
     return (

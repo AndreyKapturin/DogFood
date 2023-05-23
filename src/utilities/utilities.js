@@ -26,9 +26,9 @@ export const getEnding = (num) => {
     }
 };
 
-export const getRate = (product) => {
-    if (product.reviews) {
-        const rate = product.reviews.reduce((avg, review, i, arr) => {
+export const getRating = (reviews) => {
+    if (reviews) {
+        const rate = reviews.reduce((avg, review, i, arr) => {
             if (i !== arr.length - 1) {
                 return (avg += review.rating);
             } else {
@@ -68,7 +68,7 @@ export const sort = (cards, filter, hookFunc) => {
         return hookFunc([...filtered]);
     }
     if (filter === 'topRate') {
-        const filtered = cards.sort((a, b) => getRate(b) - getRate(a));
+        const filtered = cards.sort((a, b) => getRating(b) - getRating(a));
         return hookFunc([...filtered]);
     }
     if (filter === 'reviews') {
