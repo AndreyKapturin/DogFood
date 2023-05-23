@@ -1,10 +1,12 @@
 import React from 'react';
 import './../formStyle.scss';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { emailOptions } from '../formOptions';
+import { api } from '../../../api/api';
 
 const ForgotPasswordForm = () => {
+    const navigate = useNavigate();
     const {
         register,
         reset,
@@ -13,6 +15,15 @@ const ForgotPasswordForm = () => {
     } = useForm({ mode: 'onSubmit' });
 
     const resetPassword = (data) => {
+        api.getTokenByEmail(data).then(res => {
+            if (!!res.err) {
+                alert('Аккаунта с данным Email не существует');
+            } else {
+                alert(`${res.message}`);
+                navigate('/password-reset');
+                reset();
+            }
+        })
         reset();
     };
 

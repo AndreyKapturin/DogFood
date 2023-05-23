@@ -1,7 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import './style.scss';
 import { useLocation, useNavigate } from 'react-router-dom';
-const Modal = ({ showModal, setShowModal, children }) => {
+import { AppContext } from '../../context/AppContext';
+const Modal = ({ children }) => {
+    const {showModal, setShowModal} = useContext(AppContext);
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -9,7 +11,8 @@ const Modal = ({ showModal, setShowModal, children }) => {
         if (
             location.pathname === '/registration' ||
             location.pathname === '/logIn' ||
-            location.pathname === '/forgot-password'
+            location.pathname === '/forgot-password' ||
+            location.pathname === '/password-reset'
         ) {
             setShowModal(true);
         }
