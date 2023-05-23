@@ -1,0 +1,27 @@
+@import './../../global-style.scss';
+.accordion {
+    height: auto;
+    padding: 5px;
+    border: 1px solid $main-black-color;
+    border-radius: 10px;
+    transition: all 0.3s ease-in-out;
+    &__title {
+        position: relative;
+        margin: 0;
+    }
+    &__arrow {
+        position: absolute;
+        right: 10px;
+        top: 5px;
+        transition: all 0.3s ease-in-out;
+    }
+    &__text {
+        overflow: hidden;
+        transition: all 0.4s ease-in-out;
+        height: 0px;
+    }
+}
+
+.turn180 {
+    transform: rotate(180deg);
+}

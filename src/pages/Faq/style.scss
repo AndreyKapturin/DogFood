@@ -1,0 +1,11 @@
+.faq {
+    display: grid;
+    gap: 20px;
+    &__title {
+        margin: 0;
+    }
+    &__list {
+        display: grid;
+        gap: 5px;
+    }
+}

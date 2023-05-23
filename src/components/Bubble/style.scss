@@ -1,0 +1,15 @@
+@import './../../global-style.scss';
+
+.bubble {
+    position: absolute;
+    top: -10px;
+    right: -15px;
+    background-color: $main-green-bg-color;
+    font-weight: bold;
+    font-size: 10px;
+    line-height: 12px;
+    text-align: center;
+    color: #ffffff;
+    padding: 5px 10px;
+    border-radius: 15px;
+}

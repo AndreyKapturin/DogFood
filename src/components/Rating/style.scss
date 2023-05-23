@@ -1,0 +1,15 @@
+@import './../../global-style.scss';
+.rating {
+    &__star_filled {
+        fill: $main-yellow-color;
+        stroke: $main-black-color;
+    }
+    &__star_noFilled {
+        fill: none;
+        stroke: $main-black-color;
+    }
+}
+
+.editable {
+    cursor: pointer;
+}

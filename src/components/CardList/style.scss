@@ -1,0 +1,24 @@
+.сard-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 30px;
+    justify-content: space-between;
+}
+
+@media (max-width: 1100px) {
+    .сard-list {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+}
+
+@media (max-width: 850px) {
+    .сard-list {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 600px) {
+    .сard-list {
+        grid-template-columns: 1fr;
+    }
+}

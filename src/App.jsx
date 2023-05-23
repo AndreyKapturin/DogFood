@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import './App.css';
+import './App.scss';
 import Footer from './components/Footer';
 import Header from './components/Header';
 import Main from './components/Main';
@@ -8,64 +8,71 @@ import { filterMyFavProduct } from './utilities/utilities';
 import { AppContext } from './context/AppContext';
 
 function App() {
-  const [user, setUser] = useState({})
-  const [products, setProducts] = useState([]);
-  const [myFavProduct, setMyFavProduct] = useState([])
-  const [search, setSearch] = useState(null)
+    const [user, setUser] = useState({});
+    const [products, setProducts] = useState([]);
+    const [myFavProduct, setMyFavProduct] = useState([]);
+    const [search, setSearch] = useState(null);
+    const [showModal, setShowModal] = useState(false);
 
-  useEffect(() => {
-    api.getUserInfo()
-      .then(data => setUser(data))
-      .catch(error => console.error("Ошибка при запросе данных о пользователе", error))
-  }, [])
+    useEffect(() => {
+        api.getUserInfo()
+            .then((data) => setUser(data))
+            .catch((error) => console.error('Ошибка при запросе данных о пользователе', error));
+    }, []);
 
-  useEffect(() => {
-    if (!search) {
-      api.getProducts()
-        .then(data => {
-          setProducts(data.products);
-          setMyFavProduct(filterMyFavProduct(data.products, user._id))
-        })
-        .catch(error => console.error("Ошибка при запросе всех продуктов", error))
-    } else {
-      const timer = setTimeout(() => {
-        api.searchProducts(search)
-          .then(data => setProducts(data))
-          .catch(error => console.error("Ошибка при запросе продуктов в поиске", error))
-      }, 500);
-      return () => clearTimeout(timer)
-    }
-  }, [search, user])
+    useEffect(() => {
+        if (!search) {
+            api.getProducts()
+                .then((data) => {
+                    setProducts(data.products);
+                    setMyFavProduct(filterMyFavProduct(data.products, user._id));
+                })
+                .catch((error) => console.error('Ошибка при запросе всех продуктов', error));
+        } else {
+            const timer = setTimeout(() => {
+                api.searchProducts(search)
+                    .then((data) => setProducts(data))
+                    .catch((error) =>
+                        console.error('Ошибка при запросе продуктов в поиске', error)
+                    );
+            }, 500);
+            return () => clearTimeout(timer);
+        }
+    }, [search, user]);
 
-  const changeLike = (productID, wasLiked) => {
-    api.swithLike(productID, wasLiked)
-      .then(res => {
-        const newProducts = products.map(product => product._id === productID ? res : product);
-        setProducts([...newProducts])
-        setMyFavProduct(filterMyFavProduct(newProducts, user._id))
-      })
-      .catch(error => console.error("Ошибка при смене лайка в каталоге", error))
-  }
-  const Context = {
-    setSearch,
-    setProducts,
-    changeLike,
-    user,
-    myFavProduct,
-    setMyFavProduct,
-    products,
-    search
-  }
+    const changeLike = (productID, wasLiked) => {
+        api.swithLike(productID, wasLiked)
+            .then((res) => {
+                const newProducts = products.map((product) =>
+                    product._id === productID ? res : product
+                );
+                setProducts([...newProducts]);
+                setMyFavProduct(filterMyFavProduct(newProducts, user._id));
+            })
+            .catch((error) => console.error('Ошибка при смене лайка в каталоге', error));
+    };
+    const Context = {
+        setSearch,
+        setProducts,
+        changeLike,
+        user,
+        myFavProduct,
+        setMyFavProduct,
+        products,
+        search,
+        showModal,
+        setShowModal,
+    };
 
-  return (
-    <div className='app'>
-      <AppContext.Provider value={Context}>
-        <Header />
-        <Main />
-        <Footer />
-      </AppContext.Provider >
-    </div>
-  );
+    return (
+        <div className='app'>
+            <AppContext.Provider value={Context}>
+                <Header />
+                <Main showModal={showModal} setShowModal={setShowModal} />
+                <Footer />
+            </AppContext.Provider>
+        </div>
+    );
 }
 
 export default App;
