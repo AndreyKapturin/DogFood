@@ -9,7 +9,7 @@ const Product = ({ product, changeLikeOnProductPage, user, reviews }) => {
     const { name, discount, price, description, pictures, likes, _id } = product;
     let isLiked = likes ? likes.includes(user._id) : false;
     return (
-        <div>
+        <div className='product'>
             <h1 className='product__name'>{name}</h1>
             <div className='rating-wrapper'>
                 <span>Артикул: </span>

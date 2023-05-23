@@ -18,7 +18,7 @@ const ProductPage = () => {
         Promise.all([api.getProductsByID(id), api.getReviewsByID(id)])
             .then(([productData, reviewsData]) => {
                 setProduct(productData);
-                setReviews(reviewsData);
+                setReviews(reviewsData.reverse());
             })
             .catch((error) =>
                 console.error('Ошибка при запросе данных о продукте и отзывах', error)
@@ -40,13 +40,13 @@ const ProductPage = () => {
 
     const sendReview = (id, data) => {
         api.addProductReviewByID(id, data)
-            .then((res) => setReviews(res.reviews))
+            .then((res) => setReviews(res.reviews.reverse()))
             .catch((error) => console.error('Ошибка при отправке отзыва', error));
     };
 
     const deleteReview = (productId, reviewId) => {
         api.deleteProductReviewByID(productId, reviewId)
-            .then((res) => setReviews(res.reviews))
+            .then((res) => setReviews(res.reviews.reverse()))
             .catch((error) => console.error('Ошибка при удалении отзыва', error));
     };
 

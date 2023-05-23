@@ -1,5 +1,8 @@
 @import './../../global-style.scss';
 .product {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
     &___rating {
         font-size: 20px;
         line-height: 15px;

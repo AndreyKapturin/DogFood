@@ -8,7 +8,14 @@ const Reviews = ({ reviews, productID, sendReview, deleteReview, user }) => {
     const [showForm, setShowForm] = useState(false);
     const [rating, setRating] = useState(0);
     const [filling, setFilling] = useState(0);
-    const { register, handleSubmit, reset } = useForm();
+
+    const {
+        register,
+        handleSubmit,
+        reset,
+        formState: { errors },
+    } = useForm();
+    
     const onSubmit = (data) => {
         sendReview(productID, { ...data, rating });
         reset();
@@ -16,6 +23,11 @@ const Reviews = ({ reviews, productID, sendReview, deleteReview, user }) => {
         setFilling(0);
         setShowForm(false);
     };
+
+    const textOption = {
+        required: { value: true, message: 'Поле не может быть пустым' },
+    };
+
     return (
         <div className='reviews'>
             <h2>Отзывы</h2>
@@ -32,9 +44,9 @@ const Reviews = ({ reviews, productID, sendReview, deleteReview, user }) => {
                         setFilling={setFilling}
                     />
                     <textarea
-                        {...register('text')}
-                        className='addReviewForm__text'
-                        placeholder='Ваше мнение о продукте'
+                        {...register('text', textOption)}
+                        className={`addReviewForm__text ${errors.text && 'error'}`}
+                        placeholder={errors.text ? errors.text.message : 'Ваше мнение о продукте'}
                     ></textarea>
                     <button className='addReviewForm__btn' type='submit'>
                         Отправить отзыв

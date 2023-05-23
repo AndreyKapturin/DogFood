@@ -2,11 +2,11 @@ import React, { useContext } from 'react';
 import './style.scss';
 import { AppContext } from '../../context/AppContext';
 
-const Input = ({ location }) => {
+const Search = ({ location }) => {
     const { setSearch } = useContext(AppContext);
     return (
         <input
-            className='input'
+            className='search'
             type='text'
             placeholder={'Поиск'}
             disabled={location.pathname !== '/catalog'}
@@ -15,4 +15,4 @@ const Input = ({ location }) => {
     );
 };
 
-export default Input;
+export default Search;
