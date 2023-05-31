@@ -3,6 +3,7 @@ import './style.scss';
 import Review from '../Review';
 import { useForm } from 'react-hook-form';
 import Rating from '../Rating';
+import { ratingOptions, textOption } from '../Forms/formOptions';
 
 const Reviews = ({ reviews, productID, sendReview, deleteReview, user }) => {
     const [showForm, setShowForm] = useState(false);
@@ -13,19 +14,18 @@ const Reviews = ({ reviews, productID, sendReview, deleteReview, user }) => {
         register,
         handleSubmit,
         reset,
+        setValue,
         formState: { errors },
     } = useForm();
-    
+
     const onSubmit = (data) => {
-        sendReview(productID, { ...data, rating });
+        console.log(data);
+        sendReview(productID, data);
         reset();
         setRating(0);
         setFilling(0);
+        setValue('rating', null);
         setShowForm(false);
-    };
-
-    const textOption = {
-        required: { value: true, message: 'Поле не может быть пустым' },
     };
 
     return (
@@ -42,7 +42,12 @@ const Reviews = ({ reviews, productID, sendReview, deleteReview, user }) => {
                         isEditable={true}
                         setRating={setRating}
                         setFilling={setFilling}
+                        setValue={setValue}
                     />
+                    {errors.rating && (
+                        <span className='error__message'>{errors.rating.message}</span>
+                    )}
+                    <input type='hidden' {...register('rating', ratingOptions)} />
                     <textarea
                         {...register('text', textOption)}
                         className={`addReviewForm__text ${errors.text && 'error'}`}
