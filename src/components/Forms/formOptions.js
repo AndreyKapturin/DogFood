@@ -27,8 +27,7 @@ export const emailOptions = {
     },
     pattern: {
         value: /^([A-Za-z0-9_.])+(@)([A-Za-z0-9_\-.])+([.])([A-Za-z]{2,4})$/,
-        message:
-            'Некорректный  email',
+        message: 'Некорректный  email',
     },
 };
 
@@ -40,7 +39,7 @@ export const passwordOptions = {
     pattern: {
         value: /(?=.*[0-9])(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z!@#$%^&*]{6,}/g,
         message:
-        'Пароль должен быть длиной от 6 символов и включать в себя цифры, спецсимволовы и буквы латинского алфавита в нижнем и верхнем регистре.',
+            'Пароль должен быть длиной от 6 символов и включать в себя цифры, спецсимволовы и буквы латинского алфавита в нижнем и верхнем регистре.',
     },
 };
 
@@ -52,5 +51,19 @@ export const tokenOptions = {
     minLength: {
         value: 197,
         message: 'Неккоректный токен. Проверьте ещё раз',
-    }
+    },
+};
+
+export const ratingOptions = {
+    required: {
+        value: true,
+        message: 'Оцените товар',
+    },
+};
+
+export const textOption = {
+    required: {
+        value: true,
+        message: 'Поле не может быть пустым',
+    },
 };

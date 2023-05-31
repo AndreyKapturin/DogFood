@@ -68,7 +68,7 @@ export const sort = (cards, filter, hookFunc) => {
         return hookFunc([...filtered]);
     }
     if (filter === 'topRate') {
-        const filtered = cards.sort((a, b) => getRating(b) - getRating(a));
+        const filtered = cards.sort((a, b) => getRating(b.reviews) - getRating(a.reviews));
         return hookFunc([...filtered]);
     }
     if (filter === 'reviews') {
