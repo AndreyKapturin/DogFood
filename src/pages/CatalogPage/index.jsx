@@ -5,20 +5,22 @@ import SearchResult from '../../components/SearchResult';
 import NotFound from '../../components/NotFound';
 import Sorting from '../../components/Sorting';
 import { AppContext } from '../../context/AppContext';
+import { useSelector } from 'react-redux';
 const CatalogPage = () => {
-    const { search, products } = useContext(AppContext);
+    const { productsStore } = useSelector((s) => s.products);
+    const { search } = useContext(AppContext);
     return (
         <>
             {search && <SearchResult />}
-            {products.length === 0 && (
+            {productsStore.length === 0 && (
                 <NotFound
                     text='Простите, по вашему запросу товаров не найдено'
                     buttonText='На главную'
                     buttonPath='/'
                 />
             )}
-            {products.length && <Sorting />}
-            <CardList cards={products} />
+            {!!productsStore.length && <Sorting />}
+            {!!productsStore.length && <CardList cards={productsStore} />}
         </>
     );
 };
