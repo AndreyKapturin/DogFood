@@ -4,8 +4,10 @@ import Like from '../images/Like';
 import { Truck, Award } from 'react-bootstrap-icons';
 import { getEnding, getRating } from '../../utilities/utilities';
 import Rating from '../Rating';
+import { useSelector } from 'react-redux';
 
-const Product = ({ product, changeLikeOnProductPage, user, reviews }) => {
+const Product = ({ product, changeLikeOnProductPage, reviews }) => {
+    const {user} = useSelector(s => s.user);
     const { name, discount, price, description, pictures, likes, _id } = product;
     let isLiked = likes ? likes.includes(user._id) : false;
     return (

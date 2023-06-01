@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import Rating from '../Rating';
 import { ratingOptions, textOption } from '../Forms/formOptions';
 
-const Reviews = ({ reviews, productID, sendReview, deleteReview, user }) => {
+const Reviews = ({ reviews, productID, sendReview, deleteReview }) => {
     const [showForm, setShowForm] = useState(false);
     const [rating, setRating] = useState(0);
     const [filling, setFilling] = useState(0);
@@ -19,7 +19,6 @@ const Reviews = ({ reviews, productID, sendReview, deleteReview, user }) => {
     } = useForm();
 
     const onSubmit = (data) => {
-        console.log(data);
         sendReview(productID, data);
         reset();
         setRating(0);
@@ -63,7 +62,6 @@ const Reviews = ({ reviews, productID, sendReview, deleteReview, user }) => {
                     key={`review${i}`}
                     review={review}
                     deleteReview={deleteReview}
-                    user={user}
                 />
             ))}
         </div>

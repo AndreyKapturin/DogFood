@@ -6,9 +6,12 @@ import Main from './components/Main';
 import { api } from './api/api';
 import { filterMyFavProduct } from './utilities/utilities';
 import { AppContext } from './context/AppContext';
+import { useDispatch, useSelector } from 'react-redux';
+import { getUserInfoByToken } from './store/slices/userSlice';
 
 function App() {
-    const [user, setUser] = useState({});
+    const dispatch = useDispatch();
+    const {user} = useSelector(s => s.user);
     const [products, setProducts] = useState([]);
     const [myFavProduct, setMyFavProduct] = useState([]);
     const [search, setSearch] = useState(null);
@@ -16,10 +19,8 @@ function App() {
     const [showPassword, setShowPassword] = useState(false);
 
     useEffect(() => {
-        api.getUserInfo()
-            .then((data) => setUser(data))
-            .catch((error) => console.error('Ошибка при запросе данных о пользователе', error));
-    }, []);
+        dispatch(getUserInfoByToken())
+    }, [dispatch]);
 
     useEffect(() => {
         if (!search) {

@@ -3,9 +3,11 @@ import './style.scss';
 import Like from '../images/Like';
 import { Link } from 'react-router-dom';
 import { AppContext } from '../../context/AppContext';
+import { useSelector } from 'react-redux';
 
 const Card = ({ product }) => {
-    const { user, changeLike } = useContext(AppContext);
+    const {user} = useSelector(s => s.user);
+    const { changeLike } = useContext(AppContext);
     const { name, pictures, price, wight, discount, likes, _id } = product;
     const isLiked = likes.includes(user._id);
     return (

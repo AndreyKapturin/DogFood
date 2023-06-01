@@ -7,9 +7,11 @@ import { filterMyFavProduct } from '../../utilities/utilities';
 import { AppContext } from '../../context/AppContext';
 import BackBtn from '../../components/BackBtn';
 import Reviews from '../../components/Reviews';
+import { useSelector } from 'react-redux';
 
 const ProductPage = () => {
-    const { setProducts, user, products, setMyFavProduct } = useContext(AppContext);
+    const {user} = useSelector(s => s.user);
+    const { setProducts, products, setMyFavProduct } = useContext(AppContext);
     const { id } = useParams();
     const [product, setProduct] = useState({});
     const [reviews, setReviews] = useState([]);
@@ -56,7 +58,6 @@ const ProductPage = () => {
             <Product
                 product={product}
                 changeLikeOnProductPage={changeLikeOnProductPage}
-                user={user}
                 reviews={reviews}
                 sendReview={sendReview}
                 deleteReview={deleteReview}
@@ -66,7 +67,6 @@ const ProductPage = () => {
                 sendReview={sendReview}
                 productID={id}
                 deleteReview={deleteReview}
-                user={user}
             />
         </div>
     );

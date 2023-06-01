@@ -2,7 +2,9 @@ import React from 'react';
 import './style.scss';
 import { Trash3 } from 'react-bootstrap-icons';
 import Rating from '../Rating';
-const Review = ({ review, deleteReview, user }) => {
+import { useSelector } from 'react-redux';
+const Review = ({ review, deleteReview }) => {
+    const {user} = useSelector(s => s.user);
     const { author, rating, text, created_at, product, _id } = review;
     return (
         <div className='review'>
