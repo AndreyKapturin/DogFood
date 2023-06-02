@@ -7,20 +7,20 @@ import Sorting from '../../components/Sorting';
 import { useSelector } from 'react-redux';
 
 const CatalogPage = () => {
-    const { searchQuery, productsStore } = useSelector((s) => s.products);
+    const { searchQuery, products } = useSelector((s) => s.products);
 
     return (
         <>
             {searchQuery && <SearchResult />}
-            {productsStore.length === 0 && (
+            {products.length === 0 && (
                 <NotFound
                     text='Простите, по вашему запросу товаров не найдено'
                     buttonText='На главную'
                     buttonPath='/'
                 />
             )}
-            {!!productsStore.length && <Sorting />}
-            {!!productsStore.length && <CardList cards={productsStore} />}
+            {!!products.length && <Sorting />}
+            {!!products.length && <CardList cards={products} />}
         </>
     );
 };

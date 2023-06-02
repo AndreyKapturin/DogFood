@@ -44,39 +44,14 @@ export const filterMyFavProduct = (products, userID) => {
     return fav;
 };
 
-export const sort = (cards, filter, hookFunc) => {
-    if (filter === 'popular') {
-        const filtered = cards.sort((a, b) => b.likes.length - a.likes.length);
-        return hookFunc([...filtered]);
-    }
-    if (filter === 'new') {
-        const filtered = cards.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
-        return hookFunc([...filtered]);
-    }
-    if (filter === 'cheap') {
-        const filtered = cards.sort(
-            (a, b) =>
-                a.price - (a.price * a.discount) / 100 - (b.price - (b.price * b.discount) / 100)
-        );
-        return hookFunc([...filtered]);
-    }
-    if (filter === 'costly') {
-        const filtered = cards.sort(
-            (a, b) =>
-                b.price - (b.price * b.discount) / 100 - (a.price - (a.price * a.discount) / 100)
-        );
-        return hookFunc([...filtered]);
-    }
-    if (filter === 'topRate') {
-        const filtered = cards.sort((a, b) => getRating(b.reviews) - getRating(a.reviews));
-        return hookFunc([...filtered]);
-    }
-    if (filter === 'reviews') {
-        const filtered = cards.sort((a, b) => b.reviews.length - a.reviews.length);
-        return hookFunc([...filtered]);
-    }
-    if (filter === 'sale') {
-        const filtered = cards.sort((a, b) => b.discount - a.discount);
-        return hookFunc([...filtered]);
-    }
+export const mapProducts = (products, newProduct) => {
+    return products.map((product) => (product._id === newProduct._id ? newProduct : product));
 };
+
+export const isLoading = ({type}) => {
+    return type.endsWith('pending')
+}
+
+export const isError = ({type}) => {
+    return type.endsWith('rejected')
+}

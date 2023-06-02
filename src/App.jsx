@@ -15,7 +15,7 @@ function App() {
 
     useEffect(() => {
         dispatch(getUserInfoByToken())
-        .then(dispatch(getAllProducts()));
+        .then(() => dispatch(getAllProducts()));
     }, [dispatch]);
 
     useEffect(() => {

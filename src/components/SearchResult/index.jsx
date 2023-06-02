@@ -4,12 +4,12 @@ import { getEnding } from '../../utilities/utilities';
 import { useSelector } from 'react-redux';
 
 const SearchResult = () => {
-    const { searchQuery, productsStore } = useSelector((s) => s.products);
+    const { searchQuery, products } = useSelector((s) => s.products);
 
     return (
         <h1 className='searchResult'>
-            По запросу <span className='red'>{searchQuery}</span> найдено {productsStore.length}{' '}
-            товар{getEnding(productsStore.length)}
+            По запросу <span className='red'>{searchQuery}</span> найдено {products.length}{' '}
+            товар{getEnding(products.length)}
         </h1>
     );
 };

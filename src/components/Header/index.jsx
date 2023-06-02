@@ -11,9 +11,7 @@ import { BoxArrowInLeft } from 'react-bootstrap-icons';
 import { useSelector } from 'react-redux';
 
 const Header = () => {
-    
     const { myFavProducts } = useSelector((s) => s.products);
-
     return (
         <header className='header'>
             <div className='header__container'>
