@@ -6,7 +6,9 @@ import NotFound from '../../components/NotFound';
 import { useSelector } from 'react-redux';
 
 const FavoritePage = () => {
+
     const { myFavProducts } = useSelector((s) => s.products);
+    
     return (
         <div className='favoritePage'>
             <BackBtn />
@@ -17,7 +19,7 @@ const FavoritePage = () => {
                     buttonPath='/catalog'
                 />
             )}
-            <CardList cards={myFavProducts} />
+            {!! myFavProducts.length && <CardList cards={myFavProducts} />}
         </div>
     );
 };

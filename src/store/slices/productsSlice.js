@@ -5,6 +5,7 @@ import { filterMyFavProduct } from '../../utilities/utilities';
 const initialState = {
     productsStore: [],
     myFavProducts: [],
+    searchQuery: '',
 };
 
 export const getAllProducts = createAsyncThunk(
@@ -31,6 +32,9 @@ const productsSlice = createSlice({
     name: 'products',
     initialState,
     reducers: {
+        searchProductsQuery(state, { payload }) {
+            state.searchQuery = payload;
+        },
         filterProduct(state, { payload }) {
             state.productsStore = payload;
         },
@@ -60,5 +64,5 @@ const productsSlice = createSlice({
     },
 });
 
-export const { filterProduct, updateProducts } = productsSlice.actions;
+export const { searchProductsQuery, filterProduct, updateProducts } = productsSlice.actions;
 export default productsSlice.reducer;

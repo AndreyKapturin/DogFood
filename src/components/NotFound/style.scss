@@ -1,5 +1,5 @@
 @import './../../global-style.scss';
-.searhNotFound {
+.notFound {
     height: 450px;
     width: 350px;
     display: grid;
@@ -16,5 +16,6 @@
         font-weight: 700;
         font-size: 16px;
         color: $main-black-color;
+        cursor: pointer;
     }
 }

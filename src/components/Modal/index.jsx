@@ -1,9 +1,9 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import './style.scss';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { AppContext } from '../../context/AppContext';
+import { XLg } from 'react-bootstrap-icons';
 const Modal = ({ children }) => {
-    const {showModal, setShowModal} = useContext(AppContext);
+    const [showModal, setShowModal] = useState(false);
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -24,10 +24,10 @@ const Modal = ({ children }) => {
     };
 
     return (
-        <div className={`modal ${showModal ? 'active' : ''}`}>
+        <div className={showModal ? 'modal active' : 'modal'}>
             <div className='modal__content'>
-                <span onClick={() => modalClose()} className='modal__closer'>
-                    X
+                <span onClick={modalClose} className='modal__closer'>
+                    <XLg />
                 </span>
                 {children}
             </div>
