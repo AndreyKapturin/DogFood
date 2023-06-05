@@ -4,8 +4,12 @@ import Review from '../Review';
 import { useForm } from 'react-hook-form';
 import Rating from '../Rating';
 import { ratingOptions, textOption } from '../Forms/formOptions';
+import { useDispatch, useSelector } from 'react-redux';
+import { addReview } from '../../store/slices/reviewsSlice';
 
-const Reviews = ({ reviews, productID, sendReview, deleteReview, user }) => {
+const Reviews = ({ productID }) => {
+    const dispatch = useDispatch();
+    const { reviews } = useSelector((s) => s.reviews);
     const [showForm, setShowForm] = useState(false);
     const [rating, setRating] = useState(0);
     const [filling, setFilling] = useState(0);
@@ -19,8 +23,7 @@ const Reviews = ({ reviews, productID, sendReview, deleteReview, user }) => {
     } = useForm();
 
     const onSubmit = (data) => {
-        console.log(data);
-        sendReview(productID, data);
+        dispatch(addReview([productID, data]));
         reset();
         setRating(0);
         setFilling(0);
@@ -59,12 +62,7 @@ const Reviews = ({ reviews, productID, sendReview, deleteReview, user }) => {
                 </form>
             </div>
             {reviews.map((review, i) => (
-                <Review
-                    key={`review${i}`}
-                    review={review}
-                    deleteReview={deleteReview}
-                    user={user}
-                />
+                <Review key={`review${i}`} review={review} />
             ))}
         </div>
     );

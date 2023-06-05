@@ -1,15 +1,17 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import './style.scss';
 import CardList from '../../components/CardList';
 import SearchResult from '../../components/SearchResult';
 import NotFound from '../../components/NotFound';
 import Sorting from '../../components/Sorting';
-import { AppContext } from '../../context/AppContext';
+import { useSelector } from 'react-redux';
+
 const CatalogPage = () => {
-    const { search, products } = useContext(AppContext);
+    const { searchQuery, products } = useSelector((s) => s.products);
+
     return (
         <>
-            {search && <SearchResult />}
+            {searchQuery && <SearchResult />}
             {products.length === 0 && (
                 <NotFound
                     text='Простите, по вашему запросу товаров не найдено'
@@ -17,8 +19,8 @@ const CatalogPage = () => {
                     buttonPath='/'
                 />
             )}
-            {products.length && <Sorting />}
-            <CardList cards={products} />
+            {!!products.length && <Sorting />}
+            {!!products.length && <CardList cards={products} />}
         </>
     );
 };

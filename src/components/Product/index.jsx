@@ -4,8 +4,13 @@ import Like from '../images/Like';
 import { Truck, Award } from 'react-bootstrap-icons';
 import { getEnding, getRating } from '../../utilities/utilities';
 import Rating from '../Rating';
+import { useDispatch, useSelector } from 'react-redux';
+import { changeLikeOnProductPage } from '../../store/slices/productSlice';
 
-const Product = ({ product, changeLikeOnProductPage, user, reviews }) => {
+const Product = ({ product }) => {
+    const dispatch = useDispatch();
+    const {user} = useSelector(s => s.user);
+    const {reviews} = useSelector(s => s.reviews)
     const { name, discount, price, description, pictures, likes, _id } = product;
     let isLiked = likes ? likes.includes(user._id) : false;
     return (
@@ -51,7 +56,7 @@ const Product = ({ product, changeLikeOnProductPage, user, reviews }) => {
                             <button className='product__card-btn'>В корзину</button>
                         </div>
                         <div className='product-favorite'>
-                            <span onClick={() => changeLikeOnProductPage(_id, isLiked)}>
+                            <span onClick={() => dispatch(changeLikeOnProductPage([_id, isLiked]))}>
                                 <Like fill={isLiked ? 'red' : 'none'} />{' '}
                                 {isLiked ? 'В избранном' : 'В избранное'}
                             </span>

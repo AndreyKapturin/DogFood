@@ -13,7 +13,7 @@ import RegistrationForm from '../Forms/RegistrationForm';
 import ForgotPasswordForm from '../Forms/ForgotPasswordForm';
 import ResetPasswordForm from '../Forms/ResetPasswordForm';
 
-const Main = ({ showModal, setShowModal }) => {
+const Main = () => {
     return (
         <main className='main'>
             <Routes>

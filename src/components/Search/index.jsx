@@ -1,16 +1,21 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import './style.scss';
-import { AppContext } from '../../context/AppContext';
+import { useLocation } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { searchProductsQuery } from '../../store/slices/productsSlice';
 
-const Search = ({ location }) => {
-    const { setSearch } = useContext(AppContext);
+const Search = () => {
+
+    const location = useLocation();
+    const dispatch = useDispatch();
+    
     return (
         <input
             className='search'
             type='text'
             placeholder={'Поиск'}
             disabled={location.pathname !== '/catalog'}
-            onChange={(e) => setSearch(e.target.value)}
+            onChange={(e) => dispatch(searchProductsQuery(e.target.value))}
         ></input>
     );
 };

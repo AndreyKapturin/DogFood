@@ -1,26 +1,19 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import './style.scss';
-import { AppContext } from '../../context/AppContext';
-import { sort } from '../../utilities/utilities';
+import { useDispatch } from 'react-redux';
+import { sortProduct } from '../../store/slices/productsSlice';
+import { filters } from '../../Constants/constants';
 
 const Sorting = () => {
-    const { products, setProducts } = useContext(AppContext);
-    const filters = [
-        { filter: 'popular', title: 'Популярные' },
-        { filter: 'new', title: 'Новинки' },
-        { filter: 'cheap', title: 'Сначала дешёвые' },
-        { filter: 'costly', title: 'Сначала дорогие' },
-        { filter: 'topRate', title: 'По рейтингу' },
-        { filter: 'reviews', title: 'По количеству отзывов' },
-        { filter: 'sale', title: 'По скидке' },
-    ];
+    const dispatch = useDispatch();
+
     return (
         <div className='sorting'>
             {filters.map((filter, i) => (
                 <span
                     key={`sorting${i}`}
                     className='sorting__point'
-                    onClick={() => sort(products, filter.filter, setProducts)}
+                    onClick={() => dispatch(sortProduct(filter.filter))}
                 >
                     {filter.title}
                 </span>
