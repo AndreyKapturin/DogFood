@@ -36,6 +36,20 @@ class Api {
             headers: this.headers,
         }).then((res) => res.json());
     }
+    editUserInfo(data) {
+        return fetch(`${this.baseUserUrl}/me`, {
+            method: 'PATCH',
+            headers: this.headers,
+            body: JSON.stringify(data),
+        }).then((res) => res.json());
+    }
+    editUserAvatar(data) {
+        return fetch(`${this.baseUserUrl}/me/avatar`, {
+            method: 'PATCH',
+            headers: this.headers,
+            body: JSON.stringify(data),
+        }).then((res) => res.json());
+    }
     swithLike(productID, wasLiked) {
         return fetch(`${this.baseProductUrl}/likes/${productID}`, {
             method: wasLiked ? 'DELETE' : 'PUT',

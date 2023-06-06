@@ -27,9 +27,9 @@ const Header = () => {
                     <a href='/'>
                         <Cart />
                     </a>
-                    <a href='/'>
+                    <Link className='header__icon-link' to='/profile'>
                         <Profile />
-                    </a>
+                    </Link>
                     <Link className='header__icon-link' to='/logIn'>
                         <BoxArrowInLeft width='30px' height='30px' />
                     </Link>
