@@ -4,7 +4,7 @@ export const nameOptions = {
         message: 'Введите имя',
     },
     maxLength: {
-        value: 20,
+        value: 100,
         message: 'Имя слишком длинное',
     },
 };
@@ -65,5 +65,12 @@ export const textOption = {
     required: {
         value: true,
         message: 'Поле не может быть пустым',
+    },
+};
+
+export const avatarOptions = {
+    required: {
+        value: true,
+        message: 'Вставьте URL-адрес вашего аватара',
     },
 };
