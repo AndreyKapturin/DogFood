@@ -4,6 +4,7 @@ import Like from '../images/Like';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { changeLike } from '../../store/slices/productsSlice';
+import Button from '../Button';
 
 const Card = ({ product }) => {
     const dispatch = useDispatch();
@@ -31,7 +32,7 @@ const Card = ({ product }) => {
                 <span className='card__wight'>{wight}</span>
                 <span className='card__name'>{name}</span>
             </Link>
-            <button className='card__btn'>В корзину</button>
+            <Button className={'base-btn primary fit'}>В корзину</Button>
         </div>
     );
 };

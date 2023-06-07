@@ -6,6 +6,7 @@ import { tokenOptions, passwordOptions } from '../formOptions';
 import { api } from '../../../api/api';
 import { EyeFill, EyeSlashFill } from 'react-bootstrap-icons';
 import { AppContext } from '../../../context/AppContext';
+import Button from '../../Button';
 
 const ResetPasswordForm = () => {
     const { showPassword, setShowPassword } = useContext(AppContext);
@@ -54,13 +55,11 @@ const ResetPasswordForm = () => {
                 {errors.password && (
                     <span className='error__message'>{errors.password.message}</span>
                 )}
-                <button className='form__button' type='submit'>
+                <Button className={'base-btn primary large'} type={'submit'}>
                     Обновить пароль
-                </button>
+                </Button>
                 <Link to='/logIn'>
-                    <button className='form__button-link' type='submit'>
-                        Я вспомнил пароль
-                    </button>
+                    <Button className={'base-btn secondary large'}>Я вспомнил пароль</Button>
                 </Link>
             </form>
         </div>

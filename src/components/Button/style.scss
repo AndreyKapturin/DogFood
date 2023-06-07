@@ -1,0 +1,29 @@
+@import './../../global-style.scss';
+
+.base-btn {
+    padding: 10px 18px;
+    border-radius: 55px;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 20px;
+    color: $main-black-color;
+    cursor: pointer;
+}
+
+.primary {
+    background-color: $main-yellow-color;
+    border: none;
+}
+
+.secondary {
+    background-color: transparent;
+    border: 1px solid $main-gray-color;
+}
+
+.fit {
+    width: fit-content;
+}
+
+.large {
+    width: 100%;
+}

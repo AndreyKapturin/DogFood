@@ -6,6 +6,7 @@ import Rating from '../Rating';
 import { ratingOptions, textOption } from '../Forms/formOptions';
 import { useDispatch, useSelector } from 'react-redux';
 import { addReview } from '../../store/slices/reviewsSlice';
+import Button from '../Button';
 
 const Reviews = ({ productID }) => {
     const dispatch = useDispatch();
@@ -34,9 +35,9 @@ const Reviews = ({ productID }) => {
     return (
         <div className='reviews'>
             <h2>Отзывы</h2>
-            <button className='reviews__show-modal-btn' onClick={() => setShowForm((s) => !s)}>
+            <Button className={'base-btn primary fit'} onClick={() => setShowForm((s) => !s)}>
                 Написать отзыв
-            </button>
+            </Button>
             <div className={`reviews__modal ${showForm ? 'active' : ''}`}>
                 <form className='addReviewForm' onSubmit={handleSubmit((data) => onSubmit(data))}>
                     <Rating
@@ -56,9 +57,13 @@ const Reviews = ({ productID }) => {
                         className={`addReviewForm__text ${errors.text && 'error'}`}
                         placeholder={errors.text ? errors.text.message : 'Ваше мнение о продукте'}
                     ></textarea>
-                    <button className='addReviewForm__btn' type='submit'>
+                    <Button
+                        className={'base-btn primary fit'}
+                        onClick={() => setShowForm((s) => !s)}
+                        type={'submite'}
+                    >
                         Отправить отзыв
-                    </button>
+                    </Button>
                 </form>
             </div>
             {reviews.map((review, i) => (

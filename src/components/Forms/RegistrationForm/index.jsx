@@ -6,9 +6,10 @@ import { aboutOptions, emailOptions, nameOptions, passwordOptions } from '../for
 import { api } from '../../../api/api';
 import { EyeFill, EyeSlashFill } from 'react-bootstrap-icons';
 import { AppContext } from '../../../context/AppContext';
+import Button from '../../Button';
 
 const RegistrationForm = () => {
-    const {showPassword, setShowPassword} = useContext(AppContext);
+    const { showPassword, setShowPassword } = useContext(AppContext);
     const navigate = useNavigate();
     const {
         register,
@@ -62,20 +63,18 @@ const RegistrationForm = () => {
                         placeholder='Пароль'
                         autoComplete='true'
                     />
-                    <span className='input__eye' onClick={() => setShowPassword(s => !s)}>
-                    {showPassword ? <EyeFill /> : <EyeSlashFill />}
+                    <span className='input__eye' onClick={() => setShowPassword((s) => !s)}>
+                        {showPassword ? <EyeFill /> : <EyeSlashFill />}
                     </span>
                 </div>
                 {errors.password && (
                     <span className='error__message'>{errors.password.message}</span>
                 )}
-                <button className='form__button' type='submit'>
+                <Button className={'base-btn primary large'} type={'submit'}>
                     Зарегистрироваться
-                </button>
+                </Button>
                 <Link to='/login'>
-                    <button className='form__button-link' type='submit'>
-                        У меня уже есть аккаунт
-                    </button>
+                    <Button className={'base-btn secondary large'}>У меня уже есть аккаунт</Button>
                 </Link>
             </form>
         </div>
