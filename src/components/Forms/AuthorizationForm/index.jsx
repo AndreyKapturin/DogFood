@@ -6,9 +6,10 @@ import { emailOptions, passwordOptions } from '../formOptions';
 import { api } from '../../../api/api';
 import { EyeFill, EyeSlashFill } from 'react-bootstrap-icons';
 import { AppContext } from '../../../context/AppContext';
+import Button from '../../Button';
 
 const AuthorizationForm = () => {
-    const {showPassword, setShowPassword} = useContext(AppContext);
+    const { showPassword, setShowPassword } = useContext(AppContext);
     const navigate = useNavigate();
     const {
         register,
@@ -46,8 +47,8 @@ const AuthorizationForm = () => {
                         placeholder='Пароль'
                         autoComplete='true'
                     />
-                    <span className='input__eye' onClick={() => setShowPassword(s => !s)}>
-                    {showPassword ? <EyeFill /> : <EyeSlashFill />}
+                    <span className='input__eye' onClick={() => setShowPassword((s) => !s)}>
+                        {showPassword ? <EyeFill /> : <EyeSlashFill />}
                     </span>
                 </div>
                 <span className='form__forgote-password'>
@@ -59,13 +60,11 @@ const AuthorizationForm = () => {
                 {errors.password && (
                     <span className='error__message'>{errors.password.message}</span>
                 )}
-                <button className='form__button' type='submit'>
+                <Button className={'base-btn primary large'} type={'submit'}>
                     Войти
-                </button>
+                </Button>
                 <Link to='/registration'>
-                    <button className='form__button-link' type='submit'>
-                        У меня ещё нет аккаунта
-                    </button>
+                    <Button className={'base-btn secondary large'}>У меня ещё нет аккаунта</Button>
                 </Link>
             </form>
         </div>

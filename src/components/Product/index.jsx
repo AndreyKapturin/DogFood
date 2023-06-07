@@ -6,6 +6,7 @@ import { getEnding, getRating } from '../../utilities/utilities';
 import Rating from '../Rating';
 import { useDispatch, useSelector } from 'react-redux';
 import { changeLikeOnProductPage } from '../../store/slices/productSlice';
+import Button from '../Button';
 
 const Product = ({ product }) => {
     const dispatch = useDispatch();
@@ -53,7 +54,7 @@ const Product = ({ product }) => {
                                 <span>0</span>
                                 <button className='quantity-counter-btn'>+</button>
                             </div>
-                            <button className='product__card-btn'>В корзину</button>
+                            <Button className={'base-btn primary fit'}>В корзину</Button>
                         </div>
                         <div className='product-favorite'>
                             <span onClick={() => dispatch(changeLikeOnProductPage([_id, isLiked]))}>

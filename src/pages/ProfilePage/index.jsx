@@ -6,6 +6,7 @@ import { useForm } from 'react-hook-form';
 import { aboutOptions, avatarOptions, nameOptions } from '../../components/Forms/formOptions';
 import { sendNewUserInfo } from '../../store/slices/userSlice';
 import defaultImage from '../../images/defaultAvatar.png';
+import Button from '../../components/Button';
 
 const ProfilePage = () => {
     const dispatch = useDispatch();
@@ -42,12 +43,12 @@ const ProfilePage = () => {
                         <span>{user.email}</span>
                         <span>{user.about}</span>
                     </div>
-                    <button
-                        className='profilePage__form-btn'
+                    <Button
+                        className={'base-btn secondary fit'}
                         onClick={() => setShowForm((s) => !s)}
                     >
                         Изменить
-                    </button>
+                    </Button>
                 </div>
             </div>
             {showForm && (
@@ -87,9 +88,9 @@ const ProfilePage = () => {
                     {errors.avatar && (
                         <span className='error__message'>{errors.avatar.message}</span>
                     )}
-                    <button className='profilePage__form-btn' type='submit'>
+                    <Button className={'base-btn secondary fit'} type={'submit'}>
                         Сохранить
-                    </button>
+                    </Button>
                 </form>
             )}
         </div>
