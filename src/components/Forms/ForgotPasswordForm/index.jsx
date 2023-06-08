@@ -3,10 +3,13 @@ import './../formStyle.scss';
 import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 import { emailOptions } from '../formOptions';
-import { api } from '../../../api/api';
 import Button from '../../Button';
+import { useDispatch } from 'react-redux';
+import { getTokenForNewPassword } from '../../../store/slices/userSlice';
+import { isError } from '../../../utilities/utilities';
 
 const ForgotPasswordForm = () => {
+    const dispatch = useDispatch();
     const navigate = useNavigate();
     const {
         register,
@@ -16,16 +19,12 @@ const ForgotPasswordForm = () => {
     } = useForm({ mode: 'onSubmit' });
 
     const resetPassword = (data) => {
-        api.getTokenByEmail(data).then((res) => {
-            if (!!res.err) {
-                alert('Аккаунта с данным Email не существует');
-            } else {
-                alert(`${res.message}`);
+        dispatch(getTokenForNewPassword(data)).then((res) => {
+            if (!isError(res)) {
                 navigate('/password-reset');
                 reset();
             }
         });
-        reset();
     };
 
     return (

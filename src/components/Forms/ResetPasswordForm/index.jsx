@@ -1,15 +1,16 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import './../formStyle.scss';
 import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
-import { tokenOptions, passwordOptions } from '../formOptions';
-import { api } from '../../../api/api';
-import { EyeFill, EyeSlashFill } from 'react-bootstrap-icons';
-import { AppContext } from '../../../context/AppContext';
+import { tokenOptions } from '../formOptions';
 import Button from '../../Button';
+import InputPassword from '../../InputPassword';
+import { useDispatch } from 'react-redux';
+import { sendNewPassword } from '../../../store/slices/userSlice';
+import { isError } from '../../../utilities/utilities';
 
 const ResetPasswordForm = () => {
-    const { showPassword, setShowPassword } = useContext(AppContext);
+    const dispatch = useDispatch();
     const navigate = useNavigate();
     const {
         register,
@@ -19,11 +20,8 @@ const ResetPasswordForm = () => {
     } = useForm({ mode: 'onSubmit' });
 
     const resetPassword = (data) => {
-        api.setNewPassword(data).then((res) => {
-            if (!!res.err) {
-                alert(`${res.message}`);
-            } else {
-                alert(`Добро пожаловать, ${res.data.name}`);
+        dispatch(sendNewPassword(data)).then((res) => {
+            if (!isError(res)) {
                 navigate('/catalog');
                 reset();
             }
@@ -39,18 +37,7 @@ const ResetPasswordForm = () => {
                     {...register('token', tokenOptions)}
                     placeholder='Токен из письма'
                 />
-                <div className='input__wrapper'>
-                    <input
-                        className={errors.password ? 'input error' : 'input'}
-                        type={showPassword ? 'text' : 'password'}
-                        {...register('password', passwordOptions)}
-                        placeholder='Пароль'
-                        autoComplete='true'
-                    />
-                    <span className='input__eye' onClick={() => setShowPassword((s) => !s)}>
-                        {showPassword ? <EyeFill /> : <EyeSlashFill />}
-                    </span>
-                </div>
+                <InputPassword register={register} errors={errors} />
                 {errors.token && <span className='error__message'>{errors.token.message}</span>}
                 {errors.password && (
                     <span className='error__message'>{errors.password.message}</span>

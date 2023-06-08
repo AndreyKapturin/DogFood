@@ -8,7 +8,11 @@ const config = {
 };
 
 const refreshToken = () => {
-    return localStorage.getItem('token')
+    return localStorage.getItem('token');
+};
+
+const onResponce = (res) => {
+    return res.ok ? res.json() : res.json().then((err) => Promise.reject(err.message));
 };
 
 class Api {
@@ -20,61 +24,61 @@ class Api {
     }
     getProducts() {
         return fetch(`${this.baseProductUrl}`, {
-            headers: {...this.headers, authorization: refreshToken()},
-        }).then((res) => res.json());
+            headers: { ...this.headers, authorization: refreshToken() },
+        }).then(onResponce);
     }
     getProductsByID(id) {
         return fetch(`${this.baseProductUrl}/${id}`, {
-            headers: {...this.headers, authorization: refreshToken()},
-        }).then((res) => res.json());
+            headers: { ...this.headers, authorization: refreshToken() },
+        }).then(onResponce);
     }
     searchProducts(search) {
         return fetch(`${this.baseProductUrl}/search?query=${search}`, {
-            headers: {...this.headers, authorization: refreshToken()},
-        }).then((res) => res.json());
+            headers: { ...this.headers, authorization: refreshToken() },
+        }).then(onResponce);
     }
     getUserInfo() {
         return fetch(`${this.baseUserUrl}/me`, {
-            headers: {...this.headers, authorization: refreshToken()},
-        }).then((res) => res.json());
+            headers: { ...this.headers, authorization: refreshToken() },
+        }).then(onResponce);
     }
     editUserInfo(data) {
         return fetch(`${this.baseUserUrl}/me`, {
             method: 'PATCH',
-            headers: {...this.headers, authorization: refreshToken()},
+            headers: { ...this.headers, authorization: refreshToken() },
             body: JSON.stringify(data),
-        }).then((res) => res.json());
+        }).then(onResponce);
     }
     editUserAvatar(data) {
         return fetch(`${this.baseUserUrl}/me/avatar`, {
             method: 'PATCH',
-            headers: {...this.headers, authorization: refreshToken()},
+            headers: { ...this.headers, authorization: refreshToken() },
             body: JSON.stringify(data),
-        }).then((res) => res.json());
+        }).then(onResponce);
     }
     swithLike(productID, wasLiked) {
         return fetch(`${this.baseProductUrl}/likes/${productID}`, {
             method: wasLiked ? 'DELETE' : 'PUT',
-            headers: {...this.headers, authorization: refreshToken()},
-        }).then((res) => res.json());
+            headers: { ...this.headers, authorization: refreshToken() },
+        }).then(onResponce);
     }
     getReviewsByID(id) {
         return fetch(`${this.baseProductUrl}/review/${id}`, {
-            headers: {...this.headers, authorization: refreshToken()},
-        }).then((res) => res.json());
+            headers: { ...this.headers, authorization: refreshToken() },
+        }).then(onResponce);
     }
     addProductReviewByID(id, data) {
-        return fetch(`${this.baseProductUrl}/review/${id}`, {
+        return fetch(`${this.baseProductUrl}/revdsdsiew/${id}`, {
             method: 'POST',
-            headers: {...this.headers, authorization: refreshToken()},
+            headers: { ...this.headers, authorization: refreshToken() },
             body: JSON.stringify(data),
-        }).then((res) => res.json());
+        }).then(onResponce);
     }
     deleteProductReviewByID(productId, reviewId) {
         return fetch(`${this.baseProductUrl}/review/${productId}/${reviewId}`, {
             method: 'DELETE',
-            headers: {...this.headers, authorization: refreshToken()},
-        }).then((res) => res.json());
+            headers: { ...this.headers, authorization: refreshToken() },
+        }).then(onResponce);
     }
     signUp(data) {
         return fetch(`${this.baseUrl}/signup`, {
@@ -83,7 +87,7 @@ class Api {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({ ...data, group: 'group-12' }),
-        }).then((res) => res.json());
+        }).then(onResponce);
     }
     signIn(data) {
         return fetch(`${this.baseUrl}/signin`, {
@@ -92,7 +96,7 @@ class Api {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(data),
-        }).then((res) => res.json());
+        }).then(onResponce);
     }
     getTokenByEmail(data) {
         return fetch(`${this.baseUrl}/forgot-password`, {
@@ -101,7 +105,7 @@ class Api {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(data),
-        }).then((res) => res.json());
+        }).then(onResponce);
     }
     setNewPassword(data) {
         return fetch(`${this.baseUrl}/password-reset/${data.token}`, {
@@ -109,8 +113,8 @@ class Api {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({password: data.password}),
-        }).then((res) => res.json());
+            body: JSON.stringify({ password: data.password }),
+        }).then(onResponce);
     }
 }
 

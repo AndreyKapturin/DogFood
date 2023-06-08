@@ -10,8 +10,8 @@ import Button from '../Button';
 
 const Product = ({ product }) => {
     const dispatch = useDispatch();
-    const {user} = useSelector(s => s.user);
-    const {reviews} = useSelector(s => s.reviews)
+    const { user } = useSelector((s) => s.user);
+    const { reviews } = useSelector((s) => s.reviews);
     const { name, discount, price, description, pictures, likes, _id } = product;
     let isLiked = likes ? likes.includes(user._id) : false;
     return (
@@ -56,11 +56,12 @@ const Product = ({ product }) => {
                             </div>
                             <Button className={'base-btn primary fit'}>В корзину</Button>
                         </div>
-                        <div className='product-favorite'>
-                            <span onClick={() => dispatch(changeLikeOnProductPage([_id, isLiked]))}>
-                                <Like fill={isLiked ? 'red' : 'none'} />{' '}
-                                {isLiked ? 'В избранном' : 'В избранное'}
-                            </span>
+                        <div
+                            onClick={() => dispatch(changeLikeOnProductPage([_id, isLiked]))}
+                            className='product-favorite'
+                        >
+                            <Like fill={isLiked ? 'red' : 'none'} />{' '}
+                            {isLiked ? 'В избранном' : 'В избранное'}
                         </div>
                         <div className='placeholrer-delivery'>
                             <Truck width='24' height='24' />
