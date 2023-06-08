@@ -8,10 +8,16 @@ import Profile from '../images/Profile';
 import { Link } from 'react-router-dom';
 import Bubble from '../Bubble';
 import { BoxArrowInLeft } from 'react-bootstrap-icons';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { setAuth } from '../../store/slices/userSlice';
 
 const Header = () => {
     const { myFavProducts } = useSelector((s) => s.products);
+    const dispatch = useDispatch();
+    const logout = () => {
+        localStorage.removeItem('token');
+        dispatch(setAuth(false));
+    };
     return (
         <header className='header'>
             <div className='header__container'>
@@ -30,9 +36,12 @@ const Header = () => {
                     <Link className='header__icon-link' to='/profile'>
                         <Profile />
                     </Link>
-                    <Link className='header__icon-link' to='/logIn'>
-                        <BoxArrowInLeft width='30px' height='30px' />
-                    </Link>
+                    <BoxArrowInLeft
+                        className='header__icon-link'
+                        onClick={logout}
+                        width='30px'
+                        height='30px'
+                    />
                 </div>
             </div>
         </header>

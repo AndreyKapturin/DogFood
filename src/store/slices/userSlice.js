@@ -3,6 +3,7 @@ import { api } from './../../api/api';
 
 const initialState = {
     user: {},
+    isAuth: false,
 };
 
 export const getUserInfoByToken = createAsyncThunk('user/getUserInfoByToken', async () => {
@@ -35,6 +36,11 @@ export const sendNewUserInfo = createAsyncThunk(
 const userSlice = createSlice({
     name: 'userSlice',
     initialState,
+    reducers: {
+        setAuth(state, { payload }) {
+            state.isAuth = payload;
+        },
+    },
     extraReducers: (builder) => {
         builder.addCase(getUserInfoByToken.fulfilled, (state, action) => {
             state.user = action.payload;
@@ -45,4 +51,5 @@ const userSlice = createSlice({
     },
 });
 
+export const { setAuth } = userSlice.actions;
 export default userSlice.reducer;

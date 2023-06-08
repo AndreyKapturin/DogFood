@@ -10,7 +10,7 @@ const Modal = ({ children }) => {
     useEffect(() => {
         if (
             location.pathname === '/registration' ||
-            location.pathname === '/logIn' ||
+            location.pathname === '/login' ||
             location.pathname === '/forgot-password' ||
             location.pathname === '/password-reset'
         ) {
