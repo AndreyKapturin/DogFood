@@ -7,9 +7,12 @@ import { api } from '../../../api/api';
 import { EyeFill, EyeSlashFill } from 'react-bootstrap-icons';
 import { AppContext } from '../../../context/AppContext';
 import Button from '../../Button';
+import { setAuth } from '../../../store/slices/userSlice';
+import { useDispatch } from 'react-redux';
 
 const AuthorizationForm = () => {
     const { showPassword, setShowPassword } = useContext(AppContext);
+    const dispatch = useDispatch();
     const navigate = useNavigate();
     const {
         register,
@@ -24,6 +27,8 @@ const AuthorizationForm = () => {
                 alert(`${res.message}`);
             } else {
                 alert(`Добро пожаловать, ${res.data.name}`);
+                localStorage.setItem('token', res.token);
+                dispatch(setAuth(true));
                 navigate('/catalog');
                 reset();
             }
