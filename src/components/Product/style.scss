@@ -17,7 +17,7 @@
     }
     &-action-wrapper {
         display: grid;
-        gap: 10px;
+        gap: 20px;
     }
     &-action-buttons {
         display: flex;
@@ -35,6 +35,8 @@
         display: flex;
         gap: 12px;
         align-items: center;
+        width: fit-content;
+        cursor: pointer;
     }
     &__img-wrapper {
         max-width: 500px;

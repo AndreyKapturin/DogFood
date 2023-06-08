@@ -6,17 +6,31 @@ const initialState = {
     product: {},
 };
 
-export const getOneProduct = createAsyncThunk('product/getOneProduct', async (id) => {
-    const product = await api.getProductsByID(id);
-    return product;
-});
+export const getOneProduct = createAsyncThunk(
+    'product/getOneProduct',
+    async (id, { rejectWithValue, fulfillWithValue }) => {
+        try {
+            const product = await api.getProductsByID(id);
+            return fulfillWithValue(product);
+        } catch (error) {
+            return rejectWithValue(error);
+        }
+    }
+);
 
-export const changeLikeOnProductPage = createAsyncThunk('product/changeLikeOnProductPage', async (data, {getState, dispatch}) => {
-    const {user} = getState();
-    const product = await api.swithLike(...data);
-    dispatch(updateProducts({product, user}))
-    return {user, product}
-})
+export const changeLikeOnProductPage = createAsyncThunk(
+    'product/changeLikeOnProductPage',
+    async (data, { getState, dispatch, rejectWithValue, fulfillWithValue }) => {
+        const { user } = getState();
+        try {
+            const product = await api.swithLike(...data);
+            dispatch(updateProducts({ product, user }));
+            return fulfillWithValue({ user, product });
+        } catch (error) {
+            return rejectWithValue(error);
+        }
+    }
+);
 
 const productSlice = createSlice({
     name: 'productSlice',
@@ -25,7 +39,7 @@ const productSlice = createSlice({
         builder.addCase(getOneProduct.fulfilled, (state, { payload }) => {
             state.product = payload;
         });
-        
+
         builder.addCase(changeLikeOnProductPage.fulfilled, (state, { payload }) => {
             state.product = payload.product;
         });

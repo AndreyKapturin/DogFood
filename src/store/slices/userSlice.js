@@ -1,34 +1,98 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { api } from './../../api/api';
+import { isError } from '../../utilities/utilities';
 
 const initialState = {
     user: {},
     isAuth: false,
 };
 
-export const getUserInfoByToken = createAsyncThunk('user/getUserInfoByToken', async () => {
-    const user = await api.getUserInfo();
-    return user;
-});
+export const authorization = createAsyncThunk(
+    'user/authorization',
+    async (data, { rejectWithValue, fulfillWithValue }) => {
+        try {
+            const response = await api.signIn(data);
+            return fulfillWithValue(response);
+        } catch (error) {
+            return rejectWithValue(error);
+        }
+    }
+);
+
+export const registration = createAsyncThunk(
+    'user/registration',
+    async (data, { rejectWithValue, fulfillWithValue }) => {
+        try {
+            const response = await api.signUp(data);
+            return fulfillWithValue(response);
+        } catch (error) {
+            return rejectWithValue(error);
+        }
+    }
+);
+
+export const getTokenForNewPassword = createAsyncThunk(
+    'user/getTokenForNewPassword',
+    async (data, { rejectWithValue, fulfillWithValue }) => {
+        try {
+            const response = await api.getTokenByEmail(data);
+            return fulfillWithValue(response);
+        } catch (error) {
+            return rejectWithValue(error);
+        }
+    }
+);
+
+export const sendNewPassword = createAsyncThunk(
+    'user/sendNewPassword',
+    async (data, { rejectWithValue, fulfillWithValue }) => {
+        try {
+            const response = await api.setNewPassword(data);
+            return fulfillWithValue(response);
+        } catch (error) {
+            return rejectWithValue(error);
+        }
+    }
+);
+
+export const getUserInfoByToken = createAsyncThunk(
+    'user/getUserInfoByToken',
+    async (data, { rejectWithValue, fulfillWithValue }) => {
+        try {
+            const user = await api.getUserInfo();
+            return fulfillWithValue(user);
+        } catch (error) {
+            return rejectWithValue(error);
+        }
+    }
+);
 
 export const sendNewUserInfo = createAsyncThunk(
     'user/sendNewUserInfo',
-    async (newUserInfo, { getState }) => {
+    async (newUserInfo, { getState, rejectWithValue, fulfillWithValue }) => {
         const { user } = getState();
         if (newUserInfo.avatar !== user.user.avatar) {
-            const updatedUserInfo = await api.editUserInfo({
-                name: newUserInfo.name,
-                about: newUserInfo.about,
-            });
-            const updatedUserAvatar = await api.editUserAvatar({ avatar: newUserInfo.avatar });
-            const updatedUser = { ...updatedUserInfo, avatar: updatedUserAvatar.avatar };
-            return updatedUser;
+            try {
+                const updatedUserInfo = await api.editUserInfo({
+                    name: newUserInfo.name,
+                    about: newUserInfo.about,
+                });
+                const updatedUserAvatar = await api.editUserAvatar({ avatar: newUserInfo.avatar });
+                const updatedUser = { ...updatedUserInfo, avatar: updatedUserAvatar.avatar };
+                return fulfillWithValue(updatedUser);
+            } catch (error) {
+                return rejectWithValue(error);
+            }
         } else {
-            const updatedUserInfo = await api.editUserInfo({
-                name: newUserInfo.name,
-                about: newUserInfo.about,
-            });
-            return updatedUserInfo;
+            try {
+                const updatedUserInfo = await api.editUserInfo({
+                    name: newUserInfo.name,
+                    about: newUserInfo.about,
+                });
+                return fulfillWithValue(updatedUserInfo);
+            } catch (error) {
+                return rejectWithValue(error);
+            }
         }
     }
 );
@@ -42,11 +106,35 @@ const userSlice = createSlice({
         },
     },
     extraReducers: (builder) => {
+        builder.addCase(authorization.fulfilled, (state, { payload }) => {
+            state.isAuth = true;
+            localStorage.setItem('token', payload.token);
+            alert(`Добро пожаловать, ${payload.data.name}`);
+        });
+
+        builder.addCase(registration.fulfilled, () => {
+            alert(`Регистрация прошла успешно}`);
+        });
+
         builder.addCase(getUserInfoByToken.fulfilled, (state, action) => {
             state.user = action.payload;
         });
+
         builder.addCase(sendNewUserInfo.fulfilled, (state, action) => {
             state.user = action.payload;
+        });
+
+        builder.addCase(getTokenForNewPassword.fulfilled, (state, { payload }) => {
+            alert(`${payload.message}`);
+        });
+
+        builder.addCase(sendNewPassword.fulfilled, (state, { payload }) => {
+            localStorage.setItem('token', payload.token);
+            alert(`Добро пожаловать, ${payload.data.name}`);
+        });
+
+        builder.addMatcher(isError, (state, { payload }) => {
+            alert(`${payload}`);
         });
     },
 });
