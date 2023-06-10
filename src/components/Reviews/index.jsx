@@ -3,8 +3,14 @@ import './style.scss';
 import Review from '../Review';
 import { useForm } from 'react-hook-form';
 import Rating from '../Rating';
+import { ratingOptions, textOption } from '../Forms/formOptions';
+import { useDispatch, useSelector } from 'react-redux';
+import { addReview } from '../../store/slices/reviewsSlice';
+import Button from '../Button';
 
-const Reviews = ({ reviews, productID, sendReview, deleteReview, user }) => {
+const Reviews = ({ productID }) => {
+    const dispatch = useDispatch();
+    const { reviews } = useSelector((s) => s.reviews);
     const [showForm, setShowForm] = useState(false);
     const [rating, setRating] = useState(0);
     const [filling, setFilling] = useState(0);
@@ -13,53 +19,54 @@ const Reviews = ({ reviews, productID, sendReview, deleteReview, user }) => {
         register,
         handleSubmit,
         reset,
+        setValue,
         formState: { errors },
     } = useForm();
-    
+
     const onSubmit = (data) => {
-        sendReview(productID, { ...data, rating });
+        dispatch(addReview([productID, data]));
         reset();
         setRating(0);
         setFilling(0);
+        setValue('rating', null);
         setShowForm(false);
-    };
-
-    const textOption = {
-        required: { value: true, message: 'Поле не может быть пустым' },
     };
 
     return (
         <div className='reviews'>
             <h2>Отзывы</h2>
-            <button className='reviews__show-modal-btn' onClick={() => setShowForm((s) => !s)}>
+            <Button className={'base-btn primary fit'} onClick={() => setShowForm((s) => !s)}>
                 Написать отзыв
-            </button>
+            </Button>
             <div className={`reviews__modal ${showForm ? 'active' : ''}`}>
-                <form className='addReviewForm' onSubmit={handleSubmit((data) => onSubmit(data))}>
+                <form className='addReviewForm' onSubmit={handleSubmit(onSubmit)}>
                     <Rating
                         filling={filling}
                         rating={rating}
                         isEditable={true}
                         setRating={setRating}
                         setFilling={setFilling}
+                        setValue={setValue}
                     />
+                    {errors.rating && (
+                        <span className='error__message'>{errors.rating.message}</span>
+                    )}
+                    <input type='hidden' {...register('rating', ratingOptions)} />
                     <textarea
                         {...register('text', textOption)}
                         className={`addReviewForm__text ${errors.text && 'error'}`}
                         placeholder={errors.text ? errors.text.message : 'Ваше мнение о продукте'}
                     ></textarea>
-                    <button className='addReviewForm__btn' type='submit'>
+                    <Button
+                        className={'base-btn primary fit'}
+                        type={'submite'}
+                    >
                         Отправить отзыв
-                    </button>
+                    </Button>
                 </form>
             </div>
             {reviews.map((review, i) => (
-                <Review
-                    key={`review${i}`}
-                    review={review}
-                    deleteReview={deleteReview}
-                    user={user}
-                />
+                <Review key={`review${i}`} review={review} />
             ))}
         </div>
     );

@@ -1,14 +1,15 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import './style.scss';
 import { getEnding } from '../../utilities/utilities';
-import { AppContext } from '../../context/AppContext';
+import { useSelector } from 'react-redux';
 
 const SearchResult = () => {
-    const { products, search } = useContext(AppContext);
+    const { searchQuery, products } = useSelector((s) => s.products);
+
     return (
         <h1 className='searchResult'>
-            По запросу <span className='red'>{search}</span> найдено {products.length} товар
-            {getEnding(products.length)}
+            По запросу <span className='red'>{searchQuery}</span> найдено {products.length}{' '}
+            товар{getEnding(products.length)}
         </h1>
     );
 };

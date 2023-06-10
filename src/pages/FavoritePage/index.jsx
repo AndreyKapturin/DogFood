@@ -1,23 +1,31 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import './style.scss';
 import CardList from '../../components/CardList';
 import BackBtn from '../../components/BackBtn';
 import NotFound from '../../components/NotFound';
-import { AppContext } from '../../context/AppContext';
+import { useSelector } from 'react-redux';
+import Loader from '../../components/Loader';
 
 const FavoritePage = () => {
-    const { myFavProduct } = useContext(AppContext);
+    const { myFavProducts, loading } = useSelector((s) => s.products);
+
     return (
         <div className='favoritePage'>
             <BackBtn />
-            {myFavProduct.length === 0 && (
-                <NotFound
-                    text='Пусто... Добавьте товары из каталога!'
-                    buttonText='В каталог'
-                    buttonPath='/catalog'
-                />
+            {loading ? (
+                <Loader />
+            ) : (
+                <>
+                    {!!myFavProducts.length && <CardList cards={myFavProducts} />}
+                    {!myFavProducts.length && (
+                        <NotFound
+                            text='Пусто... Добавьте товары из каталога!'
+                            buttonText='В каталог'
+                            buttonPath='/catalog'
+                        />
+                    )}
+                </>
             )}
-            <CardList cards={myFavProduct} />
         </div>
     );
 };

@@ -3,9 +3,13 @@ import './../formStyle.scss';
 import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 import { emailOptions } from '../formOptions';
-import { api } from '../../../api/api';
+import Button from '../../Button';
+import { useDispatch } from 'react-redux';
+import { getTokenForNewPassword } from '../../../store/slices/userSlice';
+import { isError } from '../../../utilities/utilities';
 
 const ForgotPasswordForm = () => {
+    const dispatch = useDispatch();
     const navigate = useNavigate();
     const {
         register,
@@ -15,16 +19,12 @@ const ForgotPasswordForm = () => {
     } = useForm({ mode: 'onSubmit' });
 
     const resetPassword = (data) => {
-        api.getTokenByEmail(data).then(res => {
-            if (!!res.err) {
-                alert('Аккаунта с данным Email не существует');
-            } else {
-                alert(`${res.message}`);
+        dispatch(getTokenForNewPassword(data)).then((res) => {
+            if (!isError(res)) {
                 navigate('/password-reset');
                 reset();
             }
-        })
-        reset();
+        });
     };
 
     return (
@@ -42,13 +42,11 @@ const ForgotPasswordForm = () => {
                     placeholder='Email'
                 />
                 {errors.email && <span className='error__message'>{errors.email.message}</span>}
-                <button className='form__button' type='submit'>
+                <Button className={'base-btn primary large'} type={'submit'}>
                     Восстановить пароль
-                </button>
+                </Button>
                 <Link to='/login'>
-                    <button className='form__button-link' type='submit'>
-                        Я вспомнил пароль
-                    </button>
+                    <Button className={'base-btn secondary large'}>Я вспомнил пароль</Button>
                 </Link>
             </form>
         </div>

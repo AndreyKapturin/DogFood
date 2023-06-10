@@ -1,14 +1,16 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import './../formStyle.scss';
 import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
-import { emailOptions, passwordOptions } from '../formOptions';
-import { api } from '../../../api/api';
-import { EyeFill, EyeSlashFill } from 'react-bootstrap-icons';
-import { AppContext } from '../../../context/AppContext';
+import { emailOptions } from '../formOptions';
+import Button from '../../Button';
+import { authorization } from '../../../store/slices/userSlice';
+import { useDispatch } from 'react-redux';
+import InputPassword from '../../InputPassword';
+import { isError } from '../../../utilities/utilities';
 
 const AuthorizationForm = () => {
-    const {showPassword, setShowPassword} = useContext(AppContext);
+    const dispatch = useDispatch();
     const navigate = useNavigate();
     const {
         register,
@@ -18,11 +20,8 @@ const AuthorizationForm = () => {
     } = useForm({ mode: 'onSubmit' });
 
     const logIn = (data) => {
-        api.signIn(data).then((res) => {
-            if (!!res.err) {
-                alert(`${res.message}`);
-            } else {
-                alert(`Добро пожаловать, ${res.data.name}`);
+        dispatch(authorization(data)).then((res) => {
+            if (!isError(res)) {
                 navigate('/catalog');
                 reset();
             }
@@ -38,34 +37,21 @@ const AuthorizationForm = () => {
                     {...register('email', emailOptions)}
                     placeholder='Email'
                 />
-                <div className='input__wrapper'>
-                    <input
-                        className={errors.password ? 'input error' : 'input'}
-                        type={showPassword ? 'text' : 'password'}
-                        {...register('password', passwordOptions)}
-                        placeholder='Пароль'
-                        autoComplete='true'
-                    />
-                    <span className='input__eye' onClick={() => setShowPassword(s => !s)}>
-                    {showPassword ? <EyeFill /> : <EyeSlashFill />}
-                    </span>
-                </div>
+                {errors.email && <span className='error__message'>{errors.email.message}</span>}
+                <InputPassword register={register} errors={errors} />
                 <span className='form__forgote-password'>
                     <Link className='form__text' to='/forgot-password'>
                         Забыли пароль?
                     </Link>
                 </span>
-                {errors.email && <span className='error__message'>{errors.email.message}</span>}
                 {errors.password && (
                     <span className='error__message'>{errors.password.message}</span>
                 )}
-                <button className='form__button' type='submit'>
+                <Button className={'base-btn primary large'} type={'submit'}>
                     Войти
-                </button>
+                </Button>
                 <Link to='/registration'>
-                    <button className='form__button-link' type='submit'>
-                        У меня ещё нет аккаунта
-                    </button>
+                    <Button className={'base-btn secondary large'}>У меня ещё нет аккаунта</Button>
                 </Link>
             </form>
         </div>

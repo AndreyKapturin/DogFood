@@ -4,8 +4,14 @@ import Like from '../images/Like';
 import { Truck, Award } from 'react-bootstrap-icons';
 import { getEnding, getRating } from '../../utilities/utilities';
 import Rating from '../Rating';
+import { useDispatch, useSelector } from 'react-redux';
+import { changeLikeOnProductPage } from '../../store/slices/productSlice';
+import Button from '../Button';
 
-const Product = ({ product, changeLikeOnProductPage, user, reviews }) => {
+const Product = ({ product }) => {
+    const dispatch = useDispatch();
+    const { user } = useSelector((s) => s.user);
+    const { reviews } = useSelector((s) => s.reviews);
     const { name, discount, price, description, pictures, likes, _id } = product;
     let isLiked = likes ? likes.includes(user._id) : false;
     return (
@@ -48,13 +54,14 @@ const Product = ({ product, changeLikeOnProductPage, user, reviews }) => {
                                 <span>0</span>
                                 <button className='quantity-counter-btn'>+</button>
                             </div>
-                            <button className='product__card-btn'>В корзину</button>
+                            <Button className={'base-btn primary fit'}>В корзину</Button>
                         </div>
-                        <div className='product-favorite'>
-                            <span onClick={() => changeLikeOnProductPage(_id, isLiked)}>
-                                <Like fill={isLiked ? 'red' : 'none'} />{' '}
-                                {isLiked ? 'В избранном' : 'В избранное'}
-                            </span>
+                        <div
+                            onClick={() => dispatch(changeLikeOnProductPage([_id, isLiked]))}
+                            className='product-favorite'
+                        >
+                            <Like fill={isLiked ? 'red' : 'none'} />{' '}
+                            {isLiked ? 'В избранном' : 'В избранное'}
                         </div>
                         <div className='placeholrer-delivery'>
                             <Truck width='24' height='24' />

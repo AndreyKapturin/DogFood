@@ -1,28 +1,28 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import './../formStyle.scss';
 import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
-import { aboutOptions, emailOptions, nameOptions, passwordOptions } from '../formOptions';
-import { api } from '../../../api/api';
-import { EyeFill, EyeSlashFill } from 'react-bootstrap-icons';
-import { AppContext } from '../../../context/AppContext';
+import { aboutOptions, emailOptions, nameOptions } from '../formOptions';
+import Button from '../../Button';
+import InputPassword from '../../InputPassword';
+import { useDispatch } from 'react-redux';
+import { authorization, registration } from '../../../store/slices/userSlice';
+import { isError } from '../../../utilities/utilities';
 
 const RegistrationForm = () => {
-    const {showPassword, setShowPassword} = useContext(AppContext);
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     const {
         register,
-        reset,
         handleSubmit,
+        reset,
         formState: { errors },
     } = useForm({ mode: 'onSubmit' });
 
-    const registration = (data) => {
-        api.signUp(data).then((res) => {
-            if (!!res.err) {
-                alert(`${res.message}`);
-            } else {
-                alert(`Добро пожаловать, ${res.data.name}`);
+    const sendRegistrationData = (data) => {
+        dispatch(registration(data)).then((res) => {
+            if (!isError(res)) {
+                dispatch(authorization({email: data.email, password: data.password}))
                 navigate('/catalog');
                 reset();
             }
@@ -32,7 +32,7 @@ const RegistrationForm = () => {
     return (
         <div>
             <h3>Регистрация</h3>
-            <form className='form' onSubmit={handleSubmit(registration)}>
+            <form className='form' onSubmit={handleSubmit(sendRegistrationData)}>
                 <input
                     className={errors.name ? 'input error' : 'input'}
                     type='text'
@@ -54,28 +54,15 @@ const RegistrationForm = () => {
                     placeholder='Email'
                 />
                 {errors.email && <span className='error__message'>{errors.email.message}</span>}
-                <div className='input__wrapper'>
-                    <input
-                        className={errors.password ? 'input error' : 'input'}
-                        type={showPassword ? 'text' : 'password'}
-                        {...register('password', passwordOptions)}
-                        placeholder='Пароль'
-                        autoComplete='true'
-                    />
-                    <span className='input__eye' onClick={() => setShowPassword(s => !s)}>
-                    {showPassword ? <EyeFill /> : <EyeSlashFill />}
-                    </span>
-                </div>
+                <InputPassword register={register} errors={errors} />
                 {errors.password && (
                     <span className='error__message'>{errors.password.message}</span>
                 )}
-                <button className='form__button' type='submit'>
+                <Button className={'base-btn primary large'} type={'submit'}>
                     Зарегистрироваться
-                </button>
+                </Button>
                 <Link to='/login'>
-                    <button className='form__button-link' type='submit'>
-                        У меня уже есть аккаунт
-                    </button>
+                    <Button className={'base-btn secondary large'}>У меня уже есть аккаунт</Button>
                 </Link>
             </form>
         </div>

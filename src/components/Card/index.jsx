@@ -1,17 +1,20 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import './style.scss';
 import Like from '../images/Like';
 import { Link } from 'react-router-dom';
-import { AppContext } from '../../context/AppContext';
+import { useDispatch, useSelector } from 'react-redux';
+import { changeLike } from '../../store/slices/productsSlice';
+import Button from '../Button';
 
 const Card = ({ product }) => {
-    const { user, changeLike } = useContext(AppContext);
+    const dispatch = useDispatch();
+    const {user} = useSelector(s => s.user);
     const { name, pictures, price, wight, discount, likes, _id } = product;
     const isLiked = likes.includes(user._id);
     return (
         <div className='card'>
             {!!discount && <span className='card__discount'>{discount} %</span>}
-            <span onClick={() => changeLike(_id, isLiked)}>
+            <span onClick={() => dispatch(changeLike([_id, isLiked]))}>
                 <Like className='card__like' fill={isLiked ? 'red' : 'none'} />
             </span>
             <Link to={`/product/${_id}`} className='card__link'>
@@ -29,7 +32,7 @@ const Card = ({ product }) => {
                 <span className='card__wight'>{wight}</span>
                 <span className='card__name'>{name}</span>
             </Link>
-            <button className='card__btn'>В корзину</button>
+            <Button className={'base-btn primary fit'}>В корзину</Button>
         </div>
     );
 };

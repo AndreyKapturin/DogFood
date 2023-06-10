@@ -12,14 +12,16 @@ import AuthorizationForm from '../Forms/AuthorizationForm';
 import RegistrationForm from '../Forms/RegistrationForm';
 import ForgotPasswordForm from '../Forms/ForgotPasswordForm';
 import ResetPasswordForm from '../Forms/ResetPasswordForm';
+import ProfilePage from '../../pages/ProfilePage';
 
-const Main = ({ showModal, setShowModal }) => {
+const Main = () => {
     return (
         <main className='main'>
             <Routes>
                 <Route path='/' element={<HomePage />} />
                 <Route path='/favorite' element={<FavoritePage />} />
                 <Route path='/catalog' element={<CatalogPage />} />
+                <Route path='/profile' element={<ProfilePage />} />
                 <Route path='/product/:id' element={<ProductPage />} />
                 <Route path='/*' element={<NotFoundPage />} />
                 <Route path='/FAQ' element={<Faq />} />

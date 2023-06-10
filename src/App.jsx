@@ -1,79 +1,59 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import './App.scss';
 import Footer from './components/Footer';
 import Header from './components/Header';
 import Main from './components/Main';
-import { api } from './api/api';
-import { filterMyFavProduct } from './utilities/utilities';
-import { AppContext } from './context/AppContext';
+import { useDispatch, useSelector } from 'react-redux';
+import { getUserInfoByToken, setAuth } from './store/slices/userSlice';
+import { getAllProducts, searсhProducts } from './store/slices/productsSlice';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 function App() {
-    const [user, setUser] = useState({});
-    const [products, setProducts] = useState([]);
-    const [myFavProduct, setMyFavProduct] = useState([]);
-    const [search, setSearch] = useState(null);
-    const [showModal, setShowModal] = useState(false);
-    const [showPassword, setShowPassword] = useState(false);
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const { searchQuery } = useSelector((s) => s.products);
+    const { isAuth } = useSelector((s) => s.user);
+    const location = useLocation();
 
     useEffect(() => {
-        api.getUserInfo()
-            .then((data) => setUser(data))
-            .catch((error) => console.error('Ошибка при запросе данных о пользователе', error));
-    }, []);
+        if (!!localStorage.getItem('DodFood_token_AK')) {
+            dispatch(setAuth(true));
+        } else {
+            if (
+                location.pathname.includes('/registration') ||
+                location.pathname.includes('/login') ||
+                location.pathname.includes('/forgot-password') ||
+                location.pathname.includes('/password-reset')
+            ) {
+                return;
+            } else {
+                navigate('/login');
+            }
+        }
+    }, [dispatch, isAuth, location, navigate]);
 
     useEffect(() => {
-        if (!search) {
-            api.getProducts()
-                .then((data) => {
-                    setProducts(data.products);
-                    setMyFavProduct(filterMyFavProduct(data.products, user._id));
-                })
-                .catch((error) => console.error('Ошибка при запросе всех продуктов', error));
+        if (!isAuth) return;
+        dispatch(getUserInfoByToken()).then(() => dispatch(getAllProducts()));
+    }, [dispatch, isAuth]);
+
+    useEffect(() => {
+        if (!isAuth) return;
+        if (!searchQuery) {
+            dispatch(getAllProducts());
         } else {
             const timer = setTimeout(() => {
-                api.searchProducts(search)
-                    .then((data) => setProducts(data))
-                    .catch((error) =>
-                        console.error('Ошибка при запросе продуктов в поиске', error)
-                    );
+                dispatch(searсhProducts(searchQuery));
             }, 500);
             return () => clearTimeout(timer);
         }
-    }, [search, user]);
-
-    const changeLike = (productID, wasLiked) => {
-        api.swithLike(productID, wasLiked)
-            .then((res) => {
-                const newProducts = products.map((product) =>
-                    product._id === productID ? res : product
-                );
-                setProducts([...newProducts]);
-                setMyFavProduct(filterMyFavProduct(newProducts, user._id));
-            })
-            .catch((error) => console.error('Ошибка при смене лайка в каталоге', error));
-    };
-    const Context = {
-        setSearch,
-        setProducts,
-        changeLike,
-        user,
-        myFavProduct,
-        setMyFavProduct,
-        products,
-        search,
-        showModal,
-        setShowModal,
-        showPassword,
-        setShowPassword,
-    };
+    }, [searchQuery, dispatch, isAuth]);
 
     return (
         <div className='app'>
-            <AppContext.Provider value={Context}>
-                <Header />
-                <Main />
-                <Footer />
-            </AppContext.Provider>
+            <Header />
+            <Main />
+            <Footer />
         </div>
     );
 }
