@@ -16,7 +16,7 @@ function App() {
     const location = useLocation();
 
     useEffect(() => {
-        if (!!localStorage.getItem('token')) {
+        if (!!localStorage.getItem('DodFood_token_AK')) {
             dispatch(setAuth(true));
         } else {
             if (

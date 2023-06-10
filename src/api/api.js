@@ -8,7 +8,7 @@ const config = {
 };
 
 const refreshToken = () => {
-    return localStorage.getItem('token');
+    return localStorage.getItem('DodFood_token_AK');
 };
 
 const onResponce = (res) => {
@@ -68,7 +68,7 @@ class Api {
         }).then(onResponce);
     }
     addProductReviewByID(id, data) {
-        return fetch(`${this.baseProductUrl}/revdsdsiew/${id}`, {
+        return fetch(`${this.baseProductUrl}/review/${id}`, {
             method: 'POST',
             headers: { ...this.headers, authorization: refreshToken() },
             body: JSON.stringify(data),

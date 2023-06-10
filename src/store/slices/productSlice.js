@@ -1,9 +1,11 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { api } from '../../api/api';
 import { updateProducts } from './productsSlice';
+import { isLoading } from '../../utilities/utilities';
 
 const initialState = {
     product: {},
+    loading: false,
 };
 
 export const getOneProduct = createAsyncThunk(
@@ -33,15 +35,20 @@ export const changeLikeOnProductPage = createAsyncThunk(
 );
 
 const productSlice = createSlice({
-    name: 'productSlice',
+    name: 'product',
     initialState,
     extraReducers: (builder) => {
         builder.addCase(getOneProduct.fulfilled, (state, { payload }) => {
             state.product = payload;
+            state.loading = false;
         });
 
         builder.addCase(changeLikeOnProductPage.fulfilled, (state, { payload }) => {
             state.product = payload.product;
+        });
+
+        builder.addMatcher((action) => isLoading(action, 'product/'), (state, {type}) => {
+            state.loading = true;
         });
     },
 });

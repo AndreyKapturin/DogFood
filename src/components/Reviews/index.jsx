@@ -39,7 +39,7 @@ const Reviews = ({ productID }) => {
                 Написать отзыв
             </Button>
             <div className={`reviews__modal ${showForm ? 'active' : ''}`}>
-                <form className='addReviewForm' onSubmit={handleSubmit((data) => onSubmit(data))}>
+                <form className='addReviewForm' onSubmit={handleSubmit(onSubmit)}>
                     <Rating
                         filling={filling}
                         rating={rating}
@@ -59,7 +59,6 @@ const Reviews = ({ productID }) => {
                     ></textarea>
                     <Button
                         className={'base-btn primary fit'}
-                        onClick={() => setShowForm((s) => !s)}
                         type={'submite'}
                     >
                         Отправить отзыв
