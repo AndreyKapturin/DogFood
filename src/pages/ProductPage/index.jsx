@@ -6,23 +6,25 @@ import BackBtn from '../../components/BackBtn';
 import Reviews from '../../components/Reviews';
 import { useDispatch, useSelector } from 'react-redux';
 import { getOneProduct } from '../../store/slices/productSlice';
-import { getProducrReviews } from '../../store/slices/reviewsSlice';
+import { getProductReviews } from '../../store/slices/reviewsSlice';
+import Loader from '../../components/Loader';
 
 const ProductPage = () => {
     const dispatch = useDispatch();
-    const { product } = useSelector((s) => s.product);
+    const { product, loading } = useSelector((s) => s.product);
+    const { reviews } = useSelector((s) => s.reviews);
     const { id } = useParams();
 
     useEffect(() => {
         dispatch(getOneProduct(id));
-        dispatch(getProducrReviews(id));
+        dispatch(getProductReviews(id));
     }, [id, dispatch]);
 
     return (
         <div className='productPage'>
             <BackBtn />
-            <Product product={product} />
-            <Reviews productID={id} />
+            {loading && reviews ? <Loader /> : <><Product product={product} />
+            <Reviews productID={id} /></>}
         </div>
     );
 };

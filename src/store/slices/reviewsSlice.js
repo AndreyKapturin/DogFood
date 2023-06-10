@@ -5,7 +5,7 @@ const initialState = {
     reviews: [],
 };
 
-export const getProducrReviews = createAsyncThunk(
+export const getProductReviews = createAsyncThunk(
     'reviews/getProductReviews',
     async (id, { rejectWithValue, fulfillWithValue }) => {
         try {
@@ -45,7 +45,7 @@ const reviewsSlice = createSlice({
     name: 'reviewsSlice',
     initialState,
     extraReducers: (builder) => {
-        builder.addCase(getProducrReviews.fulfilled, (state, { payload }) => {
+        builder.addCase(getProductReviews.fulfilled, (state, { payload }) => {
             state.reviews = payload.reverse();
         });
 

@@ -48,8 +48,8 @@ export const mapProducts = (products, newProduct) => {
     return products.map((product) => (product._id === newProduct._id ? newProduct : product));
 };
 
-export const isLoading = ({type}) => {
-    return type.endsWith('pending')
+export const isLoading = ({type}, sliceName) => {
+    return type.startsWith(sliceName) && type.endsWith('pending') && !type.includes('changeLike')
 }
 
 export const isError = ({type}) => {

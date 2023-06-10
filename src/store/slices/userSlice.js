@@ -1,10 +1,11 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { api } from './../../api/api';
-import { isError } from '../../utilities/utilities';
+import { isError, isLoading } from '../../utilities/utilities';
 
 const initialState = {
     user: {},
     isAuth: false,
+    loading: false,
 };
 
 export const authorization = createAsyncThunk(
@@ -98,7 +99,7 @@ export const sendNewUserInfo = createAsyncThunk(
 );
 
 const userSlice = createSlice({
-    name: 'userSlice',
+    name: 'user',
     initialState,
     reducers: {
         setAuth(state, { payload }) {
@@ -108,7 +109,7 @@ const userSlice = createSlice({
     extraReducers: (builder) => {
         builder.addCase(authorization.fulfilled, (state, { payload }) => {
             state.isAuth = true;
-            localStorage.setItem('token', payload.token);
+            localStorage.setItem('DodFood_token_AK', payload.token);
             alert(`Добро пожаловать, ${payload.data.name}`);
         });
 
@@ -118,6 +119,7 @@ const userSlice = createSlice({
 
         builder.addCase(getUserInfoByToken.fulfilled, (state, action) => {
             state.user = action.payload;
+            state.loading = false;
         });
 
         builder.addCase(sendNewUserInfo.fulfilled, (state, action) => {
@@ -129,9 +131,16 @@ const userSlice = createSlice({
         });
 
         builder.addCase(sendNewPassword.fulfilled, (state, { payload }) => {
-            localStorage.setItem('token', payload.token);
+            localStorage.setItem('DodFood_token_AK', payload.token);
             alert(`Добро пожаловать, ${payload.data.name}`);
         });
+
+        builder.addMatcher(
+            ((action) => isLoading(action, 'user/')),
+            (state) => {
+                state.loading = true;
+            }
+        );
 
         builder.addMatcher(isError, (state, { payload }) => {
             alert(`${payload}`);

@@ -12,7 +12,7 @@ const initialState = {
     products: [],
     myFavProducts: [],
     searchQuery: '',
-    isLoading: false,
+    loading: false,
 };
 
 export const getAllProducts = createAsyncThunk(
@@ -112,31 +112,33 @@ const productsSlice = createSlice({
         builder.addCase(getAllProducts.fulfilled, (state, { payload }) => {
             state.products = payload.products;
             state.myFavProducts = filterMyFavProduct(payload.products, payload.user.user._id);
-            state.isLoading = false;
+            state.loading = false;
         });
 
         builder.addCase(searсhProducts.fulfilled, (state, { payload }) => {
             state.products = payload;
-            state.isLoading = false;
+            state.loading = false;
         });
 
         builder.addCase(changeLike.fulfilled, (state, { payload }) => {
             state.products = mapProducts(state.products, payload.product);
             state.myFavProducts = filterMyFavProduct(state.products, payload.user.user._id);
-            state.isLoading = false;
+            state.loading = false;
         });
 
-        builder.addMatcher(isLoading, (state) => {
-            state.isLoading = true;
-        });
+        builder.addMatcher(
+            ((action) => isLoading(action, 'products/')),
+            (state) => {
+                state.loading = true;
+            }
+        );
 
-        builder.addMatcher(isError, (state, action) => {
-            state.isError = action.payload;
-            state.isLoading = false;
+        builder.addMatcher(isError, (state, {payload}) => {
+            alert(`${payload}`)
+            state.loading = false;
         });
     },
 });
-
 export const { sortProduct, searchProductsQuery, filterProduct, updateProducts } =
     productsSlice.actions;
 export default productsSlice.reducer;

@@ -7,10 +7,11 @@ import { aboutOptions, avatarOptions, nameOptions } from '../../components/Forms
 import { sendNewUserInfo } from '../../store/slices/userSlice';
 import defaultImage from '../../images/defaultAvatar.png';
 import Button from '../../components/Button';
+import Loader from '../../components/Loader';
 
 const ProfilePage = () => {
     const dispatch = useDispatch();
-    const { user } = useSelector((s) => s.user);
+    const { user, loading } = useSelector((s) => s.user);
     const [showForm, setShowForm] = useState(false);
     const [prefillingImage, setPrefillingImage] = useState('');
     const {
@@ -33,7 +34,7 @@ const ProfilePage = () => {
         <div className='profilePage'>
             <BackBtn />
             <h1>Профиль</h1>
-            <div className='profilePage__container'>
+            {loading ? <Loader /> : <><div className='profilePage__container'>
                 <div className='profilePage__avatar-wrapper'>
                     <img className='profilePage__avatar' src={user.avatar} alt='defaultAvatar' />
                 </div>
@@ -92,7 +93,7 @@ const ProfilePage = () => {
                         Сохранить
                     </Button>
                 </form>
-            )}
+            )}</>}
         </div>
     );
 };

@@ -15,7 +15,7 @@ const Header = () => {
     const { myFavProducts } = useSelector((s) => s.products);
     const dispatch = useDispatch();
     const logout = () => {
-        localStorage.removeItem('token');
+        localStorage.removeItem('DodFood_token_AK');
         dispatch(setAuth(false));
     };
     return (
