@@ -7,11 +7,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getUserInfoByToken, setAuth } from './store/slices/userSlice';
 import { getAllProducts, searсhProducts } from './store/slices/productsSlice';
 import { useLocation, useNavigate } from 'react-router-dom';
+import {NotificationList} from './components/NotificationList';
 
 function App() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const { searchQuery } = useSelector((s) => s.products);
+    const { notifications } = useSelector((s) => s.notification);
     const { isAuth } = useSelector((s) => s.user);
     const location = useLocation();
 
@@ -54,6 +56,7 @@ function App() {
             <Header />
             <Main />
             <Footer />
+            {!!notifications.length && <NotificationList notifications={notifications} />}
         </div>
     );
 }

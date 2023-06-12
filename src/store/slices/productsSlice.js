@@ -3,10 +3,10 @@ import { api } from './../../api/api';
 import {
     filterMyFavProduct,
     getRating,
-    isError,
     isLoading,
     mapProducts,
 } from '../../utilities/utilities';
+import { addNotification } from './notificationSlice';
 
 const initialState = {
     products: [],
@@ -17,12 +17,13 @@ const initialState = {
 
 export const getAllProducts = createAsyncThunk(
     'products/getAllProducts',
-    async (data, { getState, rejectWithValue, fulfillWithValue }) => {
+    async (data, { getState, dispatch, rejectWithValue, fulfillWithValue }) => {
         const { user } = getState();
         try {
             const { products } = await api.getProducts();
             return fulfillWithValue({ products, user });
         } catch (error) {
+            dispatch(addNotification({ type: 'error', message: error }));
             return rejectWithValue(error);
         }
     }
@@ -30,11 +31,12 @@ export const getAllProducts = createAsyncThunk(
 
 export const searсhProducts = createAsyncThunk(
     'products/searсhProducts',
-    async (search, { rejectWithValue, fulfillWithValue }) => {
+    async (search, { dispatch, rejectWithValue, fulfillWithValue }) => {
         try {
             const products = await api.searchProducts(search);
             return fulfillWithValue(products);
         } catch (error) {
+            dispatch(addNotification({ type: 'error', message: error }));
             return rejectWithValue(error);
         }
     }
@@ -42,12 +44,13 @@ export const searсhProducts = createAsyncThunk(
 
 export const changeLike = createAsyncThunk(
     'products/changeLike',
-    async (data, { getState, rejectWithValue, fulfillWithValue }) => {
+    async (data, { getState, rejectWithValue, fulfillWithValue, dispatch }) => {
         const { user } = getState();
         try {
             const product = await api.swithLike(...data);
             return fulfillWithValue({ product, user });
         } catch (error) {
+            dispatch(addNotification({ type: 'error', message: error }));
             return rejectWithValue(error);
         }
     }
@@ -127,16 +130,11 @@ const productsSlice = createSlice({
         });
 
         builder.addMatcher(
-            ((action) => isLoading(action, 'products/')),
+            (action) => isLoading(action, 'products/'),
             (state) => {
                 state.loading = true;
             }
         );
-
-        builder.addMatcher(isError, (state, {payload}) => {
-            alert(`${payload}`)
-            state.loading = false;
-        });
     },
 });
 export const { sortProduct, searchProductsQuery, filterProduct, updateProducts } =
