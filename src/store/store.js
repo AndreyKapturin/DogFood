@@ -3,6 +3,7 @@ import userSlice from './slices/userSlice';
 import productsSlice from './slices/productsSlice';
 import productSlice from './slices/productSlice';
 import reviewsSlice from './slices/reviewsSlice';
+import notificationsSlice from './slices/notificationSlice';
 
 const store = configureStore({
     reducer: {
@@ -10,6 +11,7 @@ const store = configureStore({
         products: productsSlice,
         product: productSlice,
         reviews: reviewsSlice,
+        notification: notificationsSlice,
     },
 });
 
