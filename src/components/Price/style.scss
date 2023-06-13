@@ -1,0 +1,16 @@
+@import './../../global-style.scss';
+
+.price {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    &__withoutDiscount {
+        text-decoration-line: line-through;
+    }
+    &__current {
+        font-style: normal;
+        font-weight: 800;
+        font-size: 20px;
+        line-height: 143%;
+    }
+}

@@ -1,12 +1,13 @@
 import React from 'react';
 import './style.scss';
 import Like from '../images/Like';
-import { Truck, Award } from 'react-bootstrap-icons';
+import { Award } from 'react-bootstrap-icons';
 import { getEnding, getRating } from '../../utilities/utilities';
 import Rating from '../Rating';
 import { useDispatch, useSelector } from 'react-redux';
 import { changeLikeOnProductPage } from '../../store/slices/productSlice';
 import Button from '../Button';
+import PlaceholderDelivery from '../PlaceholderDelivery';
 
 const Product = ({ product }) => {
     const dispatch = useDispatch();
@@ -63,18 +64,7 @@ const Product = ({ product }) => {
                             <Like fill={isLiked ? 'red' : 'none'} />{' '}
                             {isLiked ? 'В избранном' : 'В избранное'}
                         </div>
-                        <div className='placeholrer-delivery'>
-                            <Truck width='24' height='24' />
-                            <div className='placeholrer-delivery__text'>
-                                <h3>Доставка по всему Миру!</h3>
-                                <p>
-                                    Доставка курьером — <b>от 399 ₽</b>
-                                </p>
-                                <p>
-                                    Доставка в пункт выдачи — <b>от 199 ₽</b>
-                                </p>
-                            </div>
-                        </div>
+                        <PlaceholderDelivery />
                         <div className='placeholrer-guarantee'>
                             <Award width='24' height='24' />
                             <div className='placeholrer-guarantee__text'>

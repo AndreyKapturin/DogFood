@@ -30,9 +30,10 @@ const Header = () => {
                         {!!myFavProducts.length && <Bubble products={myFavProducts} />}
                         <Favorite />
                     </Link>
-                    <a href='/'>
+                    <Link className='header__icon-link' to='/cart'>
+                        {!!myFavProducts.length && <Bubble products={myFavProducts} />}
                         <Cart />
-                    </a>
+                    </Link>
                     <Link className='header__icon-link' to='/profile'>
                         <Profile />
                     </Link>
