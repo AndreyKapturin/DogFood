@@ -1,14 +1,17 @@
 import React from 'react';
 import './style.scss';
 
-const Price = ({ discount, price }) => {
+const Price = ({ cartItem }) => {
+    const { product, totalProductPrice, totalProductPriceWithDiscount } = cartItem;
     return (
         <div className='price'>
-            {!!discount && <span className='price__withoutDiscount'>{price} ₽</span>}
-            {!!discount ? (
-                <span className='price__current red'>{price - (price * discount) / 100} ₽</span>
+            {!!product.discount && (
+                <span className='price__withoutDiscount'>{totalProductPrice} ₽</span>
+            )}
+            {!!product.discount ? (
+                <span className='price__current red'>{totalProductPriceWithDiscount} ₽</span>
             ) : (
-                <span className='price__current black'>{price - (price * discount) / 100} ₽</span>
+                <span className='price__current black'>{totalProductPrice} ₽</span>
             )}
         </div>
     );

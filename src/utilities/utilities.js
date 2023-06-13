@@ -48,10 +48,28 @@ export const mapProducts = (products, newProduct) => {
     return products.map((product) => (product._id === newProduct._id ? newProduct : product));
 };
 
-export const isLoading = ({type}, sliceName) => {
-    return type.startsWith(sliceName) && type.endsWith('pending') && !type.includes('changeLike')
-}
+export const isLoading = ({ type }, sliceName) => {
+    return type.startsWith(sliceName) && type.endsWith('pending') && !type.includes('changeLike');
+};
 
-export const isError = ({type}) => {
-    return type.endsWith('rejected')
-}
+export const isError = ({ type }) => {
+    return type.endsWith('rejected');
+};
+
+export const getProductPrice = (product) => {
+    if (product.discount) {
+        let priceWithDiscount = product.price - (product.price * product.discount) / 100;
+        return Math.floor(priceWithDiscount);
+    } else {
+        return product.price;
+    }
+};
+
+export const getProductDiscount = (product) => {
+    if (product.discount) {
+        let discount = product.price * (product.discount / 100);
+        return Math.floor(discount);
+    } else {
+        return 0;
+    }
+};

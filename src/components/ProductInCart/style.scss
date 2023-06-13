@@ -1,6 +1,10 @@
+@import './../../global-style.scss';
+
 .productInCart {
     display: flex;
     justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid $main-gray-color;
     &__image-wrapper {
         width: 100px;
         height: 100px;
@@ -9,9 +13,12 @@
         width: 100%;
         height: 100%;
     }
+    &__info {
+        width: 300px;
+    }
     &__link {
         text-decoration: none;
-        color: black;
+        color: $main-black-color;
     }
     &__container {
         display: flex;

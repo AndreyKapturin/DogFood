@@ -5,29 +5,35 @@ import Card from './../Card';
 import product from './data.json';
 import PlaceholderDelivery from '../PlaceholderDelivery';
 import CardListInCart from '../CardListInCart';
+import { useSelector } from 'react-redux';
 
-const Cart = () => {
-    const arrProd = [product, product]
+const Cart = ({ productsInCart }) => {
+    const { orderPrice, orderPriceWithDiscount } = useSelector((s) => s.cart);
     return (
         <div className='cart'>
             <div className='cart__productList'>
-            <CardListInCart cards={arrProd} />
+                <CardListInCart productsInCart={productsInCart} />
             </div>
             <div className='cart__form'>
                 <div className='cart__order'>
                     <h2>Ваша корзина</h2>
                     <div className='cart__amountOrder'>
-                        <span className='cart__order-text grey'>Товары 4</span>
-                        <span className='cart__order-cost bold'>3 925 р</span>
+                        <span className='cart__order-text grey'>{`Товары (${productsInCart.reduce(
+                            (acc, el) => acc + el.count,
+                            0
+                        )})`}</span>
+                        <span className='cart__order-cost bold'>{`${orderPrice} ₽`}</span>
                     </div>
                     <div className='cart__amountOrder'>
                         <span className='cart__order-text grey'>Скидка</span>
-                        <span className='cart__order-cost red bold'> -960 р</span>
+                        <span className='cart__order-cost red bold'>{`${
+                            orderPrice - orderPriceWithDiscount
+                        } ₽`}</span>
                     </div>
                     <hr />
                     <div className='cart__amountOrder'>
                         <span className='cart__order-text bold'>Общая стоимость</span>
-                        <span className='cart__order-cost bold'> 3500</span>
+                        <span className='cart__order-cost bold'>{`${orderPriceWithDiscount} ₽`}</span>
                     </div>
                     <Button className={'base-btn primary large'}>Оформить заказ</Button>
                 </div>

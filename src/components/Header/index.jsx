@@ -13,6 +13,7 @@ import { setAuth } from '../../store/slices/userSlice';
 
 const Header = () => {
     const { myFavProducts } = useSelector((s) => s.products);
+    const { productsInCart } = useSelector((s) => s.cart);
     const dispatch = useDispatch();
     const logout = () => {
         localStorage.removeItem('DodFood_token_AK');
@@ -27,11 +28,15 @@ const Header = () => {
                 <Search />
                 <div className='header__icons'>
                     <Link className='header__icon-link' to='/favorite'>
-                        {!!myFavProducts.length && <Bubble products={myFavProducts} />}
+                        {!!myFavProducts.length && <Bubble products={myFavProducts.length} />}
                         <Favorite />
                     </Link>
                     <Link className='header__icon-link' to='/cart'>
-                        {!!myFavProducts.length && <Bubble products={myFavProducts} />}
+                        {!!productsInCart.length && (
+                            <Bubble
+                                products={productsInCart.reduce((acc, el) => acc + el.count, 0)}
+                            />
+                        )}
                         <Cart />
                     </Link>
                     <Link className='header__icon-link' to='/profile'>

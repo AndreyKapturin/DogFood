@@ -4,9 +4,17 @@ import { Trash } from 'react-bootstrap-icons';
 import { Link } from 'react-router-dom';
 import Price from '../Price';
 import Counter from '../Counter';
+import { useDispatch } from 'react-redux';
+import { deleteProductFromCart } from '../../store/slices/cartSlice';
 
-const ProductInCart = ({ product }) => {
-    const { pictures, name, wight, discount, price, _id } = product;
+const ProductInCart = ({ cartItem }) => {
+    const dispatch = useDispatch();
+    const { pictures, name, wight, _id } = cartItem.product;
+
+    const handleDeleteCart = () => {
+        dispatch(deleteProductFromCart(cartItem));
+    };
+    
     return (
         <div className='productInCart'>
             <div className='productInCart__image-wrapper'>
@@ -19,13 +27,13 @@ const ProductInCart = ({ product }) => {
                 </Link>
             </div>
             <div className='productInCart__container'>
-                <Counter />
+                <Counter product={cartItem.product} count={cartItem.count} />
             </div>
             <div className='productInCart__container'>
-                <Price discount={discount} price={price} />
+                <Price cartItem={cartItem} />
             </div>
             <div className='productInCart__container'>
-                <Trash className='productInCart__trash' />
+                <Trash className='productInCart__trash' onClick={handleDeleteCart} />
             </div>
         </div>
     );

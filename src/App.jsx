@@ -8,6 +8,7 @@ import { getUserInfoByToken, setAuth } from './store/slices/userSlice';
 import { getAllProducts, searсhProducts } from './store/slices/productsSlice';
 import { useLocation, useNavigate } from 'react-router-dom';
 import {NotificationList} from './components/NotificationList';
+import { updateState } from './store/slices/cartSlice';
 
 function App() {
     const navigate = useNavigate();
@@ -20,6 +21,7 @@ function App() {
     useEffect(() => {
         if (!!localStorage.getItem('DodFood_token_AK')) {
             dispatch(setAuth(true));
+            dispatch(updateState());
         } else {
             if (
                 location.pathname.includes('/registration') ||
