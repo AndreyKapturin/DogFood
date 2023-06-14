@@ -20,8 +20,8 @@ function App() {
 
     useEffect(() => {
         if (!!localStorage.getItem('DodFood_token_AK')) {
-            dispatch(setAuth(true));
             dispatch(updateState());
+            dispatch(setAuth(true));
         } else {
             if (
                 location.pathname.includes('/registration') ||

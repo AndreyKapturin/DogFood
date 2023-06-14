@@ -70,10 +70,12 @@ const cartSlice = createSlice({
             localStorage.setItem('DoogFoodCart_AK', JSON.stringify(state));
         },
         updateState(state) {
-            const cardFromLocalStorage = { ...JSON.parse(localStorage.getItem('DoogFoodCart_AK')) };
-            state.productsInCart = cardFromLocalStorage.productsInCart;
-            state.orderPrice = cardFromLocalStorage.orderPrice;
-            state.orderPriceWithDiscount = cardFromLocalStorage.orderPriceWithDiscount;
+            const cardFromLocalStorage = JSON.parse(localStorage.getItem('DoogFoodCart_AK'));
+            if (cardFromLocalStorage) {
+                state.productsInCart = cardFromLocalStorage.productsInCart;
+                state.orderPrice = cardFromLocalStorage.orderPrice;
+                state.orderPriceWithDiscount = cardFromLocalStorage.orderPriceWithDiscount;
+            }
         },
     },
 });
