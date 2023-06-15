@@ -2,7 +2,7 @@ import React from 'react';
 import './style.scss';
 import Like from '../images/Like';
 import { Award } from 'react-bootstrap-icons';
-import { getEnding, getRating } from '../../utilities/utilities';
+import { getEnding, getProductPrice, getRating } from '../../utilities/utilities';
 import Rating from '../Rating';
 import { useDispatch, useSelector } from 'react-redux';
 import { changeLikeOnProductPage } from '../../store/slices/productSlice';
@@ -10,6 +10,7 @@ import Button from '../Button';
 import PlaceholderDelivery from '../PlaceholderDelivery';
 import Counter from '../Counter';
 import { addProductInCart } from '../../store/slices/cartSlice';
+import Price from '../Price';
 
 const Product = ({ product }) => {
     const dispatch = useDispatch();
@@ -48,29 +49,23 @@ const Product = ({ product }) => {
                         <img className='product__img' src={pictures} alt={name} />
                     </div>
                     <div className='product-action-wrapper'>
-                        {!!discount ? (
-                            <span className='product__old-price'>{price} ₽</span>
-                        ) : (
-                            <span className='product__old-price'></span>
-                        )}
-                        {!!discount ? (
-                            <span className='product__price red'>
-                                {price - (price * discount) / 100} ₽
-                            </span>
-                        ) : (
-                            <span className='product__price black'>
-                                {price - (price * discount) / 100} ₽
-                            </span>
-                        )}
+                        <Price
+                            discount={discount}
+                            price={getProductPrice(product)}
+                            oldPrice={price}
+                        />
                         {!!stock ? (
                             <div className='product-action-buttons'>
-                                <Counter
-                                    product={product}
-                                    count={currentProductInCart ? currentProductInCart.count : 0}
-                                />
-                                <Button className={'base-btn primary fit'} onClick={handleCart}>
-                                    В корзину
-                                </Button>
+                                {currentProductInCart ? (
+                                    <Counter
+                                        product={product}
+                                        count={currentProductInCart}
+                                    />
+                                ) : (
+                                    <Button className={'base-btn primary fit'} onClick={handleCart}>
+                                        В корзину
+                                    </Button>
+                                )}
                             </div>
                         ) : (
                             <span>Товара нет в наличии</span>

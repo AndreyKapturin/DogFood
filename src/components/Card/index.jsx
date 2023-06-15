@@ -7,6 +7,8 @@ import { changeLike } from '../../store/slices/productsSlice';
 import Button from '../Button';
 import { addProductInCart } from '../../store/slices/cartSlice';
 import Counter from '../Counter';
+import Price from '../Price';
+import { getProductPrice } from '../../utilities/utilities';
 
 const Card = ({ product }) => {
     const dispatch = useDispatch();
@@ -31,30 +33,22 @@ const Card = ({ product }) => {
             </span>
             <Link to={`/product/${_id}`} className='card__link'>
                 <img className='card__img' src={pictures} alt={name}></img>
-                {!!discount ? (
-                    <span className='card__old-price'>{price} ₽</span>
-                ) : (
-                    <span className='card__old-price'></span>
-                )}
-                {!!discount ? (
-                    <span className='card__price red'>{price - (price * discount) / 100} ₽</span>
-                ) : (
-                    <span className='card__price black'>{price - (price * discount) / 100} ₽</span>
-                )}
+                <Price discount={discount} price={getProductPrice(product)} oldPrice={price} />
                 <span className='card__wight'>{wight}</span>
                 <span className='card__wight'>{`В наличии: ${stock}`}</span>
                 <span className='card__name'>{name}</span>
             </Link>
             {!!stock ? (
                 <div className='card__button-wrapper'>
-                    <Button className={'base-btn primary fit'} onClick={handleCart}>
-                        В корзину
-                    </Button>
-                    {currentProductInCart && (
+                    {currentProductInCart ? (
                         <Counter
                             product={product}
                             count={currentProductInCart ? currentProductInCart.count : 0}
                         />
+                    ) : (
+                        <Button className={'base-btn primary fit'} onClick={handleCart}>
+                            В корзину
+                        </Button>
                     )}
                 </div>
             ) : (

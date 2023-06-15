@@ -25,7 +25,7 @@
     }
     &__link {
         display: grid;
-        grid-template-rows: 310px repeat(4, 25px) 50px;
+        grid-template-rows: 310px 50px repeat(2, 25px) 50px;
         color: $main-black-color;
         text-decoration: none;
     }

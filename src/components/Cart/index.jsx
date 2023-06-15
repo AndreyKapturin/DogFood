@@ -22,25 +22,28 @@ const Cart = ({ productsInCart }) => {
                             (acc, el) => acc + el.count,
                             0
                         )})`}</span>
-                        <span className='cart__order-cost bold'>{`${orderPrice} ₽`}</span>
+                        <span className='cart__order-cost bold'>{`${orderPrice.toLocaleString(
+                            'ru-RU'
+                        )} ₽`}</span>
                     </div>
                     <div className='cart__amountOrder'>
                         <span className='cart__order-text grey'>Скидка</span>
-                        <span className='cart__order-cost red bold'>{`${
+                        <span className='cart__order-cost red bold'>{`${(
                             orderPrice - orderPriceWithDiscount
-                        } ₽`}</span>
+                        ).toLocaleString('ru-RU')} ₽`}</span>
                     </div>
                     <hr />
                     <div className='cart__amountOrder'>
                         <span className='cart__order-text bold'>Общая стоимость</span>
-                        <span className='cart__order-cost bold'>{`${orderPriceWithDiscount} ₽`}</span>
+                        <span className='cart__order-cost bold'>{`${orderPriceWithDiscount.toLocaleString(
+                            'ru-RU'
+                        )} ₽`}</span>
                     </div>
                     <Button className={'base-btn primary large'}>Оформить заказ</Button>
                 </div>
                 <PlaceholderDelivery />
             </div>
             <div className='slider'>
-                <Card product={product} />
                 <Card product={product} />
                 <Card product={product} />
                 <Card product={product} />
