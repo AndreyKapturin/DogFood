@@ -7,8 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getUserInfoByToken, setAuth } from './store/slices/userSlice';
 import { getAllProducts, searсhProducts } from './store/slices/productsSlice';
 import { useLocation, useNavigate } from 'react-router-dom';
-import {NotificationList} from './components/NotificationList';
-import { updateState } from './store/slices/cartSlice';
+import { NotificationList } from './components/NotificationList';
 
 function App() {
     const navigate = useNavigate();
@@ -20,7 +19,6 @@ function App() {
 
     useEffect(() => {
         if (!!localStorage.getItem('DodFood_token_AK')) {
-            dispatch(updateState());
             dispatch(setAuth(true));
         } else {
             if (
@@ -43,9 +41,7 @@ function App() {
 
     useEffect(() => {
         if (!isAuth) return;
-        if (!searchQuery) {
-            dispatch(getAllProducts());
-        } else {
+        if (typeof(searchQuery) === 'string') {
             const timer = setTimeout(() => {
                 dispatch(searсhProducts(searchQuery));
             }, 500);

@@ -3,7 +3,7 @@ import './style.scss';
 import { useDispatch } from 'react-redux';
 import { addProductInCart, removeProductFromCart } from '../../store/slices/cartSlice';
 
-const Counter = ({ product, count = 0 }) => {
+const Counter = ({ product, count }) => {
     const dispatch = useDispatch();
     const handleAddCart = () => {
         dispatch(addProductInCart(product));

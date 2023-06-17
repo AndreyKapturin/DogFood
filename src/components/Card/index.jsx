@@ -8,7 +8,7 @@ import Button from '../Button';
 import { addProductInCart } from '../../store/slices/cartSlice';
 import Counter from '../Counter';
 import Price from '../Price';
-import { getProductPrice } from '../../utilities/utilities';
+import { getPriceWithDiscount } from '../../utilities/utilities';
 
 const Card = ({ product }) => {
     const dispatch = useDispatch();
@@ -33,7 +33,7 @@ const Card = ({ product }) => {
             </span>
             <Link to={`/product/${_id}`} className='card__link'>
                 <img className='card__img' src={pictures} alt={name}></img>
-                <Price discount={discount} price={getProductPrice(product)} oldPrice={price} />
+                <Price discount={discount} price={getPriceWithDiscount(product)} oldPrice={price} />
                 <span className='card__wight'>{wight}</span>
                 <span className='card__wight'>{`В наличии: ${stock}`}</span>
                 <span className='card__name'>{name}</span>

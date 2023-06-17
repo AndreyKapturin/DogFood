@@ -2,7 +2,7 @@ import React from 'react';
 import './style.scss';
 import Like from '../images/Like';
 import { Award } from 'react-bootstrap-icons';
-import { getEnding, getProductPrice, getRating } from '../../utilities/utilities';
+import { getEnding, getPriceWithDiscount, getRating } from '../../utilities/utilities';
 import Rating from '../Rating';
 import { useDispatch, useSelector } from 'react-redux';
 import { changeLikeOnProductPage } from '../../store/slices/productSlice';
@@ -22,7 +22,7 @@ const Product = ({ product }) => {
     const currentProductInCart = productsInCart.find((e) => {
         return e.product._id === _id;
     });
-
+    console.log(currentProductInCart);
     const handleCart = () => {
         dispatch(addProductInCart(product));
     };
@@ -51,16 +51,13 @@ const Product = ({ product }) => {
                     <div className='product-action-wrapper'>
                         <Price
                             discount={discount}
-                            price={getProductPrice(product)}
+                            price={getPriceWithDiscount(product)}
                             oldPrice={price}
                         />
                         {!!stock ? (
                             <div className='product-action-buttons'>
                                 {currentProductInCart ? (
-                                    <Counter
-                                        product={product}
-                                        count={currentProductInCart}
-                                    />
+                                    <Counter product={product} count={currentProductInCart.count} />
                                 ) : (
                                     <Button className={'base-btn primary fit'} onClick={handleCart}>
                                         В корзину

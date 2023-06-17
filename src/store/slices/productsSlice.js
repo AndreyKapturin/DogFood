@@ -1,17 +1,13 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { api } from './../../api/api';
-import {
-    filterMyFavProduct,
-    getRating,
-    isLoading,
-    mapProducts,
-} from '../../utilities/utilities';
+import { filterMyFavProduct, getRating, isLoading, mapProducts } from '../../utilities/utilities';
 import { addNotification } from './notificationSlice';
+import { updateCart } from './cartSlice';
 
 const initialState = {
     products: [],
     myFavProducts: [],
-    searchQuery: '',
+    searchQuery: null,
     loading: false,
 };
 
@@ -21,6 +17,7 @@ export const getAllProducts = createAsyncThunk(
         const { user } = getState();
         try {
             const { products } = await api.getProducts();
+            dispatch(updateCart(products));
             return fulfillWithValue({ products, user });
         } catch (error) {
             dispatch(addNotification({ type: 'error', message: error }));

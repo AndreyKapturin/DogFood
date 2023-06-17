@@ -6,10 +6,11 @@ import Price from '../Price';
 import Counter from '../Counter';
 import { useDispatch } from 'react-redux';
 import { deleteProductFromCart } from '../../store/slices/cartSlice';
+import { getPriceWithDiscount } from '../../utilities/utilities';
 
 const ProductInCart = ({ cartItem }) => {
     const dispatch = useDispatch();
-    const { product, count, totalProductPrice, totalProductPriceWithDiscount } = cartItem;
+    const { product, count } = cartItem;
     const handleDeleteCart = () => {
         dispatch(deleteProductFromCart(cartItem));
     };
@@ -32,8 +33,8 @@ const ProductInCart = ({ cartItem }) => {
                 <div className='productInCart__container'>
                     <Price
                         discount={product.discount}
-                        price={totalProductPriceWithDiscount}
-                        oldPrice={totalProductPrice}
+                        price={getPriceWithDiscount(product, count)}
+                        oldPrice={product.price * count}
                     />
                 </div>
             </div>

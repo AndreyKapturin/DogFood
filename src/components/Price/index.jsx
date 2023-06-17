@@ -7,12 +7,12 @@ const Price = ({ discount, price, oldPrice }) => {
             {!!discount ? (
                 <>
                     <span className='price__withoutDiscount'>
-                        {oldPrice.toLocaleString('ru-RU')} ₽
+                        {oldPrice?.toLocaleString('ru-RU')} ₽
                     </span>
-                    <span className='price__current red'>{price.toLocaleString('ru-RU')} ₽</span>
+                    <span className='price__current red'>{price?.toLocaleString('ru-RU')} ₽</span>
                 </>
             ) : (
-                <span className='price__current black'>{oldPrice.toLocaleString('ru-RU')} ₽</span>
+                <span className='price__current black'>{oldPrice?.toLocaleString('ru-RU')} ₽</span>
             )}
         </div>
     );

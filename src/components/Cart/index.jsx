@@ -5,10 +5,9 @@ import Card from './../Card';
 import product from './data.json';
 import PlaceholderDelivery from '../PlaceholderDelivery';
 import CardListInCart from '../CardListInCart';
-import { useSelector } from 'react-redux';
+import { getTotalPrice, getTotalPriceWithDiscount } from '../../utilities/utilities';
 
 const Cart = ({ productsInCart }) => {
-    const { orderPrice, orderPriceWithDiscount } = useSelector((s) => s.cart);
     return (
         <div className='cart'>
             <div className='cart__productList'>
@@ -22,22 +21,23 @@ const Cart = ({ productsInCart }) => {
                             (acc, el) => acc + el.count,
                             0
                         )})`}</span>
-                        <span className='cart__order-cost bold'>{`${orderPrice.toLocaleString(
-                            'ru-RU'
-                        )} ₽`}</span>
+                        <span className='cart__order-cost bold'>{`${getTotalPrice(
+                            productsInCart
+                        ).toLocaleString('ru-RU')} ₽`}</span>
                     </div>
                     <div className='cart__amountOrder'>
                         <span className='cart__order-text grey'>Скидка</span>
                         <span className='cart__order-cost red bold'>{`${(
-                            orderPrice - orderPriceWithDiscount
+                            getTotalPrice(productsInCart) -
+                            getTotalPriceWithDiscount(productsInCart)
                         ).toLocaleString('ru-RU')} ₽`}</span>
                     </div>
                     <hr />
                     <div className='cart__amountOrder'>
                         <span className='cart__order-text bold'>Общая стоимость</span>
-                        <span className='cart__order-cost bold'>{`${orderPriceWithDiscount.toLocaleString(
-                            'ru-RU'
-                        )} ₽`}</span>
+                        <span className='cart__order-cost bold'>{`${getTotalPriceWithDiscount(
+                            productsInCart
+                        ).toLocaleString('ru-RU')} ₽`}</span>
                     </div>
                     <Button className={'base-btn primary large'}>Оформить заказ</Button>
                 </div>

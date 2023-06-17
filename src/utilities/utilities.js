@@ -56,20 +56,45 @@ export const isError = ({ type }) => {
     return type.endsWith('rejected');
 };
 
-export const getProductPrice = (product) => {
+export const getPriceWithDiscount = (product, count = 1) => {
     if (product.discount) {
         let priceWithDiscount = product.price - (product.price * product.discount) / 100;
-        return Math.floor(priceWithDiscount);
+        return Math.floor(priceWithDiscount) * count;
     } else {
-        return product.price;
+        return product.price * count;
     }
 };
 
-export const getProductDiscount = (product) => {
-    if (product.discount) {
-        let discount = product.price * (product.discount / 100);
-        return Math.floor(discount);
-    } else {
-        return 0;
+export const getTotalPrice = (productsInCart) => {
+    if (productsInCart.length) {
+        return productsInCart.reduce((sum, item) => {
+            return sum + item.product.price * item.count;
+        }, 0);
     }
+    return 0;
+};
+
+export const getTotalPriceWithDiscount = (productsInCart) => {
+    if (productsInCart.length) {
+        return productsInCart.reduce((sum, item) => {
+            return sum + getPriceWithDiscount(item.product) * item.count;
+        }, 0);
+    }
+    return 0;
+};
+
+export const getMatches = (inspectedArr, requestedArr) => {
+    return requestedArr.filter((cartItem) => {
+        const requestedProduct = inspectedArr.find((product) => {
+            return product._id === cartItem.product._id;
+        });
+        if (requestedProduct.stock >= cartItem.count) {
+            return { ...cartItem, product: requestedProduct };
+        } else if (requestedProduct.stock === 0) {
+            return false;
+        } else if (requestedProduct.stock < cartItem.count) {
+            return { ...cartItem, product: requestedProduct, count: requestedProduct.stock };
+        } 
+        return cartItem;
+    });
 };
