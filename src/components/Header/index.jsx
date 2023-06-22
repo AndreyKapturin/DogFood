@@ -1,10 +1,10 @@
 import React from 'react';
 import './style.scss';
-import Logo from '../images/Logo';
+import Logo from '../../images/Logo';
 import Search from '../Search';
-import Favorite from '../images/Favorite';
-import Cart from '../images/Cart';
-import Profile from '../images/Profile';
+import Favorite from '../../images/Favorite';
+import Cart from '../../images/Cart';
+import Profile from '../../images/Profile';
 import { Link } from 'react-router-dom';
 import Bubble from '../Bubble';
 import { BoxArrowInLeft } from 'react-bootstrap-icons';

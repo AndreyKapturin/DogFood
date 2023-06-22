@@ -8,7 +8,7 @@ const initialState = {
     products: [],
     myFavProducts: [],
     searchQuery: null,
-    loading: false,
+    loading: true,
 };
 
 export const getAllProducts = createAsyncThunk(

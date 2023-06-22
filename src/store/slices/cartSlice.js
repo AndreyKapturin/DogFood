@@ -54,9 +54,13 @@ const cartSlice = createSlice({
                 state.productsInCart = getMatches(payload, cartFromLocalStorage);
             }
         },
+        sendOrder(state) {
+            state.productsInCart = [];
+            localStorage.setItem('DoogFoodCart_AK', JSON.stringify(state.productsInCart));
+        },
     },
 });
 
-export const { addProductInCart, removeProductFromCart, deleteProductFromCart, updateCart } =
+export const { addProductInCart, removeProductFromCart, deleteProductFromCart, updateCart, sendOrder } =
     cartSlice.actions;
 export default cartSlice.reducer;

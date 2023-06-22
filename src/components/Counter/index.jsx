@@ -17,7 +17,7 @@ const Counter = ({ product, count }) => {
                 -
             </button>
             <span>{count}</span>
-            <button className='counter__button' onClick={handleAddCart}>
+            <button className='counter__button' onClick={handleAddCart} disabled={count >= product.stock}>
                 +
             </button>
         </div>

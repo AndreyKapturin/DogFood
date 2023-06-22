@@ -84,17 +84,19 @@ export const getTotalPriceWithDiscount = (productsInCart) => {
 };
 
 export const getMatches = (inspectedArr, requestedArr) => {
-    return requestedArr.filter((cartItem) => {
+    return requestedArr.map((cartItem) => {
         const requestedProduct = inspectedArr.find((product) => {
             return product._id === cartItem.product._id;
         });
         if (requestedProduct.stock >= cartItem.count) {
             return { ...cartItem, product: requestedProduct };
-        } else if (requestedProduct.stock === 0) {
-            return false;
         } else if (requestedProduct.stock < cartItem.count) {
             return { ...cartItem, product: requestedProduct, count: requestedProduct.stock };
-        } 
+        } else if (requestedProduct.stock === 0) {
+            return false;
+        }
         return cartItem;
     });
 };
+
+export const allowedPaths = ['/registration', '/login', '/forgot-password', '/password-reset'];

@@ -1,6 +1,6 @@
 import React from 'react';
 import './style.scss';
-import Like from '../images/Like';
+import Like from '../../images/Like';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { changeLike } from '../../store/slices/productsSlice';
