@@ -92,8 +92,6 @@ export const getMatches = (inspectedArr, requestedArr) => {
             return { ...cartItem, product: requestedProduct };
         } else if (requestedProduct.stock < cartItem.count) {
             return { ...cartItem, product: requestedProduct, count: requestedProduct.stock };
-        } else if (requestedProduct.stock === 0) {
-            return false;
         }
         return cartItem;
     });
