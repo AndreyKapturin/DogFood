@@ -19,12 +19,12 @@ function App() {
     const location = useLocation();
 
     useEffect(() => {
-        if (!!localStorage.getItem('DodFood_token_AK')) {
+        if (localStorage.getItem('DodFood_token_AK')) {
             dispatch(setAuth(true));
         } else if (!allowedPaths.includes(location.pathname)) {
             navigate('/login');
         }
-    }, [dispatch, isAuth, location, navigate]);
+    }, [dispatch, location, navigate]);
 
     useEffect(() => {
         if (!isAuth) return;

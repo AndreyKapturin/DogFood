@@ -5,7 +5,7 @@ import Search from '../Search';
 import Favorite from '../../images/Favorite';
 import Cart from '../../images/Cart';
 import Profile from '../../images/Profile';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Bubble from '../Bubble';
 import { BoxArrowInLeft } from 'react-bootstrap-icons';
 import { useSelector, useDispatch } from 'react-redux';
@@ -14,11 +14,15 @@ import { setAuth } from '../../store/slices/userSlice';
 const Header = () => {
     const { myFavProducts } = useSelector((s) => s.products);
     const { productsInCart } = useSelector((s) => s.cart);
+    const navigate = useNavigate();
     const dispatch = useDispatch();
+
     const logout = () => {
         localStorage.removeItem('DodFood_token_AK');
         dispatch(setAuth(false));
+        navigate('/login');
     };
+    
     return (
         <header className='header'>
             <div className='header__container'>
