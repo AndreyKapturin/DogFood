@@ -38,18 +38,16 @@
     }
     &__productList {
         grid-area: list;
+        
     }
-}
-
-.slider {
-    grid-area: slider;
-    display: flex;
-    height: auto;
+    &__slider {
+        grid-area: slider;
+    }
 }
 
 @media (max-width: 1100px) {
     .cart {
-        grid-template-columns: auto;
+        grid-template-columns: 100%;
         grid-template-rows: auto auto auto;
         grid-template-areas: 'list' 'form' 'slider';
     }
