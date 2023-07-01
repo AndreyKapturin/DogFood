@@ -13,6 +13,7 @@ import RegistrationForm from '../Forms/RegistrationForm';
 import ForgotPasswordForm from '../Forms/ForgotPasswordForm';
 import ResetPasswordForm from '../Forms/ResetPasswordForm';
 import ProfilePage from '../../pages/ProfilePage';
+import CartPage from '../../pages/CartPage';
 
 const Main = () => {
     return (
@@ -25,6 +26,7 @@ const Main = () => {
                 <Route path='/product/:id' element={<ProductPage />} />
                 <Route path='/*' element={<NotFoundPage />} />
                 <Route path='/FAQ' element={<Faq />} />
+                <Route path='/cart' element={<CartPage />} />
                 <Route
                     path='/login'
                     element={

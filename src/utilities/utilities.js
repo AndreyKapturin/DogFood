@@ -48,10 +48,53 @@ export const mapProducts = (products, newProduct) => {
     return products.map((product) => (product._id === newProduct._id ? newProduct : product));
 };
 
-export const isLoading = ({type}, sliceName) => {
-    return type.startsWith(sliceName) && type.endsWith('pending') && !type.includes('changeLike')
-}
+export const isLoading = ({ type }, sliceName) => {
+    return type.startsWith(sliceName) && type.endsWith('pending') && !type.includes('changeLike');
+};
 
-export const isError = ({type}) => {
-    return type.endsWith('rejected')
-}
+export const isError = ({ type }) => {
+    return type.endsWith('rejected');
+};
+
+export const getPriceWithDiscount = (product, count = 1) => {
+    if (product.discount) {
+        let priceWithDiscount = product.price - (product.price * product.discount) / 100;
+        return Math.floor(priceWithDiscount) * count;
+    } else {
+        return product.price * count;
+    }
+};
+
+export const getTotalPrice = (productsInCart) => {
+    if (productsInCart.length) {
+        return productsInCart.reduce((sum, item) => {
+            return sum + item.product.price * item.count;
+        }, 0);
+    }
+    return 0;
+};
+
+export const getTotalPriceWithDiscount = (productsInCart) => {
+    if (productsInCart.length) {
+        return productsInCart.reduce((sum, item) => {
+            return sum + getPriceWithDiscount(item.product) * item.count;
+        }, 0);
+    }
+    return 0;
+};
+
+export const getMatches = (inspectedArr, requestedArr) => {
+    return requestedArr.map((cartItem) => {
+        const requestedProduct = inspectedArr.find((product) => {
+            return product._id === cartItem.product._id;
+        });
+        if (requestedProduct.stock >= cartItem.count) {
+            return { ...cartItem, product: requestedProduct };
+        } else if (requestedProduct.stock < cartItem.count) {
+            return { ...cartItem, product: requestedProduct, count: requestedProduct.stock };
+        }
+        return cartItem;
+    });
+};
+
+export const allowedPaths = ['/registration', '/login', '/forgot-password', '/password-reset'];

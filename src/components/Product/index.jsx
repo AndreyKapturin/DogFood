@@ -1,19 +1,34 @@
 import React from 'react';
 import './style.scss';
-import Like from '../images/Like';
-import { Truck, Award } from 'react-bootstrap-icons';
-import { getEnding, getRating } from '../../utilities/utilities';
+import Like from '../../images/Like';
+import { Award } from 'react-bootstrap-icons';
+import { getEnding, getPriceWithDiscount, getRating } from '../../utilities/utilities';
 import Rating from '../Rating';
 import { useDispatch, useSelector } from 'react-redux';
 import { changeLikeOnProductPage } from '../../store/slices/productSlice';
 import Button from '../Button';
+import PlaceholderDelivery from '../PlaceholderDelivery';
+import Counter from '../Counter';
+import { addProductInCart } from '../../store/slices/cartSlice';
+import Price from '../Price';
 
 const Product = ({ product }) => {
     const dispatch = useDispatch();
     const { user } = useSelector((s) => s.user);
     const { reviews } = useSelector((s) => s.reviews);
-    const { name, discount, price, description, pictures, likes, _id } = product;
+    const { productsInCart } = useSelector((s) => s.cart);
+    const { name, discount, price, description, pictures, likes, _id, stock } = product;
+
+    const currentProductInCart = productsInCart.find((e) => {
+        return e.product._id === _id;
+    });
+    
+    const handleCart = () => {
+        dispatch(addProductInCart(product));
+    };
+
     let isLiked = likes ? likes.includes(user._id) : false;
+
     return (
         <div className='product'>
             <h1 className='product__name'>{name}</h1>
@@ -34,28 +49,25 @@ const Product = ({ product }) => {
                         <img className='product__img' src={pictures} alt={name} />
                     </div>
                     <div className='product-action-wrapper'>
-                        {!!discount ? (
-                            <span className='product__old-price'>{price} ₽</span>
-                        ) : (
-                            <span className='product__old-price'></span>
-                        )}
-                        {!!discount ? (
-                            <span className='product__price red'>
-                                {price - (price * discount) / 100} ₽
-                            </span>
-                        ) : (
-                            <span className='product__price black'>
-                                {price - (price * discount) / 100} ₽
-                            </span>
-                        )}
-                        <div className='product-action-buttons'>
-                            <div className='product__quantity-counter'>
-                                <button className='quantity-counter-btn'>-</button>
-                                <span>0</span>
-                                <button className='quantity-counter-btn'>+</button>
+                        <Price
+                            discount={discount}
+                            price={getPriceWithDiscount(product)}
+                            oldPrice={price}
+                        />
+                        {!!stock ? (
+                            <div className='product-action-buttons'>
+                                {currentProductInCart ? (
+                                    <Counter product={product} count={currentProductInCart.count} />
+                                ) : (
+                                    <Button className={'base-btn primary fit'} onClick={handleCart}>
+                                        В корзину
+                                    </Button>
+                                )}
                             </div>
-                            <Button className={'base-btn primary fit'}>В корзину</Button>
-                        </div>
+                        ) : (
+                            <span>Товара нет в наличии</span>
+                        )}
+                        <span>{`В наличии: ${stock}`}</span>
                         <div
                             onClick={() => dispatch(changeLikeOnProductPage([_id, isLiked]))}
                             className='product-favorite'
@@ -63,18 +75,7 @@ const Product = ({ product }) => {
                             <Like fill={isLiked ? 'red' : 'none'} />{' '}
                             {isLiked ? 'В избранном' : 'В избранное'}
                         </div>
-                        <div className='placeholrer-delivery'>
-                            <Truck width='24' height='24' />
-                            <div className='placeholrer-delivery__text'>
-                                <h3>Доставка по всему Миру!</h3>
-                                <p>
-                                    Доставка курьером — <b>от 399 ₽</b>
-                                </p>
-                                <p>
-                                    Доставка в пункт выдачи — <b>от 199 ₽</b>
-                                </p>
-                            </div>
-                        </div>
+                        <PlaceholderDelivery />
                         <div className='placeholrer-guarantee'>
                             <Award width='24' height='24' />
                             <div className='placeholrer-guarantee__text'>

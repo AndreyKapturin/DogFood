@@ -1,0 +1,15 @@
+@import './../../global-style.scss';
+.counter {
+    display: flex;
+    width: 100px;
+    border-radius: 20px;
+    border: 1px solid $main-gray-color;
+    align-items: center;
+    justify-content: space-evenly;
+    &__button {
+        border: none;
+        background-color: transparent;
+        font-size: 25px;
+        cursor: pointer;
+    }
+}

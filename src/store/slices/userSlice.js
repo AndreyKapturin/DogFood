@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { api } from './../../api/api';
 import { isLoading } from '../../utilities/utilities';
 import { addNotification } from './notificationSlice';
+import { setCurrentUserId } from './cartSlice';
 
 const initialState = {
     user: {},
@@ -80,6 +81,7 @@ export const getUserInfoByToken = createAsyncThunk(
     async (data, { dispatch, rejectWithValue, fulfillWithValue }) => {
         try {
             const user = await api.getUserInfo();
+            dispatch(setCurrentUserId(user._id));
             return fulfillWithValue(user);
         } catch (error) {
             dispatch(addNotification({ type: 'error', message: error }));

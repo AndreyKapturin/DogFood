@@ -30,7 +30,7 @@ const RegistrationForm = () => {
     };
 
     return (
-        <div>
+        <div className='form__container'>
             <h3>Регистрация</h3>
             <form className='form' onSubmit={handleSubmit(sendRegistrationData)}>
                 <input
