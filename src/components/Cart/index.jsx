@@ -1,7 +1,6 @@
 import React from 'react';
 import './style.scss';
 import Button from './../Button';
-import Card from './../Card';
 import product from './data.json';
 import PlaceholderDelivery from '../PlaceholderDelivery';
 import CardListInCart from '../CardListInCart';
@@ -9,6 +8,7 @@ import { getTotalPrice, getTotalPriceWithDiscount } from '../../utilities/utilit
 import { useDispatch } from 'react-redux';
 import { sendOrder } from '../../store/slices/cartSlice';
 import { addNotification } from '../../store/slices/notificationSlice';
+import Slider from '../Slider';
 
 const Cart = ({ productsInCart }) => {
     const dispatch = useDispatch();
@@ -50,10 +50,8 @@ const Cart = ({ productsInCart }) => {
                 </div>
                 <PlaceholderDelivery />
             </div>
-            <div className='slider'>
-                <Card product={product} />
-                <Card product={product} />
-                <Card product={product} />
+            <div className='cart__slider'>
+                <Slider title={'Рекомендуем'} cards={product} />
             </div>
         </div>
     );
