@@ -6,22 +6,25 @@ import { CaretLeftFill, CaretRightFill } from 'react-bootstrap-icons';
 const Slider = memo(({ title, cards }) => {
     const [slide, setSlide] = useState(0);
     const [cardInSlider, setCardInSlider] = useState(4);
-    const [windowWidth, setWindowWidth] = useState(window.screen.width);
+    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+    window.onresize = () => {
+        setWindowWidth(window.innerWidth);
+    };
 
     useEffect(() => {
-        window.onresize = () => {
-            setWindowWidth(window.screen.width);
-        };
-        if (window.screen.width > 1120) {
+        if (window.innerWidth > 1120) {
             setCardInSlider(4);
-        } else if (window.screen.width > 850) {
+            setSlide(0);
+        } else if (window.innerWidth > 850) {
             setCardInSlider(3);
-        } else if (window.screen.width > 600) {
+            setSlide(0);
+        } else if (window.innerWidth > 600) {
             setCardInSlider(2);
+            setSlide(0);
         } else {
             setCardInSlider(1);
+            setSlide(0);
         }
-        return () => window.onresize = false;
     }, [windowWidth]);
 
     const moveLeft = () => {

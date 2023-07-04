@@ -36,7 +36,7 @@
 @media (max-width: 1120px) {
     .slider {
         &__slide {
-            min-width: calc((100% / 3 - 13.3px));
+            min-width: calc((100% / 3 - 13.33px));
         }
     }
 }

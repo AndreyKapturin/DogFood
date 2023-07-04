@@ -9,6 +9,7 @@ const initialState = {
     myFavProducts: [],
     searchQuery: null,
     loading: true,
+    viewedProducts: [],
 };
 
 export const getAllProducts = createAsyncThunk(
@@ -105,7 +106,19 @@ const productsSlice = createSlice({
         },
         updateProducts(state, { payload }) {
             state.products = mapProducts(state.products, payload.product);
+            state.viewedProducts = mapProducts(state.viewedProducts, payload.product);
             state.myFavProducts = filterMyFavProduct(state.products, payload.user.user._id);
+        },
+        addViewedProduct(state, { payload }) {
+            if (state.viewedProducts.find((el) => el._id === payload._id)) {
+                return;
+            }
+            if (state.viewedProducts.length >= 8) {
+                state.viewedProducts.shift();
+                state.viewedProducts.push(payload);
+            } else {
+                state.viewedProducts.push(payload);
+            }
         },
     },
     extraReducers: (builder) => {
@@ -122,6 +135,7 @@ const productsSlice = createSlice({
 
         builder.addCase(changeLike.fulfilled, (state, { payload }) => {
             state.products = mapProducts(state.products, payload.product);
+            state.viewedProducts = mapProducts(state.viewedProducts, payload.product);
             state.myFavProducts = filterMyFavProduct(state.products, payload.user.user._id);
             state.loading = false;
         });
@@ -134,6 +148,6 @@ const productsSlice = createSlice({
         );
     },
 });
-export const { sortProduct, searchProductsQuery, filterProduct, updateProducts } =
+export const { sortProduct, searchProductsQuery, filterProduct, updateProducts, addViewedProduct } =
     productsSlice.actions;
 export default productsSlice.reducer;

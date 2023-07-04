@@ -4,7 +4,7 @@ import './style.scss';
 const Price = ({ discount, price, oldPrice }) => {
     return (
         <div className='price'>
-            {!!discount ? (
+            {discount ? (
                 <>
                     <span className='price__withoutDiscount'>
                         {oldPrice?.toLocaleString('ru-RU')} ₽

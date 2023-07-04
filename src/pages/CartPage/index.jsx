@@ -27,7 +27,7 @@ const CartPage = () => {
                             )} в корзине`}
                         </h1>
                     </div>
-                    {!!productsInCart.length ? (
+                    {productsInCart.length ? (
                         <Cart productsInCart={productsInCart} />
                     ) : (
                         <NotFound

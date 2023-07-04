@@ -1,0 +1,37 @@
+@import './../../global-style.scss';
+
+.homePage {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    &__header {
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+    }
+    &__header-title {
+        font-size: 48px;
+        font-weight: 900;
+        line-height: 52px;
+    }
+    &__header-subtitle {
+        font-size: 24px;
+        font-weight: 300;
+        line-height: 28px;
+    }
+    &__promo-wrapper {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+    }
+}
+
+@media (max-width: 650px) {
+    .homePage {
+        &__promo-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+    }
+}

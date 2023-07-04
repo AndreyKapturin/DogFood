@@ -38,7 +38,7 @@ const Product = ({ product }) => {
                     <Rating filling={getRating(reviews)} isEditable={false} />
                 </span>
                 <span>
-                    {!!reviews
+                    {reviews
                         ? `${reviews.length} отзыв${getEnding(reviews.length)}`
                         : 'Ещё нет отзывов'}
                 </span>
@@ -54,7 +54,7 @@ const Product = ({ product }) => {
                             price={getPriceWithDiscount(product)}
                             oldPrice={price}
                         />
-                        {!!stock ? (
+                        {stock ? (
                             <div className='product-action-buttons'>
                                 {currentProductInCart ? (
                                     <Counter product={product} count={currentProductInCart.count} />
