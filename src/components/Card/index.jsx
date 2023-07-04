@@ -38,7 +38,7 @@ const Card = ({ product }) => {
                 <span className='card__wight'>{`В наличии: ${stock}`}</span>
                 <span className='card__name'>{name}</span>
             </Link>
-            {!!stock ? (
+            {stock ? (
                 <div className='card__button-wrapper'>
                     {currentProductInCart ? (
                         <Counter

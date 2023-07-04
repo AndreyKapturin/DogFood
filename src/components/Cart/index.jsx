@@ -1,28 +1,32 @@
 import React from 'react';
 import './style.scss';
 import Button from './../Button';
-import product from './data.json';
 import PlaceholderDelivery from '../PlaceholderDelivery';
 import CardListInCart from '../CardListInCart';
 import { getTotalPrice, getTotalPriceWithDiscount } from '../../utilities/utilities';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { sendOrder } from '../../store/slices/cartSlice';
 import { addNotification } from '../../store/slices/notificationSlice';
 import Slider from '../Slider';
 
 const Cart = ({ productsInCart }) => {
     const dispatch = useDispatch();
+    const { viewedProducts, myFavProducts } = useSelector((s) => s.products);
     const totalCount = productsInCart.reduce((acc, el) => acc + el.count, 0);
     const totalPrice = getTotalPrice(productsInCart).toLocaleString('ru-RU');
+
     const totalDiscount = (
         getTotalPrice(productsInCart) - getTotalPriceWithDiscount(productsInCart)
     ).toLocaleString('ru-RU');
+
     const totalPriceWithDiscount =
         getTotalPriceWithDiscount(productsInCart).toLocaleString('ru-RU');
+
     const buy = () => {
         dispatch(sendOrder());
         dispatch(addNotification({ type: 'success', message: 'Заказ отправлен' }));
     };
+
     return (
         <div className='cart'>
             <div className='cart__productList'>
@@ -51,7 +55,11 @@ const Cart = ({ productsInCart }) => {
                 <PlaceholderDelivery />
             </div>
             <div className='cart__slider'>
-                <Slider title={'Рекомендуем'} cards={product} />
+                {viewedProducts.length ? (
+                    <Slider title={'Вы смотрели'} cards={viewedProducts} />
+                ) : (
+                    myFavProducts.length && <Slider title={'Избранное'} cards={myFavProducts} />
+                )}
             </div>
         </div>
     );

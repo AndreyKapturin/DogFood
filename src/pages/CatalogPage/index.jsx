@@ -11,7 +11,7 @@ const CatalogPage = () => {
     const { searchQuery, products, loading } = useSelector((s) => s.products);
     return (
         <>
-            {searchQuery && <SearchResult />}
+            {!!searchQuery && <SearchResult />}
             {!!products.length && <Sorting />}
             {loading ? (
                 <Loader />

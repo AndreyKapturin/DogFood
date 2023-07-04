@@ -17,7 +17,7 @@ const FavoritePage = () => {
             ) : (
                 <>
                     {!!myFavProducts.length && <CardList cards={myFavProducts} />}
-                    {!myFavProducts.length && (
+                    {myFavProducts.length === 0 && (
                         <NotFound
                             text='Пусто... Добавьте товары из каталога!'
                             buttonText='В каталог'
