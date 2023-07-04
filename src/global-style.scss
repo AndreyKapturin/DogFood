@@ -6,7 +6,7 @@ $main-white-color: #ffffff;
 $main-green-bg-color: #01a54e;
 $main-light-shadow-color: #b0b0b0;
 $main-dark-shadow-color: #4d4c4c;
-$main-max-width: 1500px;
+$main-max-width: 1300px;
 
 .red {
     color: $main-red-color;
@@ -14,4 +14,12 @@ $main-max-width: 1500px;
 
 .black {
     color: $main-black-color;
+}
+
+.grey {
+    color: $main-gray-color;
+}
+
+.bold {
+    font-weight: 700;
 }

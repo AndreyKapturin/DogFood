@@ -28,7 +28,7 @@ const ForgotPasswordForm = () => {
     };
 
     return (
-        <div>
+        <div className='form__container'>
             <h3>Восстановление пароля</h3>
             <form className='form' onSubmit={handleSubmit(resetPassword)}>
                 <span className='form__text'>

@@ -1,6 +1,8 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { api } from './../../api/api';
-import { isError, isLoading } from '../../utilities/utilities';
+import { isLoading } from '../../utilities/utilities';
+import { addNotification } from './notificationSlice';
+import { setCurrentUserId } from './cartSlice';
 
 const initialState = {
     user: {},
@@ -10,11 +12,18 @@ const initialState = {
 
 export const authorization = createAsyncThunk(
     'user/authorization',
-    async (data, { rejectWithValue, fulfillWithValue }) => {
+    async (data, { rejectWithValue, fulfillWithValue, dispatch }) => {
         try {
             const response = await api.signIn(data);
+            dispatch(
+                addNotification({
+                    type: 'success',
+                    message: `Добро пожаловать, ${response.data.name}`,
+                })
+            );
             return fulfillWithValue(response);
         } catch (error) {
+            dispatch(addNotification({ type: 'error', message: error }));
             return rejectWithValue(error);
         }
     }
@@ -22,11 +31,13 @@ export const authorization = createAsyncThunk(
 
 export const registration = createAsyncThunk(
     'user/registration',
-    async (data, { rejectWithValue, fulfillWithValue }) => {
+    async (data, { dispatch, rejectWithValue, fulfillWithValue }) => {
         try {
             const response = await api.signUp(data);
+            dispatch(addNotification({ type: 'success', message: 'Вы зарегистрированы' }));
             return fulfillWithValue(response);
         } catch (error) {
+            dispatch(addNotification({ type: 'error', message: error }));
             return rejectWithValue(error);
         }
     }
@@ -34,11 +45,13 @@ export const registration = createAsyncThunk(
 
 export const getTokenForNewPassword = createAsyncThunk(
     'user/getTokenForNewPassword',
-    async (data, { rejectWithValue, fulfillWithValue }) => {
+    async (data, { dispatch, rejectWithValue, fulfillWithValue }) => {
         try {
             const response = await api.getTokenByEmail(data);
+            dispatch(addNotification({ type: 'success', message: response.message }));
             return fulfillWithValue(response);
         } catch (error) {
+            dispatch(addNotification({ type: 'error', message: error }));
             return rejectWithValue(error);
         }
     }
@@ -46,11 +59,18 @@ export const getTokenForNewPassword = createAsyncThunk(
 
 export const sendNewPassword = createAsyncThunk(
     'user/sendNewPassword',
-    async (data, { rejectWithValue, fulfillWithValue }) => {
+    async (data, { dispatch, rejectWithValue, fulfillWithValue }) => {
         try {
             const response = await api.setNewPassword(data);
+            dispatch(
+                addNotification({
+                    type: 'success',
+                    message: `Добро пожаловать, ${response.data.name}`,
+                })
+            );
             return fulfillWithValue(response);
         } catch (error) {
+            dispatch(addNotification({ type: 'error', message: error }));
             return rejectWithValue(error);
         }
     }
@@ -58,11 +78,13 @@ export const sendNewPassword = createAsyncThunk(
 
 export const getUserInfoByToken = createAsyncThunk(
     'user/getUserInfoByToken',
-    async (data, { rejectWithValue, fulfillWithValue }) => {
+    async (data, { dispatch, rejectWithValue, fulfillWithValue }) => {
         try {
             const user = await api.getUserInfo();
+            dispatch(setCurrentUserId(user._id));
             return fulfillWithValue(user);
         } catch (error) {
+            dispatch(addNotification({ type: 'error', message: error }));
             return rejectWithValue(error);
         }
     }
@@ -70,7 +92,7 @@ export const getUserInfoByToken = createAsyncThunk(
 
 export const sendNewUserInfo = createAsyncThunk(
     'user/sendNewUserInfo',
-    async (newUserInfo, { getState, rejectWithValue, fulfillWithValue }) => {
+    async (newUserInfo, { getState, dispatch, rejectWithValue, fulfillWithValue }) => {
         const { user } = getState();
         if (newUserInfo.avatar !== user.user.avatar) {
             try {
@@ -80,8 +102,15 @@ export const sendNewUserInfo = createAsyncThunk(
                 });
                 const updatedUserAvatar = await api.editUserAvatar({ avatar: newUserInfo.avatar });
                 const updatedUser = { ...updatedUserInfo, avatar: updatedUserAvatar.avatar };
+                dispatch(
+                    addNotification({
+                        type: 'success',
+                        message: `Данные изменены`,
+                    })
+                );
                 return fulfillWithValue(updatedUser);
             } catch (error) {
+                dispatch(addNotification({ type: 'error', message: error }));
                 return rejectWithValue(error);
             }
         } else {
@@ -90,8 +119,15 @@ export const sendNewUserInfo = createAsyncThunk(
                     name: newUserInfo.name,
                     about: newUserInfo.about,
                 });
+                dispatch(
+                    addNotification({
+                        type: 'success',
+                        message: `Данные изменены`,
+                    })
+                );
                 return fulfillWithValue(updatedUserInfo);
             } catch (error) {
+                dispatch(addNotification({ type: 'error', message: error }));
                 return rejectWithValue(error);
             }
         }
@@ -110,11 +146,6 @@ const userSlice = createSlice({
         builder.addCase(authorization.fulfilled, (state, { payload }) => {
             state.isAuth = true;
             localStorage.setItem('DodFood_token_AK', payload.token);
-            alert(`Добро пожаловать, ${payload.data.name}`);
-        });
-
-        builder.addCase(registration.fulfilled, () => {
-            alert(`Регистрация прошла успешно}`);
         });
 
         builder.addCase(getUserInfoByToken.fulfilled, (state, action) => {
@@ -124,27 +155,19 @@ const userSlice = createSlice({
 
         builder.addCase(sendNewUserInfo.fulfilled, (state, action) => {
             state.user = action.payload;
-        });
-
-        builder.addCase(getTokenForNewPassword.fulfilled, (state, { payload }) => {
-            alert(`${payload.message}`);
+            state.loading = false;
         });
 
         builder.addCase(sendNewPassword.fulfilled, (state, { payload }) => {
             localStorage.setItem('DodFood_token_AK', payload.token);
-            alert(`Добро пожаловать, ${payload.data.name}`);
         });
 
         builder.addMatcher(
-            ((action) => isLoading(action, 'user/')),
+            (action) => isLoading(action, 'user/'),
             (state) => {
                 state.loading = true;
             }
         );
-
-        builder.addMatcher(isError, (state, { payload }) => {
-            alert(`${payload}`);
-        });
     },
 });
 

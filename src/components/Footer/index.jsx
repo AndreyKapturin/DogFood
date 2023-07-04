@@ -1,11 +1,12 @@
 import React from 'react';
 import './style.scss';
-import Logo from '../images/Logo';
-import LogoTG from '../images/LogoTG';
-import LogoWA from '../images/LogoWA';
-import LogoViber from '../images/LogoViber';
-import LogoInstagram from '../images/LogoInstagram';
-import LogoVK from '../images/LogoVK';
+import Logo from '../../images/Logo';
+import LogoTG from '../../images/LogoTG';
+import LogoWA from '../../images/LogoWA';
+import LogoViber from '../../images/LogoViber';
+import LogoInstagram from '../../images/LogoInstagram';
+import LogoVK from '../../images/LogoVK';
+import { Link } from 'react-router-dom';
 
 const Footer = () => {
     return (
@@ -17,16 +18,16 @@ const Footer = () => {
                 </div>
                 <div className='footer__nav-lists'>
                     <div className='footer__nav-list'>
-                        <a href='/'>Каталог</a>
-                        <a href='/'>Акции</a>
-                        <a href='/'>Новости</a>
-                        <a href='/'>Отзывы</a>
+                        <Link to='/catalog'>Каталог</Link>
+                        <Link to='/catalog'>Акции</Link>
+                        <Link to='/catalog'>Новости</Link>
+                        <Link to='/catalog'>Отзывы</Link>
                     </div>
                     <div className='footer__nav-list'>
-                        <a href='/'>Оплата и доставка</a>
-                        <a href='/'>Часто спрашивают</a>
-                        <a href='/'>Обратная связь</a>
-                        <a href='/'>Контакты</a>
+                        <Link to='/catalog'>Оплата и доставка</Link>
+                        <Link to='/faq'>Часто спрашивают</Link>
+                        <Link to='/catalog'>Обратная связь</Link>
+                        <Link to='/catalog'>Контакты</Link>
                     </div>
                 </div>
                 <div className='footer__contacts'>

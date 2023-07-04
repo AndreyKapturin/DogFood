@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { api } from '../../api/api';
+import { addNotification } from './notificationSlice';
 
 const initialState = {
     reviews: [],
@@ -7,11 +8,12 @@ const initialState = {
 
 export const getProductReviews = createAsyncThunk(
     'reviews/getProductReviews',
-    async (id, { rejectWithValue, fulfillWithValue }) => {
+    async (id, { dispatch, rejectWithValue, fulfillWithValue }) => {
         try {
             const reviews = await api.getReviewsByID(id);
             return fulfillWithValue(reviews);
         } catch (error) {
+            dispatch(addNotification({ type: 'error', message: error }));
             return rejectWithValue(error);
         }
     }
@@ -19,11 +21,12 @@ export const getProductReviews = createAsyncThunk(
 
 export const addReview = createAsyncThunk(
     'reviews/addReview',
-    async (data, { rejectWithValue, fulfillWithValue }) => {
+    async (data, { dispatch, rejectWithValue, fulfillWithValue }) => {
         try {
             const { reviews } = await api.addProductReviewByID(...data);
             return fulfillWithValue(reviews);
         } catch (error) {
+            dispatch(addNotification({ type: 'error', message: error }));
             return rejectWithValue(error);
         }
     }
@@ -31,11 +34,12 @@ export const addReview = createAsyncThunk(
 
 export const deleteReview = createAsyncThunk(
     'reviews/deleteReview',
-    async (data, { rejectWithValue, fulfillWithValue }) => {
+    async (data, { dispatch, rejectWithValue, fulfillWithValue }) => {
         try {
             const { reviews } = await api.deleteProductReviewByID(...data);
             return fulfillWithValue(reviews);
         } catch (error) {
+            dispatch(addNotification({ type: 'error', message: error }));
             return rejectWithValue(error);
         }
     }

@@ -1,7 +1,8 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { api } from '../../api/api';
-import { updateProducts } from './productsSlice';
+import { addViewedProduct, updateProducts } from './productsSlice';
 import { isLoading } from '../../utilities/utilities';
+import { addNotification } from './notificationSlice';
 
 const initialState = {
     product: {},
@@ -10,11 +11,13 @@ const initialState = {
 
 export const getOneProduct = createAsyncThunk(
     'product/getOneProduct',
-    async (id, { rejectWithValue, fulfillWithValue }) => {
+    async (id, { dispatch, rejectWithValue, fulfillWithValue }) => {
         try {
             const product = await api.getProductsByID(id);
+            dispatch(addViewedProduct(product));
             return fulfillWithValue(product);
         } catch (error) {
+            dispatch(addNotification({ type: 'error', message: error }));
             return rejectWithValue(error);
         }
     }
@@ -29,6 +32,7 @@ export const changeLikeOnProductPage = createAsyncThunk(
             dispatch(updateProducts({ product, user }));
             return fulfillWithValue({ user, product });
         } catch (error) {
+            dispatch(addNotification({ type: 'error', message: error }));
             return rejectWithValue(error);
         }
     }
@@ -47,9 +51,12 @@ const productSlice = createSlice({
             state.product = payload.product;
         });
 
-        builder.addMatcher((action) => isLoading(action, 'product/'), (state, {type}) => {
-            state.loading = true;
-        });
+        builder.addMatcher(
+            (action) => isLoading(action, 'product/'),
+            (state, { type }) => {
+                state.loading = true;
+            }
+        );
     },
 });
 

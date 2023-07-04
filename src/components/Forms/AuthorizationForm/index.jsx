@@ -28,7 +28,7 @@ const AuthorizationForm = () => {
         });
     };
     return (
-        <div>
+        <div className='form__container'>
             <h3>Авторизация</h3>
             <form className='form' onSubmit={handleSubmit(logIn)}>
                 <input
@@ -39,14 +39,14 @@ const AuthorizationForm = () => {
                 />
                 {errors.email && <span className='error__message'>{errors.email.message}</span>}
                 <InputPassword register={register} errors={errors} />
+                {errors.password && (
+                    <span className='error__message'>{errors.password.message}</span>
+                )}
                 <span className='form__forgote-password'>
                     <Link className='form__text' to='/forgot-password'>
                         Забыли пароль?
                     </Link>
                 </span>
-                {errors.password && (
-                    <span className='error__message'>{errors.password.message}</span>
-                )}
                 <Button className={'base-btn primary large'} type={'submit'}>
                     Войти
                 </Button>

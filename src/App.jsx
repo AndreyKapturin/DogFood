@@ -7,30 +7,24 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getUserInfoByToken, setAuth } from './store/slices/userSlice';
 import { getAllProducts, searсhProducts } from './store/slices/productsSlice';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { NotificationList } from './components/NotificationList';
+import { allowedPaths } from './utilities/utilities';
 
 function App() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const { searchQuery } = useSelector((s) => s.products);
+    const { notifications } = useSelector((s) => s.notification);
     const { isAuth } = useSelector((s) => s.user);
     const location = useLocation();
 
     useEffect(() => {
-        if (!!localStorage.getItem('DodFood_token_AK')) {
+        if (localStorage.getItem('DodFood_token_AK')) {
             dispatch(setAuth(true));
-        } else {
-            if (
-                location.pathname.includes('/registration') ||
-                location.pathname.includes('/login') ||
-                location.pathname.includes('/forgot-password') ||
-                location.pathname.includes('/password-reset')
-            ) {
-                return;
-            } else {
-                navigate('/login');
-            }
+        } else if (!allowedPaths.includes(location.pathname)) {
+            navigate('/login');
         }
-    }, [dispatch, isAuth, location, navigate]);
+    }, [dispatch, location, navigate]);
 
     useEffect(() => {
         if (!isAuth) return;
@@ -39,9 +33,7 @@ function App() {
 
     useEffect(() => {
         if (!isAuth) return;
-        if (!searchQuery) {
-            dispatch(getAllProducts());
-        } else {
+        if (typeof(searchQuery) === 'string') {
             const timer = setTimeout(() => {
                 dispatch(searсhProducts(searchQuery));
             }, 500);
@@ -54,6 +46,7 @@ function App() {
             <Header />
             <Main />
             <Footer />
+            {!!notifications.length && <NotificationList notifications={notifications} />}
         </div>
     );
 }
