@@ -22,7 +22,7 @@ const AuthorizationForm = () => {
     const logIn = (data) => {
         dispatch(authorization(data)).then((res) => {
             if (!isError(res)) {
-                navigate('/catalog');
+                navigate('/');
                 reset();
             }
         });
